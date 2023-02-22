@@ -1,0 +1,17 @@
+#+title: dotfile config
+#+AUTHOR: Moritz Gleissner
+#+DESCRIPTION: This is a description for my dotfiles
+
+* Content List :toc:
+- [[#pagages][PAGAGES]]
+  - [[#base][BASE]]
+  - [[#aur][AUR]]
+
+* PAGAGES
+This contains all the packages needed for the dotfiles
+** BASE
+Base packages that can be downloaded with pacman
+-
+** AUR
+AUR packlages that can be downloaded witb yay
+-
