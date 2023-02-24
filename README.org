@@ -6,12 +6,88 @@
 - [[#pagages][PAGAGES]]
   - [[#base][BASE]]
   - [[#aur][AUR]]
+  - [[#stpecials][stpecials]]
 
 * PAGAGES
 This contains all the packages needed for the dotfiles
 ** BASE
 Base packages that can be downloaded with pacman
--
+- libvterm
+- languagetool
+- nodejs
+- npm
+- yarn
+- lldb
+- gdb
+- unzip
+- docker
+- docker-compose
+- docker-machine
+- editorconfig-checker
+- sqlite
+- ripgrep
+- git
+- wl-clipboard
+- clang
+- ccls
+- go
+- gopls
+- jdk11-openjdk
+- texlive-core
+- texlive-bin
+- texlive-science
+- texlive-latexextra
+- gnuplot
+- marked
+- pip
+- pyright
+- rubocop
+- rustup
+- mpd
+- mpc
+- maim
+- scrot
+- gnome-screenshot
+- rust-analyzer
+- tidy
+- stylelint
+- python-pipenv
+- curl
+- gcc
+- make
+- ncurses
+- man-pages
+- xdg-utils
 ** AUR
 AUR packlages that can be downloaded witb yay
--
+- nodejs-dockerfile-language-server
+- wordnet-cli
+- cmake-language-server
+- proselint
+- ktlint
+- grip
+- shellcheck-bin
+- js-beautify
+
+** stpecials
+- curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+- ghcup install ghc
+- ghcup install cabal
+- ghcup install hls
+- pip install pytest
+- pip install nose
+- pip install black
+  pip install pyflakes
+  pip install isort
+  pip install python-language-server[all]
+  rustup component add rustfmt-preview
+  rustup component add clippy-preview
+  cargo install cargo-check
+go install github.com/x-motemen/gore/cmd/gore@latest
+go install github.com/stamblerre/gocode@latest
+go install golang.org/x/tools/cmd/godoc@latest
+go install golang.org/x/tools/cmd/goimports@latest
+go install golang.org/x/tools/cmd/gorename@latest
+go install golang.org/x/tools/cmd/guru@latest
+go install github.com/cweill/gotests/gotests@latest
+go install github.com/fatih/gomodifytags@latest
