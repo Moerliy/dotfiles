@@ -253,7 +253,7 @@ List of keybindings (SPC h b b)")
 (defun i-wanna-be-social ()
   "Connect to IM networks using bitlbee."
   (interactive)
-  (erc :server "localhost" :port 6667 :nick "distrotube" :password "clcaacmm"))
+  (erc :server "localhost" :port 6667 :nick "distrotube" :password ""))
 
 (map! :leader
       (:prefix ("e". "evaluate/ERC/EWW")
