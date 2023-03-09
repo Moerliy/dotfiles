@@ -2,6 +2,11 @@
 #+author: Moritz Gleissner
 #+property: header-args :tangle hyprland.conf
 
+* Forword
+This org document is used as documentation, explanations and config files for my hyprland setup. I recomment using this file to configure your hyprland too, if you deside to build upon this configuration. Using emacs is adviced but if you don't want to do so, you can export the code blocks with [[https://github.com/OrgTangle/ntangle][ntangle]]. Maybe I will add a user script to do so in the future but this will have to do for now.
+
+I also want to mention that this repo was build on [[https://github.com/nawfalmrouyan/hyprland][nawfalmrouyan's]] dotfiles and customised to fit my needs but you shout check out the original, especially if you have any problems getting my config to work.
+
 * Table Of Contents :toc:
 - [[#forword][Forword]]
 - [[#file-variables][File-Variables]]
@@ -25,8 +30,6 @@
 - [[#animations-1][Animations]]
 - [[#dwindle-layout][Dwindle Layout]]
 - [[#master-layout][Master Layout]]
-
-* Forword
 
 * File-Variables
 #+begin_src conf
