@@ -8,7 +8,7 @@
 <img src="https://img.shields.io/github/license/nawfalmrouyan/hyprland?style=for-the-badge&logo=powerpages&color=cba6f7&logoColor=D9E0EE&labelColor=302D41"/>
 </div>
 
-## 🌟 Preview
+## 🌟 Preview test
 
 ![Screenshot_2023-01-18-10-05-20_8586](https://user-images.githubusercontent.com/10271030/213065845-67bbaa4d-f7e0-4ac1-a255-20c3d12d41e9.png)
 

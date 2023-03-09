@@ -1,3 +1,35 @@
+#+title: Hyprland Config
+#+author: Moritz Gleissner
+#+property: header-args :tangle hyprland.conf
+
+* Table Of Contents :toc:
+- [[#forword][Forword]]
+- [[#file-variables][File-Variables]]
+- [[#env-variables][Env-Variables]]
+- [[#base-confic][Base Confic]]
+  - [[#general][General]]
+  - [[#decoration][Decoration]]
+  - [[#animations][Animations]]
+  - [[#input][Input]]
+  - [[#gestures][Gestures]]
+  - [[#misc][Misc]]
+  - [[#binds][Binds]]
+  - [[#debug][Debug]]
+- [[#base-keywords][Base Keywords]]
+  - [[#peripheral-device][Peripheral Device]]
+  - [[#blur-layer-surface][Blur Layer-Surface]]
+- [[#monitor][Monitor]]
+- [[#binds-1][Binds]]
+- [[#dispatchers][Dispatchers]]
+- [[#window-rules][Window Rules]]
+- [[#animations-1][Animations]]
+- [[#dwindle-layout][Dwindle Layout]]
+- [[#master-layout][Master Layout]]
+
+* Forword
+
+* File-Variables
+#+begin_src conf
 source = ~/.config/hypr/mocha.conf
 
 $mainMod = SUPER
@@ -18,7 +50,10 @@ $files = nautilus
 $browser = firefox
 $music = qtws /usr/share/qtws-apps/youtube-music/youtube-music.qtws
 $discord = armcord
+#+end_src
 
+* Env-Variables
+#+begin_src conf
 env = XDG_CURRENT_DESKTOP,Hyprland
 env = XDG_SESSION_DESKTOP,Hyperland
 env = XDG_SESSION_TYPE,wayland
@@ -37,7 +72,11 @@ env = MOZ_DISABLE_RDD_SANDBOX,1
 env = MOZ_ENABLE_WAYLAND,1
 
 # env = HYPRLAND_LOG_WLR=1
+#+end_src
 
+* Base Confic
+** General
+#+begin_src conf
 general {
   gaps_in = 5
   gaps_out = 5
@@ -47,7 +86,10 @@ general {
 
   layout = master
 }
+#+end_src
 
+** Decoration
+#+begin_src conf
 decoration {
   # rounding = 5
   # multisample_edges = true
@@ -73,7 +115,10 @@ decoration {
   dim_special = 0.5
   dim_around = 0.5
 }
+#+end_src
 
+** Animations
+#+begin_src conf
 animations {
   enabled = true
 
@@ -90,7 +135,10 @@ animations {
   animation = workspaces, 1, 6, simple, slide
   animation = specialWorkspace, 1, 6, simple, slidevert
 }
+#+end_src
 
+** Input
+#+begin_src conf
 input {
   kb_layout = de
   # kb_variant = altgr-intl
@@ -108,13 +156,19 @@ input {
 
   # sensitivity = 1.0 # -1.0 - 1.0, 0 means no modification.
 }
+#+end_src
 
+** Gestures
+#+begin_src conf
 gestures {
   workspace_swipe = true
   workspace_swipe_fingers = 3
   workspace_swipe_invert = false
 }
+#+end_src
 
+** Misc
+#+begin_src conf
 misc {
   disable_hyprland_logo = true
   disable_splash_rendering = true
@@ -124,16 +178,26 @@ misc {
   swallow_regex = ^(kitty)$
   focus_on_activate = true
 }
+#+end_src
 
+** Binds
+#+begin_src conf
 binds {
   workspace_back_and_forth = true
 }
+#+end_src
 
+** Debug
+#+begin_src conf
 debug {
   # overlay = true
   # damage_blink = true
 }
+#+end_src
 
+* Base Keywords
+** Peripheral Device
+#+begin_src conf
 device:epic mouse V1 {
   sensitivity = -0.5
 }
@@ -141,15 +205,23 @@ device:epic mouse V1 {
 device:DPB Ferris sweep {
   kb_layout = us
 }
+#+end_src
 
+** Blur Layer-Surface
+#+begin_src conf
 # blurls = waybar
 blurls = gtk-layer-shell
 blurls = lockscreen
-
+#+end_src
+* Monitor
+#+begin_src conf
 monitor = eDP-1, preferred, auto, 1.5
 workspace = eDP-1,1
 monitor = , preferred, auto, 1
+#+end_src
 
+* Binds
+#+begin_src conf
 bind = $mainMod, Return, exec, $term
 bind = $mainMod, W, exec, [workspace 2] MOZ_USE_XINPUT2=1 $browser
 bind = $mainMod SHIFT, W, exec, [workspace 9 silent] whatsapp-nativefier -enable-features=UseOzonePlatform -ozone-platform=wayland
@@ -372,7 +444,10 @@ bind = $mainMod, bracketright, workspace, e+1
 # move
 bind = SHIFTALT, comma, movecurrentworkspacetomonitor, l
 bind = SHIFTALT, period, movecurrentworkspacetomonitor, r
+#+end_src
 
+* Dispatchers
+#+begin_src conf
 # exec-once = /usr/lib/xdg-desktop-portal
 exec-once = nmcli device connect wlan0
 exec-once = swaybg -m fill -i $HOME/.config/hypr/bg/mohamed-chahin-mine-7.jpg
@@ -391,7 +466,10 @@ exec-once = [workspace 8 silent] $discord -enable-features=UseOzonePlatform -ozo
 # exec-once = [workspace 9 silent] whatsapp-nativefier
 exec-once = swayidle -w timeout 900 '$lock' timeout 1800 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on' before-sleep '$lock'
 # exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
+#+end_src
 
+* Window Rules
+#+begin_src conf
 windowrule = float, yad|nm-connection-editor|pavucontrol|Rofi
 windowrule = float, feh|Gimp|qt5ct
 windowrule = fullscreen, neovide
@@ -437,14 +515,23 @@ windowrulev2 = move 380 8, class:^(update)$, title:^(update)$
 windowrulev2 = float, class:^(clock)$, title:^(clock)$
 windowrulev2 = size 33% 27%, class:^(clock)$, title:^(clock)$
 windowrulev2 = center, class:^(clock)$, title:^(clock)$
+#+end_src
 
+* Animations
+
+* Dwindle Layout
+#+begin_src conf
 dwindle {
   pseudotile = true
   preserve_split = true
   special_scale_factor = 0.8
 }
+#+end_src
 
+* Master Layout
+#+begin_src conf
 master {
   new_is_master = false
   special_scale_factor = 0.8
 }
+#+end_src

@@ -2,8 +2,8 @@
 * {
   font-family: Symbols Nerd Font, Iosevka Medium, monospace;
   font-size: 15px;
-  border: none;
-  border-radius: 0;
+  /* border: none; */
+  border-radius: 10px;
   min-height: 0;
 }
 
@@ -30,8 +30,9 @@ window#waybar.hidden {
 }
 
 .modules-center {
-  /* border: 3px solid @lavender; */
+  border: 1.5px solid @overlaystrong;
   margin: 0px 5px;
+  border-radius: 20px;
 }
 
 #idle_inhibitor,

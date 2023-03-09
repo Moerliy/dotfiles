@@ -8,15 +8,39 @@
       "on-scroll-up": "~/.config/hypr/scripts/brightness --inc",
       "on-scroll-down": "~/.config/hypr/scripts/brightness --dec",
       "smooth-scrolling-threshold": 1,
-    },
+  },
 
   "wlr/workspaces": {
-    "format": "{}",
+    "format": "<span font='12' rise='1500'>{icon}</span>",
     "on-click": "activate",
     "all-outputs": true,
     "sort-by-number": true,
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "persistent_workspace": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+      "6": [],
+      "7": [],
+      "8": [],
+      "9": [],
+      "10": []
+    },
+    "format-icons": {
+      "1": "一",
+      "2": "二",
+      "3": "三",
+      "4": "四",
+      "5": "五",
+      "6": "六",
+      "7": "七",
+      "8": "八",
+      "9": "九",
+      "10": "十"
+    }
   },
 
   "battery": {
@@ -30,9 +54,9 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "<span font='11' rise='1000'>{icon}</span> {capacity}",
-    "format-charging": "<span font='11' rise='1000'> </span>{capacity}",
-    "format-plugged": "<span font='10' rise='1300'></span> {capacity}",
+    "format": "<span font='11' rise='1000'>{icon}</span> {capacity}%",
+    "format-charging": "<span font='11' rise='1000'> </span>{capacity}%",
+    "format-plugged": "<span font='10' rise='1300'></span> {capacity}%",
     "format-full": "<span font='11' rise='500'>{icon}</span>",
     "format-alt": "<span font='11' rise='1000'>{icon}</span> {time}",
     "format-icons": ["", "", "", "", ""],
@@ -84,7 +108,7 @@
 
   "network": {
     "interval": 5,
-    "format-wifi": "<span font='10' rise='2000'></span> {signalStrength}%",
+    "format-wifi": "<span font='10' rise='2000'></span> {signalStrength}",
     "format-ethernet": "<span font='11' rise='1000'></span> {ipaddr}/{cidr}",
     "format-linked": "<span font='11' rise='1000'></span> {ifname} (No IP)",
     "format-disconnected": "<span font='11' rise='1000'>睊</span> Disconnected",
@@ -177,7 +201,7 @@
       "activated": "<span color='#f38ba8'></span>",
       "deactivated": ""
     },
-    /* "timeout": 30.5 */
+     /* "timeout": 0.5 */
   },
 
   "custom/waybar-mpris": {
