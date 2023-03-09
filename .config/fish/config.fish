@@ -54,6 +54,11 @@ alias doom="$HOME/.emacs.d/bin/doom"
 alias emt="emacsclient -t -a ''"
 alias em="emacsclient -c -a emacs"
 
+# Vim
+alias vim='nvim'
+alias vi='nvim'
+alias v='nvim'
+
 # confirm before overwriting something
 alias cp="cp -i"
 alias mv='mv -i'
