@@ -219,4 +219,10 @@
     "on-scroll-down": "waybar-mpris --send prev",
     "escape": true,
   },
+
+  "hyprland/submap": {
+    "format": "{}",
+    "max-length": 12,
+    "tooltip": false
+  }
 }
