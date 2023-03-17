@@ -7,6 +7,9 @@
   - [[#base][BASE]]
   - [[#aur][AUR]]
   - [[#stpecials][stpecials]]
+- [[#arch-fresh-setup][Arch fresh setup]]
+  - [[#1-install-arch][1. Install Arch]]
+  - [[#2-hyprland][2. Hyprland]]
 
 * PAGAGES
 This contains all the packages needed for the dotfiles
@@ -91,3 +94,20 @@ go install golang.org/x/tools/cmd/gorename@latest
 go install golang.org/x/tools/cmd/guru@latest
 go install github.com/cweill/gotests/gotests@latest
 go install github.com/fatih/gomodifytags@latest
+
+* Arch fresh setup
+** 1. Install Arch
+Follow [[https://wiki.archlinux.org/title/Installation_guide][Arch Wiki]] and install [[https://github.com/Jguer/yay][yay]]
+** 2. Hyprland
+*** Yay installs
++ hyprland-git
++ kitty
++ sddm (and enable with systemctl)
++ mako
++ pipewire
++ wireplumber
++ xdg-desktop-portal-hyprland-git
++ qt6-wayland
++ qt5-wayland
++ polkit-kde-agent
++

@@ -21,7 +21,7 @@ COLOR=( --tf "#cba6f7" --tb "#313244" --nf "#c6d0f5" --nb "#313244" --af "#c6d0f
 
 # If "BROWSER" unset globally, set locally.
 [ -n "$BROWSER" ] || BROWSER="firefox -new-window"
-[ -n "$TERMINAL" ] || TERMINAL="kitty"
+[ -n "$TERMINAL" ] || TERMINAL="alacritty"
 
 case $1 in
 

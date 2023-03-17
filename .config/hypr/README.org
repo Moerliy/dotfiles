@@ -64,25 +64,56 @@ cp -r .config/hypr ~/.config/hypr
 #+end_src
 
 ** 2. Packages
+*** Base Hyprland
 + [[https://wiki.hyprland.org/Getting-Started/Installation/][hyprland]] in my case with the legacy renderer
 + [[https://github.com/emersion/mako][mako]] for notification
++ [[https://github.com/PipeWire/pipewire][pipewire]] for screen sharing
++ [[https://github.com/PipeWire/wireplumber][wireplumber]] for screen sharing
++ [[https://github.com/hyprwm/xdg-desktop-portal-hyprland][xdg-desktop-portal-hyprland]] frontend service for Flatpak and possibly other desktop containment frameworks
++ [[https://github.com/freedesktop/polkit][polkit]] authentication agent (kde version) [needs change in config files]
++ [[https://github.com/qt/qtwayland][qt5-wayland]]
++ [[https://github.com/qt/qtwayland][qt6-wayland]]
+*** Login Manager (use one)
++ [[https://github.com/sddm/sddm][sddm]] (and enable with systemctl)
+*** Status Bar (use one)
 + [[https://github.com/Alexays/Waybar][waybar]] in my case the hyprland-git version
+*** Terminal (use one)
++ [[https://github.com/alacritty/alacritty][alacritty]] terminal (config not in hypr module)
++ [[https://github.com/kovidgoyal/kitty][kitty]] (not working on my setup)
+*** Themes
++ [[https://github.com/desktop-app/qt5ct][qt5ct]] qt5 configure
++ [[https://github.com/lxde/lxappearance][lxappearance]] (conig?)
++ [[https://github.com/catppuccin/catppuccin][catppuccin-mocha]] gtk theme
+*** Used utility
++ [[https://github.com/mozilla/?q=firefox&type=all&language=&sort=stargazers][firefox]] browser
++ [[https://github.com/discord][discord]] messenger service
++ [[https://github.com/th-ch/youtube-music][youtubemusic]] music player
++ [[https://github.com/nextcloud][nextcloud]] file sync (not working)
++ [[https://github.com/GNOME/nautilus][nautilus]] file viewer
++ [[https://github.com/electron/electron][electorn]]
++ emacs (doom) custom IDE
+*** Custom Scripts
 + [[https://github.com/ArtsyMacaw/wlogout][wlogout]] as a logout manager
 + [[https://github.com/swaywm/swayidle][swayidle]] as a idle daemon
 + [[https://github.com/mortie/swaylock-effects][swaylock]] for lockscreen (config not in hypr module)
 + [[https://github.com/uncomfyhalomacro/wofi][wofi]] menu
 + [[https://github.com/cdemoulins/pamixer][pamaixer]] audiomixer
-+ [[https://github.com/freedesktop/polkit][polkit]] authentication agent (gnome version)
++ [[https://github.com/altdesktop/playerctl][playerctl]] audiocontrol
 + [[https://github.com/emersion/slurp][slurp]] region selector for wayland
++ [[https://github.com/GrimAnticheat/Grim][grim]] screenshot utility
++ [[https://github.com/stedolan/jq][jq]] json utility to parse hyprctl
 + [[https://github.com/swaywm/swaybg][swaybg]] wallpaper utility
 + [[https://github.com/ammen99/wf-recorder][wf-recorder]] screen recorder
 + [[https://github.com/bugaevc/wl-clipboard][wl-clipboard]] clipboard
++ [[https://github.com/hluk/CopyQ][copyq]] advanced clipboard
 + [[https://gitlab.freedesktop.org/wlroots/wlroots][wlroots]] Pluggable, composable, unopinionated modules for building a Wayland compositor
 + [[https://github.com/haikarainen/light][light]] for backlight control
-+ [[https://github.com/flatpak/xdg-desktop-portal][xdg-desktop-portal]] frontend service for Flatpak and possibly other desktop containment frameworks
 + [[https://archlinux.org/packages/extra/x86_64/xorg-xwayland/][xorg-xwayland]]
 + [[https://github.com/v1cont/yad][yad]] display GTK+ in terminal
-+ [[https://github.com/alacritty/alacritty][alacritty]] terminal (config not in hypr module)
++ [[https://github.com/hellosiyan/Viewnior][viewnior]] for screenshot
++ [[https://github.com/mpv-player/mpv][mpv]] cl-musicplayer
++ [[https://github.com/Cloudef/bemenu][bemenu]] (wayland version)
+
 
 #+begin_src bash :tangle no
 yay -Syu hyprland-legacyrenderer-git mako waybar-hyprland-git wlogout swayidle swaylock-effects wofi pamixer polkit-gnome slurp swaybg wf-recorder wl-clipboard wlroots light xdg-desktop-portal xorg-xwayland yad
@@ -97,7 +128,7 @@ $localBin = $HOME/.local/bin
 $scriptsDir = $HOME/.config/hypr/scripts
 
 $term = alacritty
-$menu = $HOME/.cargo/bin/anyrun     # not working
+$menu = $scriptsDir/menu
 $powermenu = $scriptsDir/powermenu  # redundant because of wlogout and never used
 $volume = $scriptsDir/volume
 $backlight = $scriptsDir/brightness
@@ -110,7 +141,7 @@ $wofi_beats = $scriptsDir/wofi-beats
 $files = nautilus
 $browser = firefox
 $electron_flags = -enable-features=UseOzonePlatform -ozone-platform=wayland
-$music = qtws /usr/share/qtws-apps/youtube-music/youtube-music.qtws
+$music = youtubemusic
 $discord = armcord
 #+end_src
 
@@ -123,6 +154,7 @@ env = XDG_SESSION_TYPE,wayland
 env = QT_QPA_PLATFORMTHEME,qt5ct
 env = QT_QPA_PLATFORM,"wayland;xcb"
 env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
+env = QT_PLUGIN_PATH,/usr/lib/qt/plugins/
 
 env = SDL_VIDEODRIVER,wayland
 env = _JAVA_AWT_WM_NONREPARENTING,1
@@ -132,6 +164,10 @@ env = XCURSOR_SIZE,24
 
 env = MOZ_DISABLE_RDD_SANDBOX,1
 env = MOZ_ENABLE_WAYLAND,1
+
+env = GTK_IM_MODULE,ibus
+env = QT_IM_MODULE,ibus
+env = XMODIFIERS,@im=ibus
 
 # env = HYPRLAND_LOG_WLR=1
 #+end_src
@@ -145,6 +181,9 @@ general {
   border_size = 3
   col.active_border = $mauve $blue 45deg
   col.inactive_border = $overlay0
+  cursor_inactive_timeout = 5
+  resize_on_border = true
+  hover_icon_on_border = true
 
   layout = master
 }
@@ -153,23 +192,22 @@ general {
 ** Decoration
 #+begin_src conf
 decoration {
-  # rounding = 5
-  # multisample_edges = true
-  blur = true
-  blur_size = 3
-  blur_passes = 3
-  blur_new_optimizations = on
-
+  rounding = 5
+  multisample_edges = true
   active_opacity = 1.0
   # inactive_opacity = 0.9
   fullscreen_opacity = 1.0
+  blur = false
+  blur_size = 3
+  blur_passes = 3
+  blur_new_optimizations = on
 
   # set drop_shadow = true to enable
   drop_shadow = true
   shadow_ignore_window = true
   shadow_offset = 7 7
-  shadow_range = 16
-  shadow_render_power = 3
+  shadow_range = 5
+  shadow_render_power = 2
   col.shadow = rgba(00000077)
 
   dim_inactive = false
@@ -191,8 +229,8 @@ animations {
   bezier = smoothOut, 0.36, 0, 0.66, -0.56
   bezier = smoothIn, 0.25, 1, 0.5, 1
 
-  animation = windows, 1, 5, simple, slide
-  animation = windowsOut, 1, 4, simple, slide
+  animation = windows, 1, 5, overshot, popin
+  animation = windowsOut, 1, 4, tehtarik, slide
   animation = fade, 1, 10, simple
   animation = workspaces, 1, 6, simple, slide
   animation = specialWorkspace, 1, 6, simple, slidevert
@@ -202,21 +240,20 @@ animations {
 ** Input
 #+begin_src conf
 input {
-  kb_layout = de
+  kb_layout = de,us
   # kb_variant = altgr-intl
-  kb_options = compose:menu,level3:ralt_switch
-
+  sensitivity = 0.3
+  accel_profile = flat
   follow_mouse = 1
   numlock_by_default = true
 
   touchpad {
+    scroll_factor = 0.2
     natural_scroll = false
     tap-to-click = false
     drag_lock = true
     disable_while_typing = true
   }
-
-  # sensitivity = 1.0 # -1.0 - 1.0, 0 means no modification.
 }
 #+end_src
 
@@ -237,7 +274,7 @@ misc {
   mouse_move_enables_dpms = true
   no_direct_scanout = true #for fullscreen games
   enable_swallow = true
-  swallow_regex = ^(kitty)$
+  swallow_regex = ^(alacritty)$
   focus_on_activate = true
 }
 #+end_src
@@ -314,7 +351,7 @@ bind = , D, exec, $discord $electron_flags
 bind = , D, submap, reset
 bind = , C, exec, $scriptsDir/menu
 bind = , C, submap, reset
-bind = , M, exec, $music
+bind = , M, exec, $music $electron_flags
 bind = , M, submap, reset
 
 submap = reset
@@ -438,7 +475,7 @@ submap = reset
 #+begin_src conf
 bind = $mainMod, Q, killactive,
 bind = $mainMod SHIFT, Q, exit,
-bind = $mainMod, C, exec, $scriptsDir/menu
+bind = $mainMod, C, exec, $menu
 bind = $mainMod, Return, exec, $term
 bind = $mainMod, W, exec, [workspace 2] MOZ_USE_XINPUT2=1 $browser
 bind = $mainMod SHIFT, E, exec, $files      # rethink binds
@@ -447,6 +484,7 @@ bind = $mainMod SHIFT, D, exec, $discord $electron_flags
 bind = $mainMod SHIFT, L, exec, $lock
 bind = $mainMod, Escape, exec, $logout
 bindr = $mainMod SHIFT, C, exec, pkill bemenu || $scriptsDir/bemenu_input -l    # terminal command without terminal
+bind = $mainMod, Y, exec, $music      # rethink binds
 
 # Night mode (blue filter)
 bind = $mainMod, T, exec, hyprctl keyword decoration:screen_shader $scriptsDir/flux.glsl
@@ -544,8 +582,6 @@ bind = $mainMod, tab, changegroupactive
 
 ** Not Working
 #+begin_src conf
-bind = $mainMod, R, exec, $menu     # not working
-bind = $mainMod, Y, exec, $music    # not working
 bindr = $mainMod SHIFT, Y, exec, pkill wofi || $wofi_beats  # not working
 #+end_src
 
@@ -555,7 +591,7 @@ exec-once = nmcli device connect wlan0
 exec-once = swaybg -m fill -i $HOME/.config/hypr/bg/mohamed-chahin-mine-7.jpg
 exec-once = $scriptsDir/startup
 exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec-once = dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec-once = dbus-update-activation-environment --systemd DISPLAY SWAYSOCK WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec-once = [workspace 1 silent] $term
 exec-once = $scriptsDir/portal
@@ -564,6 +600,7 @@ exec-once = [workspace 2 silent] $browser
 exec-once = [workspace 8 silent] $discord -enable-features=UseOzonePlatform -ozone-platform=wayland
 # exec-once = swayidle -w timeout 900 '$lock' timeout 1800 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on' before-sleep '$lock'
 exec-once = swayidle -w timeout 900 '$lock'
+exec-once = ibus-daemon -rxR
 #+end_src
 
 * Window Rules

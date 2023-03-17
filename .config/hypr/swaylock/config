@@ -4,11 +4,11 @@ font=Work Sans
 clock
 timestr=%R
 
-image=~/.config/hypr/wallpapers/tree.jpg
+image=~/.config/hypr/bg/swaylock-bg.jpg
 
 fade-in=0.2
 
-effect-blur=95x2
+# effect-blur=95x2
 
 indicator
 indicator-radius=150
