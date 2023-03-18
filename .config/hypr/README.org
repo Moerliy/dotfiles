@@ -50,10 +50,10 @@ I also want to mention that this repo was build on [[https://github.com/nawfalmr
 
 * Installation
 As mentioned in [[Forword]] the packages for this repo where chosen for Aarch64 so in some cases these are worse alternative's then there x86_64 counterpart.
-I recommend using all the dotfiles together but it is possible to just use Hyprland with some additional personal changes.
+I recommend using all the [[../../][dotfiles]] together but it is possible to just use Hyprland with some additional personal changes.
 
 ** 1. Clone
-If you don't have existing dofiles you can clone my hole repository (for that you should have a look at my README in my dotfile directory) or just Hyprland:
+If you don't have existing dofiles you can clone my hole repository (for that you should have a look at my [[../../README.org][README]] in my dotfile directory) or just Hyprland:
 #+begin_src bash :tangle no
 git clone --no-checkout https://gitlab.gleissner.com/Moritz/dotfiles.git
 cd dotfiles
