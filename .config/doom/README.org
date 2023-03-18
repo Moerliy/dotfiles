@@ -1,0 +1,4 @@
+#+title: Doom Emacs README
+#+author: Moritz Gleissner
+
+* This README is substitute by the Doom Emacs [[./config.org][config.org]]

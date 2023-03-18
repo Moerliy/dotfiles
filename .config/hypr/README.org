@@ -3,8 +3,8 @@
 #+property: header-args :tangle hyprland.conf
 
 * Forword
-This org document is used as documentation, explanations and config files for my hyprland setup. I recommend using this file to configure your hyprland too, if you decide to build upon this configuration. Using emacs is adviced but if you don't want to do so, you can export the code blocks with [[https://github.com/OrgTangle/ntangle][ntangle]]. Maybe I will add a user script to do so in the future but this will have to do for now.
-The philosophy of my repo is "have everything in the same module where you need it", so many of the configuration files that are needed for my hyprland setup are in the hyprland directory itself. This has some pros and cons.
+This org document is used as documentation, explanations and config files for my Hyprland setup. I recommend using this file to configure your Hyprland too, if you decide to build upon this configuration. Using Emacs is adviced but if you don't want to do so, you can export the code blocks with [[https://github.com/OrgTangle/ntangle][ntangle]]. Maybe I will add a user script to do so in the future but this will have to do for now.
+The philosophy of my repo is "have everything in the same module where you need it", so many of the configuration files that are needed for my Hyprland setup are in the Hyprland directory itself. This has some pros and cons.
 I should mention that most of the programs that require configuration files need to be initialized with the path to sad config and that is where most of the custom scriptscome into play.
 
 I use Arch on an M1 mac btw so you should have a good look at the required packages and maybe substitute some of them for there better counterpart, but as far as I'm convinced all of the packages that are being used, none of them isn't capable of running on x86_64 architecture.
@@ -50,10 +50,10 @@ I also want to mention that this repo was build on [[https://github.com/nawfalmr
 
 * Installation
 As mentioned in [[Forword]] the packages for this repo where chosen for Aarch64 so in some cases these are worse alternative's then there x86_64 counterpart.
-I recommend using all the dotfiles together but it is possible to just use hyprland with some additional personal changes.
+I recommend using all the dotfiles together but it is possible to just use Hyprland with some additional personal changes.
 
 ** 1. Clone
-If you don't have existing dofiles you can clone my hole repository (for that you should have a look at my README in my dotfile directory) or just hyprland:
+If you don't have existing dofiles you can clone my hole repository (for that you should have a look at my README in my dotfile directory) or just Hyprland:
 #+begin_src bash :tangle no
 git clone --no-checkout https://gitlab.gleissner.com/Moritz/dotfiles.git
 cd dotfiles
@@ -93,6 +93,7 @@ cp -r .config/hypr ~/.config/hypr
 + [[https://github.com/electron/electron][electorn]]
 + emacs (doom) custom IDE
 *** Custom Scripts
+Programs that are used in scripts will interact most likely with hyprland or other programs that are run inside this config. For that mather there configs will be stored inside the hypr directory and not at there usual place.
 + [[https://github.com/ArtsyMacaw/wlogout][wlogout]] as a logout manager
 + [[https://github.com/swaywm/swayidle][swayidle]] as a idle daemon
 + [[https://github.com/mortie/swaylock-effects][swaylock]] for lockscreen (config not in hypr module)

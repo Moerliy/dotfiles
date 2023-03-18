@@ -68,7 +68,6 @@ AUR packlages that can be downloaded witb yay
 - cmake-language-server
 - proselint
 - ktlint
-- grip
 - shellcheck-bin
 - js-beautify
 
@@ -83,11 +82,13 @@ AUR packlages that can be downloaded witb yay
   pip install pyflakes
   pip install isort
   pip install python-language-server[all]
+  pip install grip
   rustup component add rustfmt-preview
   rustup component add clippy-preview
   cargo install cargo-check
 go install github.com/x-motemen/gore/cmd/gore@latest
-go install github.com/stamblerre/gocode@latest
+go install github.com/stamblerre/gocode@latest (substitute with gopls)
+go install golang.org/x/tools/gopls@latest
 go install golang.org/x/tools/cmd/godoc@latest
 go install golang.org/x/tools/cmd/goimports@latest
 go install golang.org/x/tools/cmd/gorename@latest
@@ -110,4 +111,3 @@ Follow [[https://wiki.archlinux.org/title/Installation_guide][Arch Wiki]] and in
 + qt6-wayland
 + qt5-wayland
 + polkit-kde-agent
-+

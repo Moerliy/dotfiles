@@ -1,10 +1,19 @@
-#+TITLE: DT's Doom Emacs Config
-#+AUTHOR: Derek Taylor (DT)
-#+DESCRIPTION: DT's personal Doom Emacs config.
-#+STARTUP: showeverything
+#+title: Doom Emacs Config
+#+author: Moritz Gleissner
+#+property: header-args :tangle config.el
 
-* TABLE OF CONTENTS :toc:
-- [[#about-this-config][ABOUT THIS CONFIG]]
+* Forword
+This org document is used as documentation, explanations and config files for my [[https://github.com/doomemacs/doomemacs][Doom Emacs]] setup. I recommend using this file to configure your Doom Emacs too, if you decide to build upon this configuration. Using Emacs's [[https://github.com/topics/org-mode][Org-Mode]] is adviced but if you don't want to do so, you can export the code blocks with [[https://github.com/OrgTangle/ntangle][ntangle]]. Maybe I will add a user script to do so in the future but this will have to do for now.
+
+I use Arch on an M1 mac btw so you should have a good look at the required packages and maybe substitute some of them for there better counterpart, but as far as I'm convinced all of the packages that are being used, none of them isn't capable of running on x86_64 architecture.
+
+I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dotfiles/-/tree/master/.config/doom][Derek Taylor]] dotfiles and customized to fit my needs but you shout check out the original, especially if you have any problems getting my config to work.
+
+* Table Of Content :toc:
+- [[#forword][Forword]]
+- [[#installation][Installation]]
+  - [[#1-clone][1. Clone]]
+  - [[#2-packages][2. Packages]]
 - [[#beacon][BEACON]]
 - [[#bookmarks-and-buffers][BOOKMARKS AND BUFFERS]]
   - [[#bookmarks][Bookmarks]]
@@ -62,8 +71,109 @@
   - [[#documenetation][Documenetation]]
 - [[#copitlot][Copitlot]]
 
-* ABOUT THIS CONFIG
-This is my personal Doom Emacs config.  Doom Emacs is a distribution of Emacs that uses the "evil" keybindings (Vim keybindings) and includes a number of nice extensions and a bit of configuration out of the box.  I am maintaining this config not just for myself, but also for those that want to explore some of what is possible with Emacs.  I will add a lot of examples of plugins and settings, some of them I may not even use personally.  I do this because many people following me on YouTube look at my configs as "documentation".
+* Installation
+As mentioned in [[Forword]] the packages for this repo where chosen for Aarch64 so in some cases these are worse alternative's then there x86_64 counterpart.
+I recommend using all the dotfiles together but it is possible to just use Doom Emacs with some additional personal changes.
+
+** 1. Clone
+If you don't have existing dofiles you can clone my hole repository (for that you should have a look at my README in my dotfile directory) or just Doome Emacs:
+#+begin_src bash :tangle no
+git clone --no-checkout https://gitlab.gleissner.com/Moritz/dotfiles.git
+cd dotfiles
+git sparse-checkout init --cone
+git sparse-checkout set .config/doom
+git checkout origin/master
+cp -r .config/doom ~/.config/doom
+#+end_src
+
+** 2. Packages
+*** Packman Installs
++ [[https://github.com/TragicWarrior/libvterm][libvterm]] terminal emulator library
++ [[https://github.com/languagetool-org/languagetool][languagetool]] Open Source proofreading software
++ [[https://github.com/nodejs/node][nodejs]] JavaScript runtime environment
++ [[https://github.com/npm/cli][npm]] JavaScript package manager
++ [[https://github.com/yarnpkg][yarn]] JavaScript package manager
++ [[https://archlinux.org/packages/extra/x86_64/lldb/][lldb]] debugger
++ [[https://archlinux.org/packages/extra/x86_64/gdb/][gdb]] GNU debugger
++ [[https://archlinux.org/packages/extra/x86_64/unzip/][unzip]] extracting and viewing files in .zip archives
++ [[https://archlinux.org/packages/community/x86_64/docker/][docker]] lightweight container
++ [[https://archlinux.org/packages/community/x86_64/docker-compose/][docker-compose]] development environments using Docker
++ [[https://github.com/docker/machine][docker-machine]] Machine management for a container-centric world
++ [[https://github.com/editorconfig-checker/editorconfig-checker][editorconfig-checker]] A tool to verify that your files are in harmony with your .editorconfig
++ [[https://archlinux.org/packages/core/x86_64/sqlite/][sqlite]] A C library that implements an SQL database engine
++ [[https://github.com/BurntSushi/ripgrep][ripgreb]] searches the current directory for a regex pattern
++ [[https://archlinux.org/packages/extra/x86_64/git/][git]] version control system
++ [[https://github.com/bugaevc/wl-clipboard][wl-clipboard]] clipboard utilities
++ [[https://github.com/microsoft/clang][clang]] compiler front-end for the C family of languages
++ [[https://github.com/MaskRay/ccls][ccls]] C/C++/Objective-C language server
++ [[https://github.com/golang/go][go]] open source programming language
++ [[https://github.com/golang/tools/tree/master/gopls][gopls]] Go language server
++ [[https://archlinux.org/packages/extra/x86_64/jdk11-openjdk/][jdk11-openjdk]] OpenJDK Java 11 development kit
++ [[https://archlinux.org/packages/extra/any/texlive-core/][texlive-core]] TeX Live core distribution
++ [[https://archlinux.org/packages/extra/x86_64/texlive-bin/][texlive-bin]] TeX Live binaries
++ [[https://archlinux.org/packages/extra/any/texlive-science/][texlive-science]] TeX Live - Typesetting for mathematics, natural and computer sciences
++ [[https://archlinux.org/packages/extra/any/texlive-latexextra/][texlive-latexextra]] TeX Live - Large collection of add-on packages for LaTeX
++ [[https://github.com/gnuplot/gnuplot][gnuplot]] Plotting Utility
++ [[https://github.com/markedjs/marked][marked]] markdown parser
++ [[https://github.com/pypa/pip][pip]] package installer for Python
++ [[https://github.com/microsoft/pyright][pyright]] Static Type Checker for Python
++ [[https://github.com/rubocop/rubocop][rubocop]] Ruby static code analyzer
++ [[https://github.com/rust-lang/rustup][rustup]] Rust toolchain installer
++ [[https://github.com/MusicPlayerDaemon/MPD][mpd]] Music Player Daemon
++ [[https://archlinux.org/packages/extra/x86_64/mpc/][mpc]] Minimalist command line interface to MPD
++ [[https://github.com/naelstrof/maim][maim]] utility that takes screenshots
++ [[https://github.com/dreamer/scrot][scrot]] screen capture utility (only X11)
++ [[https://github.com/GNOME/gnome-screenshot][gnome-screenshot]] Screenshot utility
++ [[https://github.com/rust-lang/rust-analyzer][rust-analyzer]] modular compiler frontend for the Rust language
++ [[https://archlinux.org/packages/extra/x86_64/tidy/][tidy]] tidy down HTML code
++ [[https://github.com/stylelint/stylelint][stylelint]] CSS linter
++ [[https://archlinux.org/packages/community/any/python-pipenv/][python-pipenv]] Sacred Marriage of Pipfile, Pip, & Virtualenv
++ [[https://github.com/curl/curl][curl]] transferring data specified with URL syntax
++ [[https://archlinux.org/packages/core/x86_64/gcc/][gcc]] GNU Compiler Collection - C and C++ frontends
++ [[https://archlinux.org/packages/core/x86_64/make/][make]] GNU make utility to maintain groups of programs
++ [[https://github.com/mirror/ncurses][ncurses]] System V Release 4.0 curses emulation library
++ [[https://archlinux.org/packages/core/any/man-pages/][man-pages]] Linux man pages
++ [[https://github.com/freedesktop/xdg-utils][xdg-utils]] Command line tools that assist applications with a variety of desktop integration tasks
+
+*** Yay Installs
++ [[https://github.com/rcjsuen/dockerfile-language-server-nodejs][nodejs-dockerfile-language-server]] language server for Dockerfiles powered by Node.js
++ [[https://aur.archlinux.org/packages/wordnet-cli][wordnet-cli]] A CLI fontend for the WordNet Database
++ [[https://github.com/regen100/cmake-language-server][cmake-language-server]] CMake LSP Implementation.
++ [[https://github.com/amperser/proselint][proselint]] A linter for prose
++ [[https://github.com/pinterest/ktlint][ktlint]] Kotlin linter
++ [[https://aur.archlinux.org/packages/shellcheck-bin][shellcheck-bin]] Shell script analysis tool
++ [[https://aur.archlinux.org/packages/js-beautify][js-beautify]] CSS, HTML & JavaScript unobfuscator and beautifier
+
+*** Pip Installs
++ [[https://github.com/pytest-dev/pytest][pytest]] write small tests
++ [[https://github.com/nose-devs/nose][nose]] loading and running features of unittest
++ [[https://github.com/psf/black][black]] Python code formatter
++ [[https://github.com/PyCQA/pyflakes][pyflakes]] checks Python source files for errors
++ [[https://github.com/PyCQA/isort][isort]] isort is a Python utility / library to sort imports alphabetically
++ [[https://github.com/palantir/python-language-server][python-language-server]] Python LSP
++ [[https://github.com/joeyespo/grip][grip]] render a local readme file
+
+*** Ghcup Installs (requires ghcup)
++ [[https://github.com/ghc/ghc][ghc]] Haskell Compiler
++ [[https://github.com/haskell/cabal][cabal]] building and packaging Haskell libraries and programs
++ [[https://github.com/haskell/haskell-language-server][hls]] Haskell language server
+
+*** Rustup Installs
++ [[https://github.com/rust-lang/rustfmt][rustfmt-preview]] formatting Rust code according to style guidelines
++ [[https://github.com/rust-lang/rust-clippy][clippy-preview]] collection of lints to catch common mistakes
+
+*** Cargo Installs
++ [[https://github.com/rust-lang/cargo][cargo-check]]
+
+*** Go Installs
++ [[https://github.com/x-motemen/gore][gore]] Go REPL
++ [[https://github.com/golang/tools/blob/master/gopls/README.md][gopls]] Go language server
++ [[https://github.com/golang/tools/tree/master/godoc][godoc]] directory contains most of the code for running a godoc server
++ [[https://pkg.go.dev/golang.org/x/tools/cmd/goimports][goimports]] Go import lines, adding missing ones and removing unreferenced ones
++ [[https://github.com/alvarolm/GoRename][gorename]] gorename command performs precise type-safe renaming of identifiers in Go source code
++ [[https://github.com/alvarolm/GoGuru][guru]] answering questions about Go source code
++ [[https://pkg.go.dev/github.com/cweill/gotests][gotests]] Go tests
++ [[https://pkg.go.dev/github.com/fatih/gomodifytags][gomodifytags]] Go tool to modify/update field tags
 
 * BEACON
 Never lose your cursor.  When you scroll, your cursor will shine!  This is a global minor-mode. Turn it on everywhere with:
