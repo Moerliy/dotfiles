@@ -64,6 +64,14 @@ cp -r .config/hypr ~/.config/hypr
 #+end_src
 
 ** 2. Packages
+This will import all the packages listed below:
+
+#+begin_src bash :tangle packages.sh
+#!/bin/bash
+
+yay -Syu --needed hyprland-legacyrenderer-git make pipewire wireplumber xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox armcord-bin youtubemusic nextcloud-client nautilus electron20-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swaybg wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git
+#+end_src
+
 *** Base Hyprland
 + [[https://wiki.hyprland.org/Getting-Started/Installation/][hyprland]] in my case with the legacy renderer
 + [[https://github.com/emersion/mako][mako]] for notification
@@ -114,11 +122,7 @@ Programs that are used in scripts will interact most likely with hyprland or oth
 + [[https://github.com/hellosiyan/Viewnior][viewnior]] for screenshot
 + [[https://github.com/mpv-player/mpv][mpv]] cl-musicplayer
 + [[https://github.com/Cloudef/bemenu][bemenu]] (wayland version)
-
-
-#+begin_src bash :tangle no
-yay -Syu hyprland-legacyrenderer-git mako waybar-hyprland-git wlogout swayidle swaylock-effects wofi pamixer polkit-gnome slurp swaybg wf-recorder wl-clipboard wlroots light xdg-desktop-portal xorg-xwayland yad
-#+end_src
++ [[https://github.com/hyprwm/hyprpicker][hyprpicker]] wlroots-compatible Wayland color picker
 
 * File-Variables
 #+begin_src conf

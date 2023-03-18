@@ -87,6 +87,14 @@ cp -r .config/doom ~/.config/doom
 #+end_src
 
 ** 2. Packages
+This download all the imports down below:
+
+#+begin_src bash :tangle install-packages.sh
+#!/bin/bash
+
+yay -Syu --needed libvterm languagetool nodejs npm yarn lldb gdb unzip docker docker-compose docker-machine editorconfig-checker sqlite ripgrep git wl-clipboard clang ccls go gopls jdk11-openjdk texlive-bin texlive-core texlive-latexextra texlive-science gnuplot marked python pyright rubocop rustup mpd mpc maim scrot gnome-screenshot rust-analyzer tidy stylelint python-pipenv curl gcc make ncurses man-pages xdg-utils nodejs-dockerfile-language-server wordnet-cli cmake-language-server proselint ktlint shellcheck-bin js-beautify
+#+end_src
+
 *** Packman Installs
 + [[https://github.com/TragicWarrior/libvterm][libvterm]] terminal emulator library
 + [[https://github.com/languagetool-org/languagetool][languagetool]] Open Source proofreading software
