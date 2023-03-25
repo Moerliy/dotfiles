@@ -1556,6 +1556,7 @@ Annoying syntax checking that will make you want to pull your hair out, but you 
 Copilot.el is an Emacs plugin for GitHub Copilot.
 
 =Warning=: This plugin is unofficial and based on binaries provided by [[https://github.com/github/copilot.vim][copilot.vim]].
+
 =Note=: You need access to [[https://github.com/features/copilot][GitHub Copilot]] to use this plugin.
 
 #+BEGIN_SRC emacs-lisp
