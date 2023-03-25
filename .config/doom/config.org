@@ -23,9 +23,6 @@ I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dot
 - [[#calendar][CALENDAR]]
 - [[#centaur-tabs][CENTAUR-TABS]]
 - [[#clippy][CLIPPY]]
-- [[#dashboard][DASHBOARD]]
-  - [[#configuring-dashboard][Configuring Dashboard]]
-  - [[#dashboard-in-emacsclient][Dashboard in Emacsclient]]
 - [[#dired][DIRED]]
   - [[#keybindings-to-open-dired][Keybindings To Open Dired]]
   - [[#keybindings-within-dired][Keybindings Within Dired]]
@@ -63,6 +60,7 @@ I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dot
 - [[#registers][REGISTERS]]
 - [[#shells][SHELLS]]
 - [[#splits][SPLITS]]
+- [[#start-page][Start Page]]
 - [[#winner-mode][WINNER MODE]]
 - [[#zap-to-char][ZAP TO CHAR]]
 - [[#flyspell-users][Flyspell users]]
@@ -70,6 +68,7 @@ I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dot
 - [[#flycheck][Flycheck]]
   - [[#documenetation][Documenetation]]
 - [[#copitlot][Copitlot]]
+- [[#fix][Fix?]]
 
 * Installation
 As mentioned in [[Forword]] the packages for this repo where chosen for Aarch64 so in some cases these are worse alternative's then there x86_64 counterpart.
@@ -365,42 +364,6 @@ Gives us a popup box with "Clippy, the paper clip". You can make him say various
        :desc "Clippy describes function under point" "f" #'clippy-describe-function
        :desc "Clippy describes variable under point" "v" #'clippy-describe-variable))
 
-#+end_src
-
-* DASHBOARD
-Emacs Dashboard is an extensible startup screen showing you recent files, bookmarks, agenda items and an Emacs banner.
-
-** Configuring Dashboard
-#+begin_src emacs-lisp
-(use-package dashboard
-  :init      ;; tweak dashboard config before loading it
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-banner-logo-title "\nKEYBINDINGS:\
-\nFind file               (SPC .)     \
-Open buffer list    (SPC b i)\
-\nFind recent files       (SPC f r)   \
-Open the eshell     (SPC e s)\
-\nOpen dired file manager (SPC d d)   \
-List of keybindings (SPC h b b)")
-  ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
-  (setq dashboard-startup-banner "~/.config/doom/doom-emacs-dash.png")  ;; use custom image as banner
-  (setq dashboard-center-content nil) ;; set to 't' for centered content
-  (setq dashboard-items '((recents . 5)
-                          (agenda . 5 )
-                          (bookmarks . 5)
-                          (projects . 5)
-                          (registers . 5)))
-  :config
-  (dashboard-setup-startup-hook)
-  (dashboard-modify-heading-icons '((recents . "file-text")
-                                    (bookmarks . "book"))))
-#+end_src
-
-** Dashboard in Emacsclient
-This setting ensures that emacsclient always opens on *dashboard* rather than *scratch*.
-#+begin_src emacs-lisp
-(setq doom-fallback-buffer-name "*dashboard*")
 #+end_src
 
 * DIRED
@@ -1326,7 +1289,7 @@ Settings for the various shells and terminal emulators within Emacs.
 + 'eshell-aliases-file' -- sets an aliases file for the eshell.
 
 #+BEGIN_SRC emacs-lisp
-(setq shell-file-name "/bin/bash"
+(setq shell-file-name "/bin/fish"
       vterm-max-scrollback 5000)
 (setq eshell-rc-script "~/.config/doom/eshell/profile"
       eshell-aliases-file "~/.config/doom/eshell/aliases"
@@ -1354,6 +1317,29 @@ I set splits to default to opening on the right using 'prefer-horizontal-split'.
 (map! :leader
       :desc "Clone indirect buffer other window" "b c" #'clone-indirect-buffer-other-window)
 #+END_SRC
+
+* Start Page
+Instead of using Doom’s Dashboard or the Emacs Dashboard program, I have decided to just set an custom start file as my “dashboard” since it allows me more customization options.  I have added to the ‘start-mode-hook’ the argument ‘read-only-mode’.  This is to prevent accidental editing of the start file, and to prevent clashes with the ‘start-mode’ specific keybindings.  You can toggle on/off read-only-mode with ‘SPC t r’.
+
+#+begin_src emacs-lisp
+(setq initial-buffer-choice "~/.config/doom/start.org")
+
+(define-minor-mode start-mode
+  "Provide functions for custom start page."
+  :lighter " start"
+  :keymap (let ((map (make-sparse-keymap)))
+          ;;(define-key map (kbd "M-z") 'eshell)
+            (evil-define-key 'normal start-mode-map
+              (kbd "1") '(lambda () (interactive) (find-file "~/.config/doom/config.org"))
+              (kbd "2") '(lambda () (interactive) (find-file "~/.config/doom/init.el"))
+              (kbd "3") '(lambda () (interactive) (find-file "~/.config/doom/packages.el"))
+              (kbd "4") '(lambda () (interactive) (find-file "~/.config/doom/eshell/aliases"))
+              (kbd "5") '(lambda () (interactive) (find-file "~/.config/doom/eshell/profile")))
+          map))
+
+(add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
+(provide 'start-mode)
+#+end_src
 
 * WINNER MODE
 Winner mode has been included with GNU Emacs since version 20.  This is a global minor mode and, when activated, it allows you to “undo” (and “redo”) changes in the window configuration with the key commands 'SCP w <left>' and 'SPC w <right>'.
@@ -1509,8 +1495,12 @@ Dap is for debugging and provides the intreface
          :map copilot-completion-map
          ("<tab>" . 'copilot-accept-completion)
          ("TAB" . 'copilot-accept-completion)))
+(map! :leader
+      (:prefix ("t" . "toggle")
+       :desc "Toggle Copitlot" "p" #'copilot-mode))
 #+END_SRC
 
+* Fix?
 #+BEGIN_SRC emacs-lisp
 (after! projectile (setq projectile-project-root-files-bottom-up (remove
             ".git" projectile-project-root-files-bottom-up)))
