@@ -248,7 +248,7 @@
 (autoload 'exwm-enable "exwm-config.el")
 
 (setq doom-font (font-spec :family "JetBrains Mono" :size 15)
-      doom-variable-pitch-font (font-spec :fAMILY "Ubuntu" :size 15)
+      doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 15)
       doom-big-font (font-spec :family "JetBrains Mono" :size 24))
 (after! doom-themes
   (setq doom-themes-enable-bold t
@@ -678,6 +678,14 @@
   :config
   (setq org-auto-tangle-default t))
 
+(use-package! org-appear
+;;  :hook (org-mode . org-appear-mode)
+  :config
+  (setq org-appear-autolinks t))
+(map! :leader
+      (:prefix ("t" . "toggle")
+       :desc "Toggle Org-appear" "a" #'org-appear-mode))
+
 (use-package! password-store)
 
 (map! :leader
@@ -845,13 +853,6 @@
       (:prefix ("t" . "toggle")
        :desc "Toggle Copitlot" "p" #'copilot-mode))
 
-(use-package! org-appear
-;;  :hook (org-mode . org-appear-mode)
-  :config
-  (setq org-appear-autolinks t))
-(map! :leader
-      (:prefix ("t" . "toggle")
-       :desc "Toggle Org-appear" "a" #'org-appear-mode))
-
-(after! projectile (setq projectile-project-root-files-bottom-up (remove
-            ".git" projectile-project-root-files-bottom-up)))
+(after! projectile
+  (setq projectile-project-root-files-bottom-up
+        (remove ".git" projectile-project-root-files-bottom-up)))

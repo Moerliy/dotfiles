@@ -3,25 +3,28 @@
 #+property: header-args :tangle config.el
 
 * Forword
-This org document is used as documentation, explanations and config files for my [[https://github.com/doomemacs/doomemacs][Doom Emacs]] setup. I recommend using this file to configure your Doom Emacs too, if you decide to build upon this configuration. Using Emacs's [[https://github.com/topics/org-mode][Org-Mode]] is adviced but if you don't want to do so, you can export the code blocks with [[https://github.com/OrgTangle/ntangle][ntangle]]. Maybe I will add a user script to do so in the future but this will have to do for now.
+This org document is used as documentation, explanations and config files for my [[https://github.com/doomemacs/doomemacs][Doom Emacs]] setup.
+I recommend using this file to configure your Doom Emacs too, if you decide to build upon this configuration.
+Using Emacs's [[https://github.com/topics/org-mode][Org-Mode]] is adviced but if you don't want to do so, you can export the code blocks with [[https://github.com/OrgTangle/ntangle][ntangle]].
+Maybe I will add a user script to do so in the future but this will have to do for now.
 
-I use Arch on an M1 mac btw so you should have a good look at the required packages and maybe substitute some of them for there better counterpart, but as far as I'm convinced all of the packages that are being used, none of them isn't capable of running on x86_64 architecture.
+I use Arch on an M1 mac btw 😉  so you should have a good look at the required packages and maybe substitute some of them for there better counterpart, but as far as I'm convinced all of the packages that are being used, none of them isn't capable of running on x86_64 architecture.
 
 I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dotfiles/-/tree/master/.config/doom][Derek Taylor]] dotfiles and customized to fit my needs but you shout check out the original, especially if you have any problems getting my config to work.
 
 * Table Of Content :toc:
 - [[#forword][Forword]]
 - [[#installation][Installation]]
-  - [[#1-clone][1. Clone]]
-  - [[#2-packages][2. Packages]]
-- [[#beacon][BEACON]]
-- [[#bookmarks-and-buffers][BOOKMARKS AND BUFFERS]]
+  - [[#1clone][1.Clone]]
+  - [[#2packages][2.Packages]]
+- [[#beacon][Beacon]]
+- [[#bookmarks-and-buffers][Bookmarks and buffers]]
   - [[#bookmarks][Bookmarks]]
   - [[#buffers][Buffers]]
   - [[#global-auto-revert][Global Auto Revert]]
   - [[#keybindings-within-ibuffer-mode][Keybindings within ibuffer mode]]
-- [[#calendar][CALENDAR]]
-- [[#centaur-tabs][CENTAUR-TABS]]
+- [[#calendar][Calendar]]
+- [[#centaur-tabs][Centaur-tabs]]
 - [[#clippy][CLIPPY]]
 - [[#dired][DIRED]]
   - [[#keybindings-to-open-dired][Keybindings To Open Dired]]
@@ -51,9 +54,10 @@ I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dot
 - [[#org-mode][ORG MODE]]
   - [[#org-fonts][Org fonts]]
   - [[#org-export][Org-export]]
-  - [[#org-journal][Org-journal]]
-  - [[#org-publish][Org-publish]]
+  - [[#org-journal-not-setup][Org-journal (Not Setup)]]
+  - [[#org-publish-not-setup][Org-publish (Not Setup)]]
   - [[#org-auto-tangle][Org-auto-tangle]]
+  - [[#org-appear][Org-appear]]
 - [[#password-store][PASSWORD STORE]]
 - [[#perspective][PERSPECTIVE]]
 - [[#rainbow-mode][RAINBOW MODE]]
@@ -68,15 +72,14 @@ I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dot
 - [[#flycheck][Flycheck]]
   - [[#documenetation][Documenetation]]
 - [[#copitlot][Copitlot]]
-- [[#org-appear][Org-appear]]
 - [[#fix][Fix?]]
 
 * Installation
-As mentioned in [[Forword]] the packages for this repo where chosen for Aarch64 so in some cases these are worse alternative's then there x86_64 counterpart.
+As mentioned in [[Forword]] the packages for this repo where chosen for ARM64 so in some cases these are worse alternative's then there x86_64 counterpart.
 I recommend using all the [[https://gitlab.gleissner.com/Moritz/dotfiles][dotfiles]] together but it is possible to just use Doom Emacs with some additional personal changes.
 
-** 1. Clone
-If you don't have existing dofiles you can clone my hole repository (for that you should have a look at my [[../../README.org][README]] in my dotfile directory) or just Doome Emacs:
+** 1.Clone
+If you don't have existing dotfiles you can clone my hole repository (for that you should have a look at my [[../../README.org][README]] in my dotfiles directory) or just Doom Emacs:
 #+begin_src bash :tangle no
 git clone --no-checkout https://gitlab.gleissner.com/Moritz/dotfiles.git
 cd dotfiles
@@ -86,7 +89,7 @@ git checkout origin/master
 cp -r .config/doom ~/.config/doom
 #+end_src
 
-** 2. Packages
+** 2.Packages
 This download all the imports down below:
 
 #+begin_src bash :tangle install-packages.sh
@@ -183,18 +186,18 @@ yay -Syu --needed libvterm languagetool nodejs npm yarn lldb gdb unzip docker do
 + [[https://pkg.go.dev/github.com/cweill/gotests][gotests]] Go tests
 + [[https://pkg.go.dev/github.com/fatih/gomodifytags][gomodifytags]] Go tool to modify/update field tags
 
-* BEACON
-Never lose your cursor.  When you scroll, your cursor will shine!  This is a global minor-mode. Turn it on everywhere with:
+* Beacon
+Never lose your cursor.  When you scroll, your cursor will shine.  This is a global minor-mode.  Turn it on everywhere with:
 
 #+begin_src emacs-lisp
 (beacon-mode 1)
 #+end_src
 
-* BOOKMARKS AND BUFFERS
-Doom Emacs uses 'SPC b' for keybindings related to bookmarks and buffers.
+* Bookmarks and buffers
+Doom Emacs uses =SPC b= for keybindings related to bookmarks and buffers.
 
 ** Bookmarks
-Bookmarks are somewhat like registers in that they record positions you can jump to.  Unlike registers, they have long names, and they persist automatically from one Emacs session to the next. The prototypical use of bookmarks is to record where you were reading in various files.
+Is somewhat like registers in that they record positions you can jump to.  Unlike registers, they have long names, and they persist automatically from one Emacs session to the next. The prototypical use of bookmarks is to record where you were reading in various files.
 
 #+BEGIN_SRC emacs-lisp
 (map! :leader
@@ -249,11 +252,8 @@ A buffer can get out of sync with respect to its visited file on disk if that fi
   (kbd "g H") 'ibuffer-update)
 #+end_src
 
-* CALENDAR
+* Calendar
 Let's make a 12-month calendar available so we can have a calendar app that, when we click on time/date in xmobar, we get a nice 12-month calendar to view.
-
-This is a modification of: http://homepage3.nifty.com/oatu/emacs/calendar.html
-See also: https://stackoverflow.com/questions/9547912/emacs-calendar-show-more-than-3-months
 
 #+begin_src emacs-lisp
 ;; https://stackoverflow.com/questions/9547912/emacs-calendar-show-more-than-3-months
@@ -322,7 +322,7 @@ Let's also play around with calfw.
 (use-package! calfw-org)
 #+end_src
 
-* CENTAUR-TABS
+* Centaur-tabs
 To use tabs in Doom Emacs, be sure to uncomment "tabs" in Doom's init.el.  Displays tabs at the top of the window similar to tabbed web browsers such as Firefox.  I don't actually use tabs in Emacs.  I placed this in my config to help others who may want tabs.  In the default configuration of Doom Emacs, 'SPC t' is used for "toggle" keybindings, so I choose 'SPC t c' to toggle centaur-tabs.  The "g" prefix for keybindings is used for a bunch of evil keybindings in Doom, but "g" plus the arrow keys were not used, so I thought I would bind those for tab navigation.  But I did leave the default "g t" and "g T" intact if you prefer to use those for centaur-tabs-forward/backward.
 
 | COMMAND                     | DESCRIPTION               | KEYBINDING       |
@@ -647,7 +647,7 @@ Settings related to fonts within Doom Emacs:
 
 #+BEGIN_SRC emacs-lisp
 (setq doom-font (font-spec :family "JetBrains Mono" :size 15)
-      doom-variable-pitch-font (font-spec :fAMILY "Ubuntu" :size 15)
+      doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 15)
       doom-big-font (font-spec :family "JetBrains Mono" :size 24))
 (after! doom-themes
   (setq doom-themes-enable-bold t
@@ -1067,7 +1067,7 @@ We need ox-man for "Org eXporting" to manpage format and ox-gemini for exporting
 (use-package ox-gemini)
 #+END_SRC
 
-** Org-journal
+** Org-journal (Not Setup)
 #+begin_src emacs-lisp
 (setq org-journal-dir "~/NextCloud/Documents/Org/journal/"
       org-journal-date-prefix "* "
@@ -1076,7 +1076,7 @@ We need ox-man for "Org eXporting" to manpage format and ox-gemini for exporting
       org-journal-file-format "%Y-%m-%d.org")
 #+end_src
 
-** Org-publish
+** Org-publish (Not Setup)
 #+begin_src emacs-lisp
 (setq org-publish-use-timestamps-flag nil)
 (setq org-export-with-broken-links t)
@@ -1207,6 +1207,19 @@ We need ox-man for "Org eXporting" to manpage format and ox-gemini for exporting
   :config
   (setq org-auto-tangle-default t))
 
+#+end_src
+
+** Org-appear
+Org mode provides a way to toggle visibility of hidden elements such as emphasis markers, links, etc. by customizing specific variables
+
+#+begin_src emacs-lisp
+(use-package! org-appear
+;;  :hook (org-mode . org-appear-mode)
+  :config
+  (setq org-appear-autolinks t))
+(map! :leader
+      (:prefix ("t" . "toggle")
+       :desc "Toggle Org-appear" "a" #'org-appear-mode))
 #+end_src
 
 * PASSWORD STORE
@@ -1501,21 +1514,9 @@ Dap is for debugging and provides the intreface
        :desc "Toggle Copitlot" "p" #'copilot-mode))
 #+END_SRC
 
-* Org-appear
-Org mode provides a way to toggle visibility of hidden elements such as emphasis markers, links, etc. by customising specific variables
-
-#+begin_src emacs-lisp
-(use-package! org-appear
-;;  :hook (org-mode . org-appear-mode)
-  :config
-  (setq org-appear-autolinks t))
-(map! :leader
-      (:prefix ("t" . "toggle")
-       :desc "Toggle Org-appear" "a" #'org-appear-mode))
-#+end_src
-
 * Fix?
 #+BEGIN_SRC emacs-lisp
-(after! projectile (setq projectile-project-root-files-bottom-up (remove
-            ".git" projectile-project-root-files-bottom-up)))
+(after! projectile
+  (setq projectile-project-root-files-bottom-up
+        (remove ".git" projectile-project-root-files-bottom-up)))
 #+END_SRC
