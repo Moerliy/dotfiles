@@ -672,12 +672,6 @@
 
       ))
 
-(use-package! org-auto-tangle
-  :defer t
-  :hook (org-mode . org-auto-tangle-mode)
-  :config
-  (setq org-auto-tangle-default t))
-
 (use-package! org-appear
 ;;  :hook (org-mode . org-appear-mode)
   :config
@@ -685,6 +679,12 @@
 (map! :leader
       (:prefix ("t" . "toggle")
        :desc "Toggle Org-appear" "a" #'org-appear-mode))
+
+(use-package! org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-default t))
 
 (use-package! password-store)
 
