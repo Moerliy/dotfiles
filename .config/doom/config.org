@@ -68,6 +68,7 @@ I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dot
 - [[#flycheck][Flycheck]]
   - [[#documenetation][Documenetation]]
 - [[#copitlot][Copitlot]]
+- [[#org-appear][Org-appear]]
 - [[#fix][Fix?]]
 
 * Installation
@@ -1499,6 +1500,19 @@ Dap is for debugging and provides the intreface
       (:prefix ("t" . "toggle")
        :desc "Toggle Copitlot" "p" #'copilot-mode))
 #+END_SRC
+
+* Org-appear
+Org mode provides a way to toggle visibility of hidden elements such as emphasis markers, links, etc. by customising specific variables
+
+#+begin_src emacs-lisp
+(use-package! org-appear
+;;  :hook (org-mode . org-appear-mode)
+  :config
+  (setq org-appear-autolinks t))
+(map! :leader
+      (:prefix ("t" . "toggle")
+       :desc "Toggle Org-appear" "a" #'org-appear-mode))
+#+end_src
 
 * Fix?
 #+BEGIN_SRC emacs-lisp

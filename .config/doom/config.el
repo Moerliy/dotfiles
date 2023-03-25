@@ -845,5 +845,13 @@
       (:prefix ("t" . "toggle")
        :desc "Toggle Copitlot" "p" #'copilot-mode))
 
+(use-package! org-appear
+;;  :hook (org-mode . org-appear-mode)
+  :config
+  (setq org-appear-autolinks t))
+(map! :leader
+      (:prefix ("t" . "toggle")
+       :desc "Toggle Org-appear" "a" #'org-appear-mode))
+
 (after! projectile (setq projectile-project-root-files-bottom-up (remove
             ".git" projectile-project-root-files-bottom-up)))
