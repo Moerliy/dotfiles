@@ -62,6 +62,12 @@ welcome() {
 
 welcome || error "User exited"
 
+distrowarning() { \
+    whiptail --title "Installing!" --msgbox "WARNING! While this script works on all Arch based distros, some distros might have some problems with some packages. Please have a look at the packages list and adjust it if needed" 16 60 || error "User choose to exit."
+}
+
+grep -qs "ID=archarm" /etc/os-release || distrowarning
+
 lastchance() {
     whiptail --title "Last chance" --yesno "Are you sure you want to continue?" 10 60
 }

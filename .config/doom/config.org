@@ -15,6 +15,7 @@ I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dot
 * Table Of Content :toc:
 - [[#forword][Forword]]
 - [[#installation][Installation]]
+  - [[#curl-skript][Curl-Skript]]
   - [[#1clone][1.Clone]]
   - [[#2packages][2.Packages]]
 - [[#beacon][Beacon]]
@@ -77,6 +78,11 @@ I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dot
 * Installation
 As mentioned in [[Forword]] the packages for this repo where chosen for ARM64 so in some cases these are worse alternative's then there x86_64 counterpart.
 I recommend using all the [[https://gitlab.gleissner.com/Moritz/dotfiles][dotfiles]] together but it is possible to just use Doom Emacs with some additional personal changes.
+
+** Curl-Skript
+#+begin_src bash :tangle no
+curl https://gitlab.gleissner.com/Moritz/dotfiles/-/raw/master/.config/doom/install-wizard.sh | bash
+#+end_src
 
 ** 1.Clone
 If you don't have existing dotfiles you can clone my hole repository (for that you should have a look at my [[../../README.org][README]] in my dotfiles directory) or just Doom Emacs:
