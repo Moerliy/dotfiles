@@ -686,6 +686,10 @@
   :config
   (setq org-auto-tangle-default t))
 
+;;(org-babel-do-load-languages
+;; 'org-babel-load-languages
+;; '((java . t)))
+
 (use-package! password-store)
 
 (map! :leader
