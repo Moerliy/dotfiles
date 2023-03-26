@@ -26,13 +26,17 @@ checkbox=black,blue
 compactbutton=black,blue
 button=black,red"
 
-echo "########################################"
-echo "##                                    ##"
-echo "##  Cheking for 'whiptale' and 'git'  ##"
-echo "##                                    ##"
-echo "########################################"
+whiptail_git() {
+    echo "########################################"
+    echo "##                                    ##"
+    echo "##  Cheking for 'whiptale' and 'git'  ##"
+    echo "##                                    ##"
+    echo "########################################"
 
-sudo pacman --noconfirm -Syu whiptail git || error "Failed to install 'whiptail' and 'git'"
+    sudo pacman --noconfirm --needed -Syu libnewt git || error "Failed to install 'whiptail' and 'git'"
+}
+
+whiptail_git
 
 echo "#######################"
 echo "##                   ##"
