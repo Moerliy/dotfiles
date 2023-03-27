@@ -19,5 +19,5 @@ I use Arch on an M1 mac btw 😉 so you should have a good look at the required 
 Follow [[https://wiki.archlinux.org/title/Installation_guide][Arch Wiki]] and install base Arch if needed.
 ** 2. Curl-Script
 #+begin_src bash
-
+curl https://gitlab.gleissner.com/Moritz/dotfiles/-/raw/master/install-dotfiles.sh | bash
 #+end_src

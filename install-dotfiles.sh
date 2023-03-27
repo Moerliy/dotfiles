@@ -140,6 +140,15 @@ echo "##  Installing Hyprland and packeges  ##"
 echo "##                                    ##"
 echo "########################################"
 
+changehyprlandpackages() {
+    whiptail --title "Installing!" --yesno "Do you want to change the package list for hyprland?" 8 60
+}
+
+if changehyprlandpackages; then
+    vim "$HOME/.config/hypr/install-packages.sh" || error "Failed to open vim"
+    wait
+fi
+
 bash "$HOME/.config/hypr/install-packages.sh" || error "Failed to install Hyprland"
 
 installdoomemacs() { \
@@ -170,6 +179,16 @@ if [ "$installdoomemacs" = true ]; then
         echo "Removing $HOME/.doom.d"
         rm -rf "$HOME/.doom.d"
     fi
+
+    changeemacspackages() {
+        whiptail --title "Installing!" --yesno "Do you want to change the package list for Doom Emacs?" 8 60
+    }
+
+    if changeemacspackages; then
+        vim "$HOME/.config/doom/install-packages.sh" || error "Failed to open vim"
+        wait
+    fi
+
     bash "$HOME/.config/doom/install-packages.sh" || error "Failed to install Doom Emacs"
 
     git clone --depth 1 https://github.com.hlissner/doom-emacs "$HOME/.emacs.d" || error "Failed to clone Doom Emacs"
