@@ -1,113 +1,23 @@
-#+title: dotfile config
+#+title: Dotfile Config
 #+AUTHOR: Moritz Gleissner
 #+DESCRIPTION: This is a description for my dotfiles
 
+
+* Forword
+Welcome to my dotfiles repository. All of the dotfiles and its installation will include [[./.config/hypr/README.org][Hyprland]] as desktop environment and a setup of [[./.config/doom/config.org][Doom Emacs]].
+
+I use Arch on an M1 mac btw 😉 so you should have a good look at the required packages and maybe substitute some of them for there better counterpart, but as far as I'm convinced all of the packages that are being used, none of them isn't capable of running on x86_64 architecture.
+
 * Content List :toc:
-- [[#pagages][PAGAGES]]
-  - [[#base][BASE]]
-  - [[#aur][AUR]]
-  - [[#stpecials][stpecials]]
-- [[#arch-fresh-setup][Arch fresh setup]]
+- [[#forword][Forword]]
+- [[#installation][Installation]]
   - [[#1-install-arch][1. Install Arch]]
-  - [[#2-hyprland][2. Hyprland]]
+  - [[#2-curl-script][2. Curl-Script]]
 
-* PAGAGES
-This contains all the packages needed for the dotfiles
-** BASE
-Base packages that can be downloaded with pacman
-- libvterm
-- languagetool
-- nodejs
-- npm
-- yarn
-- lldb
-- gdb
-- unzip
-- docker
-- docker-compose
-- docker-machine
-- editorconfig-checker
-- sqlite
-- ripgrep
-- git
-- wl-clipboard
-- clang
-- ccls
-- go
-- gopls
-- jdk11-openjdk
-- texlive-core
-- texlive-bin
-- texlive-science
-- texlive-latexextra
-- gnuplot
-- marked
-- pip
-- pyright
-- rubocop
-- rustup
-- mpd
-- mpc
-- maim
-- scrot
-- gnome-screenshot
-- rust-analyzer
-- tidy
-- stylelint
-- python-pipenv
-- curl
-- gcc
-- make
-- ncurses
-- man-pages
-- xdg-utils
-** AUR
-AUR packlages that can be downloaded witb yay
-- nodejs-dockerfile-language-server
-- wordnet-cli
-- cmake-language-server
-- proselint
-- ktlint
-- shellcheck-bin
-- js-beautify
-
-** stpecials
-- curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-- ghcup install ghc
-- ghcup install cabal
-- ghcup install hls
-- pip install pytest
-- pip install nose
-- pip install black
-  pip install pyflakes
-  pip install isort
-  pip install python-language-server[all]
-  pip install grip
-  rustup component add rustfmt-preview
-  rustup component add clippy-preview
-  cargo install cargo-check
-go install github.com/x-motemen/gore/cmd/gore@latest
-go install github.com/stamblerre/gocode@latest (substitute with gopls)
-go install golang.org/x/tools/gopls@latest
-go install golang.org/x/tools/cmd/godoc@latest
-go install golang.org/x/tools/cmd/goimports@latest
-go install golang.org/x/tools/cmd/gorename@latest
-go install golang.org/x/tools/cmd/guru@latest
-go install github.com/cweill/gotests/gotests@latest
-go install github.com/fatih/gomodifytags@latest
-
-* Arch fresh setup
+* Installation
 ** 1. Install Arch
-Follow [[https://wiki.archlinux.org/title/Installation_guide][Arch Wiki]] and install [[https://github.com/Jguer/yay][yay]]
-** 2. Hyprland
-*** Yay installs
-+ hyprland-git
-+ kitty
-+ sddm (and enable with systemctl)
-+ mako
-+ pipewire
-+ wireplumber
-+ xdg-desktop-portal-hyprland-git
-+ qt6-wayland
-+ qt5-wayland
-+ polkit-kde-agent
+Follow [[https://wiki.archlinux.org/title/Installation_guide][Arch Wiki]] and install base Arch if needed.
+** 2. Curl-Script
+#+begin_src bash
+
+#+end_src
