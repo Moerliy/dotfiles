@@ -11,13 +11,69 @@ I use Arch on an M1 mac btw 😉 so you should have a good look at the required 
 * Content List :toc:
 - [[#forword][Forword]]
 - [[#installation][Installation]]
-  - [[#1-install-arch][1. Install Arch]]
-  - [[#2-curl-script][2. Curl-Script]]
+  - [[#requirements][Requirements]]
+  - [[#script][Script]]
+  - [[#manual-install][Manual Install]]
 
 * Installation
-** 1. Install Arch
-Follow [[https://wiki.archlinux.org/title/Installation_guide][Arch Wiki]] and install base Arch if needed.
-** 2. Curl-Script
-#+begin_src bash
+** Requirements
+Follow [[https://wiki.archlinux.org/title/Installation_guide][Arch Wiki]] and install base Arch if not already done.
+** Script
+#+begin_src bash :tangle no
 curl https://gitlab.gleissner.com/Moritz/dotfiles/-/raw/master/install-dotfiles.sh | bash
+#+end_src
+
+** Manual Install
+*** 1.Backup
+You should always backup existing files.
+Have a look at this repository and backup files that you don't want to be lost or overwritten.
+My suggestion is to backup you =.config= folder in your HOME directory.
+*** 2.Clone The Git
+There are two ways you can clone the git:
+**** A.The normal way with git clone
+1. Clone The Repository:
+#+begin_src bash :tangle no
+git clone https://gitlab.gleissner.com/Moritz/dotfiles.git
+#+end_src
+2. Move the files you want to use from =$HOME/dotfiles/*= to =$HOME/*=
+
+**** B.Cloning for futher use of the Version Controll
+This will make use of gits bare repository feature.
+If you are interested in managing you dotfiles the proper way you should have a look at [[https://www.atlassian.com/git/tutorials/dotfiles][this]].
+#+begin_src bash :tangle no
+mkdir "$HOME/dotfiles"
+git clone --bare https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/dotfiles"
+git --git-dir=$HOME/dotfiles --work-dir=$HOME checkout master
+#+end_src
+
+*** 3.Packages
+There are scripts that execute =yay= and a list of the needed packages for some of the modules.
+
+If you want Hyprland you should have a look at [[./.config/hypr/README.org][Hyperland README]] and the listed packages.
+You can also just run but some of the packages will certainly not be the best choice for you:
+#+begin_src bash :tangle no
+bash ~/.config/hypr/install-packages.sh
+#+end_src
+
+If you want Doom Emacs you should have a look at [[./.config/doom/config.org][Doom Config]] and the listed packages.
+You can also just run but some of the packages will certainly not be the best choice for you:
+#+begin_src bash :tangle no
+bash ~/.config/doom/install-packages.sh
+#+end_src
+
+*** 4.Activate SDDM
+My Hyprland Config uses [[https://github.com/sddm/sddm][sddm]] as a login manager.
+You should activate it with systemctl if you want to use it too:
+#+begin_src bash :tangle no
+sudo systemctl enable sddm
+sudo systemctl start sddm
+#+end_src
+
+*** 5.Doom Emcas
+If you wanted Doom Emacs and already installed the packages you should already have base Emacs installed.
+Now you need Doom and for that you should have a look at there [[https://github.com/doomemacs/doomemacs][git]] or just follow the steps down below.
+#+begin_src bash :tangle no
+git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.emacs.d" || error "Failed to clone Doom Emacs"
+"$HOME/.emacs.d/bin/doom" install || error "Failed to install Doom Emacs"
+"$HOME/.emacs.d/bin/doom" sync || error "Failed to sync Doom Emacs"
 #+end_src

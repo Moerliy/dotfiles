@@ -215,7 +215,7 @@ if [ "$installdoomemacs" = true ]; then
 
     bash "$HOME/.config/doom/install-packages.sh" || error "Failed to install Doom Emacs"
 
-    git clone --depth 1 https://github.com.hlissner/doom-emacs "$HOME/.emacs.d" || error "Failed to clone Doom Emacs"
+    git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.emacs.d" || error "Failed to clone Doom Emacs"
     "$HOME/.emacs.d/bin/doom" install || error "Failed to install Doom Emacs"
     "$HOME/.emacs.d/bin/doom" sync || error "Failed to sync Doom Emacs"
 fi
