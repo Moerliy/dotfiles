@@ -87,6 +87,11 @@ backup() { \
     whiptail --title "Backup" --yesno "Do you want to backup your current configuration?" 8 60
 }
 
+bareclone() { \
+    whiptail --title "Bare Clone" --yesno "Do you want to clone the bare repository?" 8 60
+}
+
+bareclone && bareclone=true || bareclone=false
 backup && backup=true || backup=false
 
 if [ "$backup" = true ]; then
@@ -110,7 +115,12 @@ if [ -d "$HOME/.dotfiles" ]; then
     fi
 fi
 
-git clone https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/.dotfiles" || error "Failed to clone git repository"
+if [ "$bareclone" = true ]; then
+    mkdir -p "$HOME/.dotfiles"
+    git clone --bare https://gitlap.gleissner.com/Moritz/dotfiles.git "$HOME/.dotfiles" || error "Failed to clone the bare repository"
+else
+    git clone https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/.dotfiles" || error "Failed to clone the repository"
+fi
 
 echo "################################"
 echo "##                            ##"
@@ -125,8 +135,13 @@ else
     echo "Removing $HOME/.config"
     rm -rf "$HOME/.config"
 fi
-mv "$HOME/.dotfiles/.config" "$HOME/.config"
-rm -rf "$HOME/.dotfiles"
+
+if [ "$bareclone" = true ]; then
+    git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" checkout || error "Failed to checkout the dotfiles"
+else
+    mv "$HOME/.dotfiles/.config" "$HOME/.config"
+    rm -rf "$HOME/.dotfiles"
+fi
 
 installhyprland() { \
     whiptail --title "Installing!" --yesno "Do you want to install Hyprland and the needed packages?" 8 60
@@ -150,6 +165,15 @@ if changehyprlandpackages; then
 fi
 
 bash "$HOME/.config/hypr/install-packages.sh" || error "Failed to install Hyprland"
+
+activatesddm() { \
+    whiptail --title "Installing!" --yesno "Do you want to activate sddm?" 8 60
+}
+
+if activatesddm; then
+    sudo systemctl enable sddm.service || error "Failed to enable sddm"
+    sudo systemctl start sddm.service || error "Failed to start sddm"
+fi
 
 installdoomemacs() { \
     whiptail --title "Installing!" --yesno "Do you want to install Doom Emacs and the needed packages?" 8 60
