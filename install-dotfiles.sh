@@ -74,7 +74,7 @@ grep -qs "#ParallelDownloads" /etc/pacman.conf && speedwarning
 grep -qs "ID=archarm" /etc/os-release || distrowarning
 
 lastchance() { \
-    whiptail --title "Installing!" --msgbox "WARNING! The DTOS installation script is currently in public beta testing. There are almost certainly errors in it; therefore, it is strongly recommended that you not install this on production machines. It is recommended that you try this out in either a virtual machine or on a test machine." 16 60
+    whiptail --title "Installing!" --msgbox "WARNING! The installation script is currently in public beta testing. There are almost certainly errors in it; therefore, it is strongly recommended that you not install this on production machines. It is recommended that you try this out in either a virtual machine or on a test machine." 16 60
 
     whiptail --title "Are You Sure You Want To Do This?" --yesno "Shall we begin installing?" 8 60 || { clear; exit 1; }
 }
@@ -104,22 +104,22 @@ echo "##  Cloning git repository  ##"
 echo "##                          ##"
 echo "##############################"
 
-if [ -d "$HOME/.dotfiles" ]; then
-    echo "Directory $HOME/.dotfiles exists."
+if [ -d "$HOME/dotfiles" ]; then
+    echo "Directory $HOME/dotfiles exists."
     if [ "$backup" = true ]; then
-        echo "Backing up $HOME/.dotfiles to $backupfile"
-        mv "$HOME/.dotfiles" "$backupfile"
+        echo "Backing up $HOME/dotfiles to $backupfile"
+        mv "$HOME/dotfiles" "$backupfile"
     else
-        echo "Removing $HOME/.dotfiles"
-        rm -rf "$HOME/.dotfiles"
+        echo "Removing $HOME/dotfiles"
+        rm -rf "$HOME/dotfiles"
     fi
 fi
 
 if [ "$bareclone" = true ]; then
-    mkdir -p "$HOME/.dotfiles"
-    git clone --bare https://gitlap.gleissner.com/Moritz/dotfiles.git "$HOME/.dotfiles" || error "Failed to clone the bare repository"
+    mkdir -p "$HOME/dotfiles"
+    git clone --bare https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/dotfiles" || error "Failed to clone the bare repository"
 else
-    git clone https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/.dotfiles" || error "Failed to clone the repository"
+    git clone https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/dotfiles" || error "Failed to clone the repository"
 fi
 
 echo "################################"
@@ -137,10 +137,10 @@ else
 fi
 
 if [ "$bareclone" = true ]; then
-    git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" checkout || error "Failed to checkout the dotfiles"
+    git --git-dir="$HOME/dotfiles" --work-tree="$HOME" checkout || error "Failed to checkout the dotfiles"
 else
-    mv "$HOME/.dotfiles/.config" "$HOME/.config"
-    rm -rf "$HOME/.dotfiles"
+    mv "$HOME/dotfiles/.config" "$HOME/.config"
+    rm -rf "$HOME/dotfiles"
 fi
 
 installhyprland() { \
