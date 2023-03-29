@@ -160,7 +160,7 @@ changehyprlandpackages() {
 }
 
 if changehyprlandpackages; then
-    vim "$HOME/.config/hypr/install-packages.sh" || error "Failed to open vim"
+    vi "$HOME/.config/hypr/install-packages.sh" || error "Failed to open vim"
     wait
 fi
 
@@ -172,7 +172,6 @@ activatesddm() { \
 
 if activatesddm; then
     sudo systemctl enable sddm.service || error "Failed to enable sddm"
-    sudo systemctl start sddm.service || error "Failed to start sddm"
 fi
 
 installdoomemacs() { \
@@ -209,7 +208,7 @@ if [ "$installdoomemacs" = true ]; then
     }
 
     if changeemacspackages; then
-        vim "$HOME/.config/doom/install-packages.sh" || error "Failed to open vim"
+        vi "$HOME/.config/doom/install-packages.sh" || error "Failed to open vim"
         wait
     fi
 
@@ -225,3 +224,13 @@ echo "##                       ##"
 echo "##  Finished installing  ##"
 echo "##                       ##"
 echo "###########################"
+
+while true; do
+    read -rp "Do you want to reboot to get your instalation? [Y/n] " yn
+    case $yn in
+        [Yy]* ) reboot;;
+        [Nn]* ) break;;
+        "" ) reboot;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
