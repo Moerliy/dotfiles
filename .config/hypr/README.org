@@ -68,7 +68,7 @@ This will import all the packages listed below:
 
 #+begin_src bash :tangle install-packages.sh
 #!/bin/bash
-yay -Syu --noconfirm --needed hyprland-legacyrenderer-git make pipewire wireplumber xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox armcord-bin youtubemusic nextcloud-client nautilus electron20-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swaybg wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git
+yay -Syu --noconfirm --needed hyprland-legacyrenderer-git make pipewire wireplumber xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox armcord-bin youtubemusic-nativefier nextcloud-client nautilus electron20-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swaybg wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git
 #+end_src
 
 *** Base Hyprland
@@ -94,7 +94,7 @@ yay -Syu --noconfirm --needed hyprland-legacyrenderer-git make pipewire wireplum
 *** Used utility
 + [[https://github.com/mozilla/?q=firefox&type=all&language=&sort=stargazers][firefox]] browser
 + [[https://github.com/discord][discord]] messenger service
-+ [[https://github.com/th-ch/youtube-music][youtubemusic]] music player
++ [[https://github.com/th-ch/youtube-music][youtubemusic]] music player (nativefier)
 + [[https://github.com/nextcloud][nextcloud]] file sync (not working)
 + [[https://github.com/GNOME/nautilus][nautilus]] file viewer
 + [[https://github.com/electron/electron][electorn]]
@@ -145,7 +145,7 @@ $wofi_beats = $scriptsDir/wofi-beats
 $files = nautilus
 $browser = firefox
 $electron_flags = -enable-features=UseOzonePlatform -ozone-platform=wayland
-$music = youtubemusic
+$music = youtubemusic-nativefier
 $discord = armcord
 #+end_src
 
