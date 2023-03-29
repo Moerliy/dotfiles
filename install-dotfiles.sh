@@ -33,7 +33,7 @@ whiptail_git() {
     echo "##                                    ##"
     echo "########################################"
 
-    sudo pacman --noconfirm --needed -Syu libnewt git || error "Failed to install 'whiptail' and 'git'"
+    sudo pacman --noconfirm --needed -Syu libnewt git base-devel || error "Failed to install 'whiptail' and 'git'"
 }
 
 whiptail_git
