@@ -10,7 +10,7 @@ if [ "$(id -u)" = 0 ]; then
 fi
 
 error() { \
-    clear; printf "ERROR:\\n%s\\n" "$1" >&2; exit 1;
+    printf "ERROR:\\n%s\\n" "$1" >&2; exit 1;
 }
 
 export NEWT_COLORS="
