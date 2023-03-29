@@ -100,7 +100,7 @@ This download all the imports down below:
 
 #+begin_src bash :tangle install-packages.sh
 #!/bin/bash
-yay -Syu --noconfirm --needed emacs-nativcomp libvterm languagetool nodejs npm yarn lldb gdb unzip docker docker-compose docker-machine editorconfig-checker sqlite ripgrep git wl-clipboard clang ccls go gopls jdk11-openjdk texlive-bin texlive-core texlive-latexextra texlive-science gnuplot marked python pyright rubocop rustup mpd mpc maim scrot gnome-screenshot rust-analyzer tidy stylelint python-pipenv curl gcc make ncurses man-pages xdg-utils nodejs-dockerfile-language-server wordnet-cli cmake-language-server proselint ktlint shellcheck-bin js-beautify
+yay -Syu --noconfirm --needed emacs-nativcomp libvterm languagetool nodejs npm yarn lldb gdb unzip docker docker-compose docker-machine editorconfig-checker sqlite ripgrep git wl-clipboard clang ccls go gopls jdk11-openjdk texlive-core texlive-latexextra texlive-science gnuplot marked python pyright rubocop rustup mpd mpc maim scrot gnome-screenshot rust-analyzer tidy stylelint python-pipenv curl gcc make ncurses man-pages xdg-utils nodejs-dockerfile-language-server wordnet-cli cmake-language-server proselint ktlint shellcheck-bin js-beautify
 #+end_src
 
 *** Packman Installs
@@ -126,7 +126,7 @@ yay -Syu --noconfirm --needed emacs-nativcomp libvterm languagetool nodejs npm y
 + [[https://github.com/golang/tools/tree/master/gopls][gopls]] Go language server
 + [[https://archlinux.org/packages/extra/x86_64/jdk11-openjdk/][jdk11-openjdk]] OpenJDK Java 11 development kit
 + [[https://archlinux.org/packages/extra/any/texlive-core/][texlive-core]] TeX Live core distribution
-+ [[https://archlinux.org/packages/extra/x86_64/texlive-bin/][texlive-bin]] TeX Live binaries
++ [[https://archlinux.org/packages/extra/x86_64/texlive-bin/][texlive-bin]] TeX Live binaries (dependency of texlive-core)
 + [[https://archlinux.org/packages/extra/any/texlive-science/][texlive-science]] TeX Live - Typesetting for mathematics, natural and computer sciences
 + [[https://archlinux.org/packages/extra/any/texlive-latexextra/][texlive-latexextra]] TeX Live - Large collection of add-on packages for LaTeX
 + [[https://github.com/gnuplot/gnuplot][gnuplot]] Plotting Utility
