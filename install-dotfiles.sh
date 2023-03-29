@@ -131,9 +131,21 @@ echo "################################"
 if [ "$backup" = true ]; then
     echo "Backing up $HOME/.config to $backupfile"
     mv "$HOME/.config" "$backupfile"
+    echo "Backing up $HOME/LICENCE to $backupfile"
+    mv "$HOME/LICENCE" "$backupfile"
+    echo "Backing up $HOME/README.org to $backupfile"
+    mv "$HOME/README.org" "$backupfile"
+    echo "Backing up $HOME/install-dotfiles.sh to $backupfile"
+    mv "$HOME/install-dotfiles.sh" "$backupfile"
 else
     echo "Removing $HOME/.config"
     rm -rf "$HOME/.config"
+    echo "Removing $HOME/LICENCE"
+    rm "$HOME/LICENCE"
+    echo "Removing $HOME/README.org"
+    rm "$HOME/README.org"
+    echo "Removing $HOME/install-dotfiles.sh"
+    rm "$HOME/install-dotfiles.sh"
 fi
 
 if [ "$bareclone" = true ]; then
