@@ -14,10 +14,12 @@ I use Arch on an M1 mac btw 😉 so you should have a good look at the required 
   - [[#requirements][Requirements]]
   - [[#script][Script]]
   - [[#manual-install][Manual Install]]
+- [[#binds][Binds]]
 
 * Installation
 ** Requirements
 Follow [[https://wiki.archlinux.org/title/Installation_guide][Arch Wiki]] and install base Arch if not already done.
+
 ** Script
 #+begin_src bash :tangle no
 curl https://gitlab.gleissner.com/Moritz/dotfiles/-/raw/master/install-dotfiles.sh | bash
@@ -28,6 +30,7 @@ curl https://gitlab.gleissner.com/Moritz/dotfiles/-/raw/master/install-dotfiles.
 You should always backup existing files.
 Have a look at this repository and backup files that you don't want to be lost or overwritten.
 My suggestion is to backup you =.config= folder in your HOME directory.
+
 *** 2.Clone The Git
 There are two ways you can clone the git:
 **** A.The normal way with git clone
@@ -77,3 +80,6 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d
 ~/.emacs.d/bin/doom install
 ~/.emacs.d/bin/doom sync
 #+end_src
+
+* Binds
+All binds you will need for the desktop environment you will find in [[./.config/hypr/README.org][Hyprland README]] and all bindings you will need inside Doom Emacs you will find in find in [[./.config/doom/config.org][Doom Config]].
