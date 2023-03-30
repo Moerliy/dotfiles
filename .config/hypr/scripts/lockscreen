@@ -4,9 +4,10 @@
 bg='1e1e2e' bgl='313244' fg='d9e0ee'
 red='f38ba8' green='a6e3a1' yellow='f9e2af'
 blue='89b4fa' magenta='cba6f7' cyan='89dceb'
-alpha='00000000'
+alpha='00000000' black='#000000' dark_magenta='#8B008B'
 
-swaylock -fFS \
+swaylock -fF \
+  --image "$HOME/.config/hypr/bg/wave_japanese.jpg" \
   --ignore-empty-password \
   --show-failed-attempts \
   --hide-keyboard-layout \
@@ -17,7 +18,7 @@ swaylock -fFS \
   --caps-lock-key-hl-color ${blue} \
   --bs-hl-color ${red} \
   --caps-lock-bs-hl-color ${red} \
-  --indicator-radius 200 \
+  --indicator-radius 300 \
   --indicator-thickness 20 \
   --inside-color ${alpha} \
   --inside-clear-color ${alpha} \
@@ -46,6 +47,3 @@ swaylock -fFS \
   --timestr "%I:%M %p" \
   --datestr "%d / %m / %y" \
   --fade-in "0.2" \
-  --effect-blur "7x3" \
-  --effect-greyscale \
-  --clock --indicator
