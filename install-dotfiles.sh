@@ -49,7 +49,7 @@ if ! command -v yay &> /dev/null; then
     echo "Installing yay"
     git clone https://aur.archlinux.org/yay.git
     cd yay || error "Failed to change directory"
-    makepkg -si --noconfirm
+    makepkg -si --noconfirm || error "Failed to install 'yay'"
     cd ..
     rm -rf yay
 else
