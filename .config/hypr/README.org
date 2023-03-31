@@ -68,7 +68,7 @@ This will import all the packages listed below:
 
 #+begin_src bash :tangle install-packages.sh
 #!/bin/bash
-yay -Syu --noconfirm --needed hyprland-legacyrenderer-git make pipewire wireplumber xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox armcord-bin youtubemusic-nativefier nextcloud-client nautilus electron20-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swaybg wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git
+yay -Syu --noconfirm --needed hyprland-legacyrenderer-git make pipewire wireplumber xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox armcord-bin youtubemusic-nativefier nextcloud-client nautilus electron20-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swaybg wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git fish neofetch neovim exa ttf-nerd-fonts-symbols-2048-em ttf-hack ttf-ubuntu-font-family ttf-kanjistrokeorders ttf-iosevka
 #+end_src
 
 *** Base Hyprland
@@ -87,10 +87,19 @@ yay -Syu --noconfirm --needed hyprland-legacyrenderer-git make pipewire wireplum
 *** Terminal (use one)
 + [[https://github.com/alacritty/alacritty][alacritty]] terminal (config not in hypr module)
 + [[https://github.com/kovidgoyal/kitty][kitty]] (not working on my setup)
++ fish (shell)
 *** Themes
 + [[https://github.com/desktop-app/qt5ct][qt5ct]] qt5 configure
 + [[https://github.com/lxde/lxappearance][lxappearance]] (conig?)
 + [[https://github.com/catppuccin/catppuccin][catppuccin-mocha]] gtk theme
++ oh-my-fish (fish theme) ------------------
+*** Fonts
++ nerd-fonts-2048 (icon fonts)
++ JetBrains Mono
++ iosevka
++ Hack
++ Ubuntu
++ kanjistrokeorders
 *** Used utility
 + [[https://github.com/mozilla/?q=firefox&type=all&language=&sort=stargazers][firefox]] browser
 + [[https://github.com/discord][discord]] messenger service
@@ -99,6 +108,9 @@ yay -Syu --noconfirm --needed hyprland-legacyrenderer-git make pipewire wireplum
 + [[https://github.com/GNOME/nautilus][nautilus]] file viewer
 + [[https://github.com/electron/electron][electorn]]
 + emacs (doom) custom IDE
++ neovim
++ neofetch
++ exa (better ls)
 *** Custom Scripts
 Programs that are used in scripts will interact most likely with hyprland or other programs that are run inside this config. For that mather there configs will be stored inside the hypr directory and not at there usual place.
 + [[https://github.com/ArtsyMacaw/wlogout][wlogout]] as a logout manager
