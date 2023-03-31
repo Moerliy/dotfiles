@@ -156,9 +156,11 @@ env = XDG_SESSION_DESKTOP,Hyperland
 env = XDG_SESSION_TYPE,wayland
 
 env = QT_QPA_PLATFORMTHEME,qt5ct
-env = QT_QPA_PLATFORM,"wayland;xcb"
+env = QT_QPA_PLATFORM,wayland;xcb
 env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
-env = QT_PLUGIN_PATH,/usr/lib/qt/plugins/
+#env = QT_PLUGIN_PATH,/usr/lib/qt/plugins/
+
+env = GDK_BACKEND,wayland,x11
 
 env = SDL_VIDEODRIVER,wayland
 env = _JAVA_AWT_WM_NONREPARENTING,1
@@ -607,7 +609,7 @@ exec-once = [workspace 2 silent] $browser
 exec-once = [workspace 8 silent] $discord $electron_flags
 # exec-once = swayidle -w timeout 900 '$lock' timeout 1800 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on' before-sleep '$lock'
 exec-once = swayidle -w timeout 900 '$lock'
-exec-once = ibus-daemon -rxR
+# exec-once = ibus-daemon -rxR
 #+end_src
 
 * Window Rules
