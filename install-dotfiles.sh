@@ -34,6 +34,7 @@ whiptail_git() {
     echo "########################################"
 
     sudo pacman --noconfirm --needed -Syu libnewt git base-devel || error "Failed to install 'whiptail' and 'git'"
+    echo "Finished installing 'whiptail' and 'git'"
 }
 
 whiptail_git
@@ -52,6 +53,7 @@ if ! command -v yay &> /dev/null; then
     makepkg -si --noconfirm || error "Failed to install 'yay'"
     cd ..
     rm -rf yay
+    echo "Finished installing yay"
 else
     echo "yay found"
 fi
@@ -87,162 +89,284 @@ backup() { \
     whiptail --title "Backup" --yesno "Do you want to backup your current configuration?" 8 60
 }
 
-bareclone() { \
-    whiptail --title "Bare Clone" --yesno "Do you want to clone the bare repository?" 8 60
-}
-
-bareclone && bareclone=true || bareclone=false
 backup && backup=true || backup=false
 
-if [ "$backup" = true ]; then
-    backupfile="$HOME/backup."$(date +%Y%m%d%H%M%S)"" && mkdir -p "$backupfile"
-fi
+scipto=$(
+    whiptail --title "Scip" --menu "Do you want to scip and when yes where?" 25 75 10 \
+    "1)" "Don't scip" \
+    "2)" "Go to Hyprland installation" \
+    "3)" "Go to Doom Emacs installation" \
+    "4)" "Go to grub theme installation" \
+    "5)" "Go to sddm theme installation" \
+    "6)" "Go to reboot" \
+    "7)" "Exit" \
+    3>&2 2>&1 1>&3
+)
 
-echo "##############################"
-echo "##                          ##"
-echo "##  Cloning git repository  ##"
-echo "##                          ##"
-echo "##############################"
-
-if [ -d "$HOME/dotfiles" ]; then
-    echo "Directory $HOME/dotfiles exists."
-    if [ "$backup" = true ]; then
-        echo "Backing up $HOME/dotfiles to $backupfile"
-        mv "$HOME/dotfiles" "$backupfile"
-    else
-        echo "Removing $HOME/dotfiles"
-        rm -rf "$HOME/dotfiles"
-    fi
-fi
-
-if [ "$bareclone" = true ]; then
-    mkdir -p "$HOME/dotfiles"
-    git clone --bare https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/dotfiles" || error "Failed to clone the bare repository"
-else
-    git clone https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/dotfiles" || error "Failed to clone the repository"
-fi
-
-echo "################################"
-echo "##                            ##"
-echo "##  Moving dotfiles to home   ##"
-echo "##                            ##"
-echo "################################"
-
-if [ "$backup" = true ]; then
-    echo "Backing up $HOME/.config to $backupfile"
-    mv "$HOME/.config" "$backupfile"
-    echo "Backing up $HOME/LICENCE to $backupfile"
-    mv "$HOME/LICENCE" "$backupfile"
-    echo "Backing up $HOME/README.org to $backupfile"
-    mv "$HOME/README.org" "$backupfile"
-    echo "Backing up $HOME/install-dotfiles.sh to $backupfile"
-    mv "$HOME/install-dotfiles.sh" "$backupfile"
-else
-    echo "Removing $HOME/.config"
-    rm -rf "$HOME/.config"
-    echo "Removing $HOME/LICENCE"
-    rm "$HOME/LICENCE"
-    echo "Removing $HOME/README.org"
-    rm "$HOME/README.org"
-    echo "Removing $HOME/install-dotfiles.sh"
-    rm "$HOME/install-dotfiles.sh"
-fi
-
-if [ "$bareclone" = true ]; then
-    git --git-dir="$HOME/dotfiles" --work-tree="$HOME" checkout || error "Failed to checkout the dotfiles"
-else
-    mv "$HOME/dotfiles/.config" "$HOME/.config"
-    rm -rf "$HOME/dotfiles"
-fi
-
-installhyprland() { \
-    whiptail --title "Installing!" --yesno "Do you want to install Hyprland and the needed packages?" 8 60
-}
-
-installhyprland || error "User choose to exit."
-
-echo "########################################"
-echo "##                                    ##"
-echo "##  Installing Hyprland and packeges  ##"
-echo "##                                    ##"
-echo "########################################"
-
-changehyprlandpackages() {
-    whiptail --title "Installing!" --yesno "Do you want to change the package list for hyprland?" 8 60
-}
-
-if changehyprlandpackages; then
-    vi "$HOME/.config/hypr/install-packages.sh" || error "Failed to open vim"
-    wait
-fi
-
-bash "$HOME/.config/hypr/install-packages.sh" || error "Failed to install Hyprland"
-
-activatesddm() { \
-    whiptail --title "Installing!" --yesno "Do you want to activate sddm?" 8 60
-}
-
-if activatesddm; then
-    sudo systemctl enable sddm.service || error "Failed to enable sddm"
-fi
-
-installdoomemacs() { \
-    whiptail --title "Installing!" --yesno "Do you want to install Doom Emacs and the needed packages?" 8 60
-}
-
-installdoomemacs && installdoomemacs=true || installdoomemacs=false
-
-if [ "$installdoomemacs" = true ]; then
-    echo "############################################"
-    echo "##                                        ##"
-    echo "##  Installing Doom Emacs and packeges    ##"
-    echo "##                                        ##"
-    echo "############################################"
-
-    if [ "$backup" = true ]; then
-        echo "Backing up $HOME/.emacs.d to $backupfile"
-        mv "$HOME/.emacs.d" "$backupfile"
-        echo "Backing up $HOME/.emacs to $backupfile"
-        mv "$HOME/.emacs" "$backupfile"
-        echo "Backing up $HOME/.doom.d to $backupfile"
-        mv "$HOME/.doom.d" "$backupfile"
-    else
-        echo "Removing $HOME/.emacs.d"
-        rm -rf "$HOME/.emacs.d"
-        echo "Removing $HOME/.emacs"
-        rm -rf "$HOME/.emacs"
-        echo "Removing $HOME/.doom.d"
-        rm -rf "$HOME/.doom.d"
-    fi
-
-    changeemacspackages() {
-        whiptail --title "Installing!" --yesno "Do you want to change the package list for Doom Emacs?" 8 60
+getfiles() { \
+    bareclone() { \
+        whiptail --title "Bare Clone" --yesno "Do you want to clone the bare repository?" 8 60
     }
 
-    if changeemacspackages; then
-        vi "$HOME/.config/doom/install-packages.sh" || error "Failed to open vim"
-        wait
+    bareclone && bareclone=true || bareclone=false
+
+    if [ "$backup" = true ]; then
+        backupfile="$HOME/backup.$(date +%Y%m%d%H%M%S)" && mkdir -p "$backupfile"
+        echo "made backup directory $backupfile"
     fi
 
-    bash "$HOME/.config/doom/install-packages.sh" || error "Failed to install Doom Emacs"
+    echo "##############################"
+    echo "##                          ##"
+    echo "##  Cloning git repository  ##"
+    echo "##                          ##"
+    echo "##############################"
 
-    git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.emacs.d" || error "Failed to clone Doom Emacs"
-    "$HOME/.emacs.d/bin/doom" install || error "Failed to install Doom Emacs"
-    "$HOME/.emacs.d/bin/doom" sync || error "Failed to sync Doom Emacs"
-fi
+    if [ -d "$HOME/dotfiles" ]; then
+        echo "Directory $HOME/dotfiles exists."
+        if [ "$backup" = true ]; then
+            echo "Backing up $HOME/dotfiles to $backupfile"
+            mv "$HOME/dotfiles" "$backupfile"
+        else
+            echo "Removing $HOME/dotfiles"
+            rm -rf "$HOME/dotfiles"
+        fi
+    fi
 
-echo "###########################"
-echo "##                       ##"
-echo "##  Finished installing  ##"
-echo "##                       ##"
-echo "###########################"
+    if [ "$bareclone" = true ]; then
+        mkdir -p "$HOME/dotfiles"
+        git clone --bare https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/dotfiles" || error "Failed to clone the bare repository"
+        echo "Finished cloning the bare repository"
+    else
+        git clone https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/dotfiles" || error "Failed to clone the repository"
+        echo "Finished cloning the repository"
+    fi
 
-while true; do
-    read -rp "Do you want to reboot to get your instalation? [Y/n] " yn
-    case $yn in
-        [Yy]* ) reboot;;
-        [Nn]* ) break;;
-        "" ) reboot;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+    echo "################################"
+    echo "##                            ##"
+    echo "##  Moving dotfiles to home   ##"
+    echo "##                            ##"
+    echo "################################"
+
+    if [ "$backup" = true ]; then
+        echo "Backing up $HOME/.config to $backupfile"
+        mv "$HOME/.config" "$backupfile"
+        echo "Backing up $HOME/LICENCE to $backupfile"
+        mv "$HOME/LICENCE" "$backupfile"
+        echo "Backing up $HOME/README.org to $backupfile"
+        mv "$HOME/README.org" "$backupfile"
+        echo "Backing up $HOME/install-dotfiles.sh to $backupfile"
+        mv "$HOME/install-dotfiles.sh" "$backupfile"
+    else
+        echo "Removing $HOME/.config"
+        rm -rf "$HOME/.config"
+        echo "Removing $HOME/LICENCE"
+        rm "$HOME/LICENCE"
+        echo "Removing $HOME/README.org"
+        rm "$HOME/README.org"
+        echo "Removing $HOME/install-dotfiles.sh"
+        rm "$HOME/install-dotfiles.sh"
+    fi
+
+    if [ "$bareclone" = true ]; then
+        git --git-dir="$HOME/dotfiles" --work-tree="$HOME" checkout || error "Failed to checkout the dotfiles"
+        echo "Finished checking out the dotfiles"
+    else
+        mv "$HOME/dotfiles/.config" "$HOME/.config"
+        rm -rf "$HOME/dotfiles"
+        echo "Finished moving the dotfiles"
+    fi
+}
+
+gethyprland() { \
+    installhyprland() { \
+        whiptail --title "Installing!" --yesno "Do you want to install Hyprland and the needed packages?" 8 60
+    }
+
+    installhyprland || error "User choose to exit."
+
+    echo "########################################"
+    echo "##                                    ##"
+    echo "##  Installing Hyprland and packeges  ##"
+    echo "##                                    ##"
+    echo "########################################"
+
+    changehyprlandpackages() {
+        whiptail --title "Installing!" --yesno "Do you want to change the package list for hyprland?" 8 60
+    }
+
+    changehyprlandpackages || error "User choose to exit. You can change the package list at $HOME/dotfiles/.config/hypr/install-packages.sh"
+
+    bash "$HOME/.config/hypr/install-packages.sh" || error "Failed to install Hyprland"
+    echo "Finished installing Hyprland and the needed packages"
+
+    activatesddm() { \
+        whiptail --title "Installing!" --yesno "Do you want to activate sddm?" 8 60
+    }
+
+    if activatesddm; then
+        sudo systemctl enable sddm.service || error "Failed to enable sddm"
+        echo "Finished enabling sddm"
+    fi
+}
+
+getdoomemacs() { \
+    installdoomemacs() { \
+        whiptail --title "Installing!" --yesno "Do you want to install Doom Emacs and the needed packages?" 8 60
+    }
+
+    installdoomemacs && installdoomemacs=true || installdoomemacs=false
+
+    if [ "$installdoomemacs" = true ]; then
+        echo "############################################"
+        echo "##                                        ##"
+        echo "##  Installing Doom Emacs and packeges    ##"
+        echo "##                                        ##"
+        echo "############################################"
+
+        if [ "$backup" = true ]; then
+            echo "Backing up $HOME/.emacs.d to $backupfile"
+            mv "$HOME/.emacs.d" "$backupfile"
+            echo "Backing up $HOME/.emacs to $backupfile"
+            mv "$HOME/.emacs" "$backupfile"
+            echo "Backing up $HOME/.doom.d to $backupfile"
+            mv "$HOME/.doom.d" "$backupfile"
+        else
+            echo "Removing $HOME/.emacs.d"
+            rm -rf "$HOME/.emacs.d"
+            echo "Removing $HOME/.emacs"
+            rm -rf "$HOME/.emacs"
+            echo "Removing $HOME/.doom.d"
+            rm -rf "$HOME/.doom.d"
+        fi
+
+        changeemacspackages() {
+            whiptail --title "Installing!" --yesno "Do you want to change the package list for Doom Emacs?" 8 60
+        }
+
+        changeemacspackages || error "User choose to exit. You can change the package list at $HOME/dotfiles/.config/doom/install-packages.sh"
+
+        bash "$HOME/.config/doom/install-packages.sh" || error "Failed to install Doom Emacs"
+        echo "Finished installing Doom Emacs and the needed packages"
+
+        git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.emacs.d" || error "Failed to clone Doom Emacs"
+        "$HOME/.emacs.d/bin/doom" install || error "Failed to install Doom Emacs"
+        "$HOME/.emacs.d/bin/doom" sync || error "Failed to sync Doom Emacs"
+        echo "Finished installing Doom Emacs"
+    fi
+}
+
+getgrubtheme() { \
+    grubtheme() { \
+        whiptail --title "Installing!" --yesno "Do you want to install the grub theme?" 8 60
+    }
+
+    grubtheme && grubtheme=true || grubtheme=false
+
+    if [ "$grubtheme" = true ]; then
+        echo "############################################"
+        echo "##                                        ##"
+        echo "##  Installing grub theme                 ##"
+        echo "##                                        ##"
+        echo "############################################"
+
+        if [ "$backup" = true ]; then
+            echo "Backing up $HOME/grub to $backupfile"
+            mv "$HOME/grub" "$backupfile"
+        else
+            echo "Removing $HOME/grub"
+            rm -rf "$HOME/grub"
+        fi
+        git clone https://github.com/catppuccin/grub.git "$HOME/grub" || error "Failed to clone grub theme"
+        sudo mv -r "$HOME/grub/src/*" /usr/share/grub/themes/ || error "Failed to copy grub theme"
+        if [ "$backup" = true ]; then
+            echo "Backing up /etc/default/grub to $backupfile"
+            sudo mv /etc/default/grub "$backupfile"
+        fi
+
+        if grep -q -E "(^|\s)GRUB_THEME=" /etc/default/grub; then
+            echo "Changing GRUB_THEME in /etc/default/grub"
+            sudo sed -i "s/GRUB_THEME=.*/GRUB_THEME=\"\/usr\/share\/grub\/themes\/catppuccin-mocha-grub-theme\/theme.txt\"/g" /etc/default/grub || error "Failed to change grub theme"
+        else
+            echo "Adding GRUB_THEME to end of line"
+            sudo echo "GRUB_THEME=\"/usr/share/grub/themes/catppuccin-mocha-grub-theme/theme.txt\"" >> /etc/default/grub || error "Failed to change grub theme"
+        fi
+
+        sudo grub-mkconfig -o /boot/grub/grub.cfg || error "Failed to update grub"
+        rm -rf "$HOME/grub"
+        echo "Finished installing grub theme"
+    fi
+}
+
+getsddmtheme() { \
+    sddmtheme() { \
+        whiptail --title "Installing!" --yesno "Do you want to install the sddm theme?" 8 60
+    }
+
+    sddmtheme && sddmtheme=true || sddmtheme=false
+
+    if [ "$sddmtheme" = true ]; then
+        echo "############################################"
+        echo "##                                        ##"
+        echo "##  Installing sddm theme                 ##"
+        echo "##                                        ##"
+        echo "############################################"
+
+        if [ -f "/etc/sddm.conf" ]; then
+            if [ "$backup" = true ]; then
+                echo "Backing up $HOME/sddm to $backupfile"
+                mv "/etc/sddm.conf" "$backupfile"
+            else
+                echo "Removing $HOME/sddm"
+                rm "/etc/sddm.conf"
+            fi
+        fi
+
+        echo "[Theme]" >> /etc/sddm.conf
+        echo "Current=catppuccin" >> /etc/sddm.conf
+        echo "Finnished installing sddm theme"
+
+    fi
+}
+
+reboot() { \
+    echo "###########################"
+    echo "##                       ##"
+    echo "##  Finished installing  ##"
+    echo "##                       ##"
+    echo "###########################"
+
+    while true; do
+        read -rp "Do you want to reboot to get your instalation? [Y/n] " yn
+        case $yn in
+            [Yy]* ) reboot;;
+            [Nn]* ) break;;
+            "" ) reboot;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+}
+
+case "$scipto" in
+    "1)")
+        echo "Installing all"
+        getfiles && gethyperland && getdoomemacs && getgrubtheme && getsddmtheme && reboot
+    ;;
+    "2)")
+        echo "Sciped cloning the repo"
+        gethyperland && getdoomemacs && getgrubtheme && getsddmtheme && reboot
+    ;;
+    "3)") echo "Sciped clone and hyprland install"
+        getdoomemacs && getgrubtheme && getsddmtheme && reboot
+    ;;
+    "4)") echo "Sciped clone, hyperland and doom emacs install"
+        getgrubtheme && getsddmtheme && reboot
+    ;;
+    "5)") echo "Sciped clone, hyperland, doom emacs and grub theme install"
+        getsddmtheme && reboot
+    ;;
+    "6)") echo "Sciped clone, hyperland, doom emacs, grub theme and sddm theme install"
+        reboot
+    ;;
+    "7)") error "User choose to exit"
+    ;;
+esac
