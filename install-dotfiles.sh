@@ -182,7 +182,7 @@ gethyprland() { \
         whiptail --title "Installing!" --yesno "Do you want to install Hyprland and the needed packages?" 8 60
     }
 
-    installhyprland || error "User choose to exit."
+    installhyprland && error "User choose to exit."
 
     echo "########################################"
     echo "##                                    ##"
@@ -243,7 +243,7 @@ getdoomemacs() { \
             whiptail --title "Installing!" --yesno "Do you want to change the package list for Doom Emacs?" 8 60
         }
 
-        changeemacspackages || error "User choose to exit. You can change the package list at $HOME/dotfiles/.config/doom/install-packages.sh"
+        changeemacspackages && error "User choose to exit. You can change the package list at $HOME/dotfiles/.config/doom/install-packages.sh"
 
         bash "$HOME/.config/doom/install-packages.sh" || error "Failed to install Doom Emacs"
         echo "Finished installing Doom Emacs and the needed packages"
