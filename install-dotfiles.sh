@@ -290,7 +290,7 @@ getgrubtheme() { \
             rm -rf "$HOME/grub"
         fi
         git clone https://github.com/catppuccin/grub.git "$HOME/grub" || error "Failed to clone grub theme"
-        sudo cp -r "$HOME/grub/src/*" /usr/share/grub/themes/ || error "Failed to copy grub theme"
+        sudo mv "$HOME/grub/src/catppuccin-mocha-grub-theme/" /usr/share/grub/themes/ || error "Failed to copy grub theme"
         if [ "$backup" = true ]; then
             echo "Backing up /etc/default/grub to $backupfile"
             sudo mv /etc/default/grub "$backupfile"
