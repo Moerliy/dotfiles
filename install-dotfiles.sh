@@ -301,7 +301,7 @@ getgrubtheme() { \
             sudo sed -i "s/GRUB_THEME=.*/GRUB_THEME=\"\/usr\/share\/grub\/themes\/catppuccin-mocha-grub-theme\/theme.txt\"/g" /etc/default/grub || error "Failed to change grub theme"
         else
             echo "Adding GRUB_THEME to end of line"
-            sudo echo "GRUB_THEME=\"/usr/share/grub/themes/catppuccin-mocha-grub-theme/theme.txt\"" >> /etc/default/grub || error "Failed to change grub theme"
+            sudo echo "GRUB_THEME=\"/usr/share/grub/themes/catppuccin-mocha-grub-theme/theme.txt\"" >> /etc/default/grub || error "Failed to add grub theme at end of file"
         fi
 
         sudo grub-mkconfig -o /boot/grub/grub.cfg || error "Failed to update grub"
