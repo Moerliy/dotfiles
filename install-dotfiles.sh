@@ -362,11 +362,11 @@ reboot() { \
 case "$scipto" in
     "1)")
         echo "Installing all"
-        getfiles && gethyperland && getdoomemacs && getgrubtheme && getsddmtheme && reboot
+        getfiles && gethyprland && getdoomemacs && getgrubtheme && getsddmtheme && reboot
     ;;
     "2)")
         echo "Sciped cloning the repo"
-        gethyperland && getdoomemacs && getgrubtheme && getsddmtheme && reboot
+        gethyprland && getdoomemacs && getgrubtheme && getsddmtheme && reboot
     ;;
     "3)") echo "Sciped clone and hyprland install"
         getdoomemacs && getgrubtheme && getsddmtheme && reboot
