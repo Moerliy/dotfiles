@@ -182,7 +182,7 @@ gethyprland() { \
         whiptail --title "Installing!" --yesno "Do you want to install Hyprland and the needed packages?" 8 60
     }
 
-    installhyprland && error "User choose to exit."
+    installhyprland || error "User choose to exit."
 
     echo "########################################"
     echo "##                                    ##"
@@ -194,7 +194,7 @@ gethyprland() { \
         whiptail --title "Installing!" --yesno "Do you want to change the package list for hyprland?" 8 60
     }
 
-    changehyprlandpackages || error "User choose to exit. You can change the package list at $HOME/dotfiles/.config/hypr/install-packages.sh"
+    changehyprlandpackages && error "User choose to exit. You can change the package list at $HOME/dotfiles/.config/hypr/install-packages.sh"
 
     bash "$HOME/.config/hypr/install-packages.sh" || error "Failed to install Hyprland"
     echo "Finished installing Hyprland and the needed packages"
