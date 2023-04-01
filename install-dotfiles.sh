@@ -251,6 +251,19 @@ getdoomemacs() { \
         git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.emacs.d" || error "Failed to clone Doom Emacs"
         "$HOME/.emacs.d/bin/doom" install || error "Failed to install Doom Emacs"
         "$HOME/.emacs.d/bin/doom" sync || error "Failed to sync Doom Emacs"
+
+        startdaemon() {
+            whiptail --title "Installing!" --yesno "Do you want to start the emcas daemon?" 8 60
+        }
+
+        startdaemon && startdaemon=true || startdaemon=false
+
+        if [ "$startdaemon" = true ]; then
+            systemctl --user enable emacs.service || error "Failed to enable emacs daemon"
+            systemctl --user start emacs.service || error "Failed to start emacs daemon"
+            echo "Finished starting the emacs daemon"
+        fi
+
         echo "Finished installing Doom Emacs"
     fi
 }
