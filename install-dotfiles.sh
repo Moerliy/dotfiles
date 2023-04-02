@@ -304,6 +304,15 @@ getgrubtheme() { \
             sudo bash -c "echo "GRUB_THEME=\"/usr/share/grub/themes/catppuccin-mocha-grub-theme/theme.txt\"" >> /etc/default/grub" || error "Failed to add grub theme at end of file"
         fi
 
+        if grep -q -E "(^|\s)GRUB_TIMEOUT=" /etc/default/grub; then
+            echo "Changing GRUB_TIMEOUT in /etc/default/grub"
+            sudo sed -i "s/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=3/g" /etc/default/grub || error "Failed to change grub timeout"
+        else
+            echo "Adding GRUB_TIMEOUT to end of line"
+            sudo bash -c "echo "GRUB_TIMEOUT=3" >> /etc/default/grub" || error "Failed to add grub timeout at end of file"
+        fi
+
+
         sudo grub-mkconfig -o /boot/grub/grub.cfg || error "Failed to update grub"
         rm -rf "$HOME/grub"
         echo "Finished installing grub theme"
@@ -348,15 +357,17 @@ reboot() { \
     echo "##                       ##"
     echo "###########################"
 
-    while true; do
-        read -rp "Do you want to reboot to get your instalation? [Y/n] " yn
-        case $yn in
-            [Yy]* ) reboot;;
-            [Nn]* ) break;;
-            "" ) reboot;;
-            * ) echo "Please answer yes or no.";;
-        esac
-    done
+    askreboot() { \
+        whiptail --title "Installing!" --yesno "Do you want to reboot now?" 8 60
+    }
+
+    askreboot && askreboot=true || askreboot=false
+
+    if [ "$askreboot" = true ]; then
+        sudo reboot
+    else
+        echo "You can reboot later by running sudo reboot"
+    fi
 }
 
 case "$scipto" in
