@@ -345,6 +345,10 @@ getsddmtheme() { \
 
         sudo bash -c "echo "[Theme]" >> /etc/sddm.conf" || error "Failed to add theme to sddm.conf"
         sudo bash -c "echo "Current=catppuccin" >> /etc/sddm.conf" || error "Failed to add theme to sddm.conf"
+        sudo bash -c "echo "[Wayland]" >> /etc/sddm.conf" || error "Failed to add theme to sddm.conf"
+        sudo bash -c "echo "EnableHiDPI=true" >> /etc/sddm.conf" || error "Failed to add theme to sddm.conf"
+        sudo bash -c "echo "[X11]" >> /etc/sddm.conf" || error "Failed to add theme to sddm.conf"
+        sudo bash -c "echo "EnableHiDPI=true" >> /etc/sddm.conf" || error "Failed to add theme to sddm.conf"
         echo "Finnished installing sddm theme"
 
     fi
