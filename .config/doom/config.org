@@ -73,6 +73,7 @@ I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dot
 - [[#dap-debugger][Dap Debugger]]
 - [[#flycheck][Flycheck]]
 - [[#copitlot][Copitlot]]
+- [[#chatgpt][ChatGPT]]
 - [[#translater][Translater]]
 - [[#fix][Fix?]]
 
@@ -1616,6 +1617,11 @@ Copilot.el is an Emacs plugin for GitHub Copilot.
       (:prefix ("t" . "toggle")
        :desc "Toggle Copitlot" "p" #'copilot-mode))
 #+END_SRC
+
+* ChatGPT
+#+begin_src emacs-lisp
+
+#+end_src
 
 * Translater
 Brings quick an easy translations to Emacs with [[https://github.com/lorniu/go-translate][go-translate]].

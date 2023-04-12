@@ -857,6 +857,8 @@
       (:prefix ("t" . "toggle")
        :desc "Toggle Copitlot" "p" #'copilot-mode))
 
+
+
 (use-package! go-translate)
 (setq gts-translate-list '(("de" "en")))
 
