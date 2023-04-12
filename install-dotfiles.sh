@@ -134,10 +134,10 @@ getfiles() { \
 
     if [ "$bareclone" = true ]; then
         mkdir -p "$HOME/dotfiles"
-        git clone --bare https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/dotfiles" || error "Failed to clone the bare repository"
+        git clone --bare https://github.com/Moerliy/dotfiles.git "$HOME/dotfiles" || error "Failed to clone the bare repository"
         echo "Finished cloning the bare repository"
     else
-        git clone https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/dotfiles" || error "Failed to clone the repository"
+        git clone https://github.com/Moerliy/dotfiles.git "$HOME/dotfiles" || error "Failed to clone the repository"
         echo "Finished cloning the repository"
     fi
 

@@ -22,7 +22,7 @@ Follow [[https://wiki.archlinux.org/title/Installation_guide][Arch Wiki]] and in
 
 ** Script
 #+begin_src bash :tangle no
-curl https://gitlab.gleissner.com/Moritz/dotfiles/-/raw/master/install-dotfiles.sh | bash
+curl https://raw.githubusercontent.com/Moerliy/dotfiles/master/install-dotfiles.sh | bash
 #+end_src
 
 ** Manual Install
@@ -36,7 +36,7 @@ There are two ways you can clone the git:
 **** A.The normal way with git clone
 1. Clone The Repository:
 #+begin_src bash :tangle no
-git clone https://gitlab.gleissner.com/Moritz/dotfiles.git
+git clone https://github.com/Moerliy/dotfiles.git
 #+end_src
 2. Move the files you want to use from =$HOME/dotfiles/*= to =$HOME/*=
 
@@ -45,7 +45,7 @@ This will make use of gits bare repository feature.
 If you are interested in managing you dotfiles the proper way you should have a look at [[https://www.atlassian.com/git/tutorials/dotfiles][this]].
 #+begin_src bash :tangle no
 mkdir "$HOME/dotfiles"
-git clone --bare https://gitlab.gleissner.com/Moritz/dotfiles.git "$HOME/dotfiles"
+git clone --bare https://github.com/Moerliy/dotfiles.git "$HOME/dotfiles"
 git --git-dir=$HOME/dotfiles --work-dir=$HOME checkout master
 #+end_src
 
