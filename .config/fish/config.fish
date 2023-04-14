@@ -8,6 +8,9 @@ fish_add_path --path "$HOME/.local/bin"
 fish_add_path --path "$HOME/go/bin"
 fish_add_path --path "$HOME/.ghcup/bin"
 
+# starship
+starship init fish | source
+
 # oh my fish settings
 set -g theme_display_git yes
 set -g theme_display_git_untracked yes
