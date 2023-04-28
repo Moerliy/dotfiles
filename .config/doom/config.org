@@ -75,6 +75,7 @@ I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dot
 - [[#copitlot][Copitlot]]
 - [[#chatgpt][ChatGPT]]
 - [[#translater][Translater]]
+- [[#anki][Anki]]
 - [[#fix][Fix?]]
 
 * Installation
@@ -1638,6 +1639,11 @@ Brings quick an easy translations to Emacs with [[https://github.com/lorniu/go-t
 (map! :leader
       (:prefix ("T" . "Translate")
        :desc "Translate region" "r" #'gts-do-translate))
+#+end_src
+
+* Anki
+#+begin_src emacs-lisp
+(use-package! anki-editor)
 #+end_src
 
 * Fix?

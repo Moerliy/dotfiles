@@ -872,6 +872,8 @@
       (:prefix ("T" . "Translate")
        :desc "Translate region" "r" #'gts-do-translate))
 
+(use-package! anki-editor)
+
 (after! projectile
   (setq projectile-project-root-files-bottom-up
         (remove ".git" projectile-project-root-files-bottom-up)))
