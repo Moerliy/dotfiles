@@ -189,7 +189,7 @@ env = XDG_CURRENT_DESKTOP,Hyprland
 env = XDG_SESSION_DESKTOP,Hyperland
 env = XDG_SESSION_TYPE,wayland
 
-env = QT_QPA_PLATFORMTHEME,qt5ct
+env = QT_QPA_PLATFORMTHEME,qt6ct
 env = QT_QPA_PLATFORM,wayland;xcb
 env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
 #env = QT_PLUGIN_PATH,/usr/lib/qt/plugins/
@@ -205,6 +205,9 @@ env = GTK_THEME,Catppuccin-Mocha-Standard-Mauve-Dark
 
 env = MOZ_DISABLE_RDD_SANDBOX,1
 env = MOZ_ENABLE_WAYLAND,1
+
+env = PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION,python
+env = ANKI_WAYLAND,1
 
 #env = MESA_GL_VERSION_OVERRIDE,3.3
 #env = MESA_GLSL_VERSION_OVERRIDE,330
@@ -286,7 +289,7 @@ animations {
 #+begin_src conf
 input {
   kb_layout = de,us
-  # kb_variant = altgr-intl
+  kb_variant = mac
   sensitivity = 0.25
   accel_profile = flat
   follow_mouse = 1
@@ -400,6 +403,8 @@ bind = , C, exec, $scriptsDir/menu
 bind = , C, submap, reset
 bind = , M, exec, $music $electron_flags
 bind = , M, submap, reset
+bind = , A, exec, $HOME/.local/bin/anki
+bind = , A, submap, reset
 
 submap = reset
 #+end_src
