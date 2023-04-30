@@ -67,6 +67,10 @@ alias cp="cp -i"
 alias mv='mv -i'
 alias rm='rm -i'
 
+# bat
+alias cat='bat'
+alias man='batman'
+
 # git
 alias addup='git add -u'
 alias addall='git add .'
