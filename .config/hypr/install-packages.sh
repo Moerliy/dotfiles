@@ -5,5 +5,3 @@ yay -Syu --noconfirm --needed hyprland-legacyrenderer-git mako pipewire wireplum
 if [ ! -d "$HOME/.local/share/omf" ]; then
     curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 fi
-
-systemctl enable bluetooth
