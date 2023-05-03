@@ -260,7 +260,6 @@ getdoomemacs() { \
 
         if [ "$startdaemon" = true ]; then
             systemctl --user enable emacs.service || error "Failed to enable emacs daemon"
-            systemctl --user start emacs.service || error "Failed to start emacs daemon"
             echo "Finished starting the emacs daemon"
         fi
 
