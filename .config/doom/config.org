@@ -109,6 +109,7 @@ yay -Syu --noconfirm --needed emacs-nativecomp hunspell hunspell-en_us libvterm 
 pip install pytest nose black pyflakes isort python-language-server grib
 
 # rustup component
+rustup default stable
 rustup component add clippy-preview rustfmt-preview
 
 # cargo installs
@@ -126,12 +127,12 @@ go install github.com/cweill/gotests/gotests@latest
 go install github.com/fatih/gomodifytags@latest
 
 # ghcup installs
-if ! command -v ghcup &> $HOME/.ghcup/bin/ghcup; then
-    curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-fi
-ghcup install ghc latest
-ghcup install cabal latest
-ghcup install hls latest
+#if ! command -v ghcup &> $HOME/.ghcup/bin/ghcup; then
+#    curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+#fi
+#ghcup install ghc latest
+#ghcup install cabal latest
+#ghcup install hls latest
 #+end_src
 
 *** Packman Installs
