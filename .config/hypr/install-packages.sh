@@ -5,3 +5,7 @@ yay -Syu --noconfirm --needed hyprland-legacyrenderer-git mako pipewire wireplum
 # if [ ! -d "$HOME/.local/share/omf" ]; then
 #     curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 # fi
+
+# check and delete other xdg-desktop-portal's
+echo "removing other xdg-desktop-portal instances"
+yay -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk
