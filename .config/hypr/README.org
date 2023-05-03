@@ -68,7 +68,7 @@ This will import all the packages listed below:
 
 #+begin_src bash :tangle install-packages.sh
 #!/bin/bash
-yay -Syu --noconfirm --needed hyprland-legacyrenderer-git mako pipewire wireplumber alsa-utils pipewire-alsa pipewire-pulse bluez bluez-utils xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox armcord-bin youtubemusic-nativefier nextcloud-client nautilus electron20-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swaybg wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git fish starship neofetch btop htop vim neovim exa ttf-nerd-fonts-symbols-2048-em ttf-hack ttf-ubuntu-font-family ttf-kanjistrokeorders ttf-iosevka adobe-source-han-mono-jp-fonts noto-fonts-emoji packer breeze bat-extras
+yay -Syu --noconfirm --needed hyprland-legacyrenderer-git mako pipewire wireplumber alsa-utils pipewire-alsa pipewire-pulse bluez bluez-utils xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox armcord-bin youtubemusic-nativefier nextcloud-client nautilus electron20-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swaybg wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git fish starship neofetch btop htop vim neovim exa nerd-fonts ttf-hack ttf-ubuntu-font-family ttf-kanjistrokeorders ttf-iosevka adobe-source-han-mono-jp-fonts noto-fonts-emoji packer breeze bat-extras checkupdates+aur waybar-mpris-git
 
 # oh my fish instalation
 # if [ ! -d "$HOME/.local/share/omf" ]; then
@@ -110,7 +110,7 @@ yay -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk
 + starship (shell theme)
 + breeze
 *** Fonts
-+ nerd-fonts-2048 (icon fonts)
++ nerd-fonts
 + JetBrains Mono
 + iosevka
 + Hack
@@ -133,6 +133,7 @@ yay -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk
 + htop
 + btop
 + bat (with extras)
++ waybar-mpri
 
 *** Custom Scripts
 Programs that are used in scripts will interact most likely with hyprland or other programs that are run inside this config. For that mather there configs will be stored inside the hypr directory and not at there usual place.
@@ -157,6 +158,7 @@ Programs that are used in scripts will interact most likely with hyprland or oth
 + [[https://github.com/mpv-player/mpv][mpv]] cl-musicplayer
 + [[https://github.com/Cloudef/bemenu][bemenu]] (wayland version)
 + [[https://github.com/hyprwm/hyprpicker][hyprpicker]] wlroots-compatible Wayland color picker
++ checkupdates+aur
 
 * File-Variables
 #+begin_src conf
