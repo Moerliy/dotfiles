@@ -182,7 +182,12 @@ gethyprland() { \
         whiptail --title "Installing!" --yesno "Do you want to install Hyprland and the needed packages?" 8 60
     }
 
+    installfonts() { \
+        whiptail --title "Installing!" --yesno "Do you want to install all my fonts?" 8 60
+    }
+
     installhyprland || error "User choose to exit."
+    installfonts && installfonts=true || installfonts=false
 
     echo "########################################"
     echo "##                                    ##"
@@ -198,6 +203,12 @@ gethyprland() { \
 
     bash "$HOME/.config/hypr/install-packages.sh" || error "Failed to install Hyprland"
     echo "Finished installing Hyprland and the needed packages"
+
+    if [ "$installfonts" = true ]; then
+        echo "Installing fonts"
+        bash "$HOME/.config/hypr/install-fonts.sh" || error "Failed to install all my fonts"
+        echo "Finished installing all my fonts"
+    fi
 
     activatesddm() { \
         whiptail --title "Installing!" --yesno "Do you want to activate sddm?" 8 60
