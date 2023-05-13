@@ -941,3 +941,4 @@
 (after! projectile
   (setq projectile-project-root-files-bottom-up
         (remove ".git" projectile-project-root-files-bottom-up)))
+(setq pdf-latex-command "lualatex")
