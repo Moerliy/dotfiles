@@ -68,7 +68,7 @@ This will import all the packages listed below:
 
 #+begin_src bash :tangle install-packages.sh
 #!/bin/bash
-yay -Syu --noconfirm --needed hyprland-git mako pipewire wireplumber alsa-utils pipewire-alsa pipewire-pulse bluez bluez-utils xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox webcord-git youtubemusic-nativefier nextcloud-client nautilus electron20-bin electron24-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swaybg wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git fish starship neofetch btop htop vim neovim exa packer breeze bat-extras checkupdates+aur waybar-mpris-git
+yay -Syu --noconfirm --needed hyprland-git mako pipewire wireplumber alsa-utils pipewire-alsa pipewire-pulse bluez bluez-utils xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox discord-screenaudio youtubemusic-nativefier nextcloud-client nautilus electron20-bin electron24-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swaybg wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git fish starship neofetch btop htop vim neovim exa packer breeze bat-extras checkupdates+aur waybar-mpris-git
 
 # oh my fish instalation
 # if [ ! -d "$HOME/.local/share/omf" ]; then
@@ -187,7 +187,7 @@ $files = nautilus
 $browser = firefox
 $electron_flags = -enable-features=UseOzonePlatform -ozone-platform=wayland
 $music = youtubemusic-nativefier
-$discord = webcord
+$discord = discord-screenaudio
 #+end_src
 
 * Env-Variables
@@ -406,7 +406,7 @@ bind = , E, exec, emacsclient -c -a emacs
 bind = , E, submap, reset
 bind = , B, exec, [workspace 2] MOZ_USE_XINPUT2=1 $browser
 bind = , B, submap, reset
-bind = , D, exec, $discord $electron_flags
+bind = , D, exec, $discord
 bind = , D, submap, reset
 bind = , C, exec, $scriptsDir/menu
 bind = , C, submap, reset
@@ -544,7 +544,7 @@ bind = $mainMod, Return, exec, $term
 bind = $mainMod, W, exec, [workspace 2] MOZ_USE_XINPUT2=1 $browser
 bind = $mainMod SHIFT, E, exec, $files      # rethink binds
 bind = $mainMod SHIFT, O, exec, $colorpicker
-bind = $mainMod SHIFT, D, exec, $discord $electron_flags
+bind = $mainMod SHIFT, D, exec, $discord
 bind = $mainMod SHIFT, L, exec, $lock
 bind = $mainMod, Escape, exec, $logout
 bindr = $mainMod SHIFT, C, exec, pkill bemenu || $scriptsDir/bemenu_input -l    # terminal command without terminal
@@ -661,7 +661,7 @@ exec-once = [workspace 1 silent] $term
 # exec-once = $scriptsDir/portal
 exec-once = copyq
 exec-once = [workspace 2 silent] $browser
-exec-once = [workspace 8 silent] $discord $electron_flags
+exec-once = [workspace 8 silent] $discord
 # exec-once = swayidle -w timeout 900 '$lock' timeout 1800 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on' before-sleep '$lock'
 exec-once = swayidle -w timeout 900 '$lock'
 # exec-once = ibus-daemon -rxR
