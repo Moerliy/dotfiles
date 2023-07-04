@@ -1,6 +1,6 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    neofetch
+    neofetch --kitty
 end
 
 # set PATH so it includes user's private ~/.local/bin if it exists
@@ -83,6 +83,7 @@ alias pull='git pull origin'
 alias push='git push origin'
 alias tag='git tag'
 alias newtag='git tag -a'
+alias gst='git status'
 
 # config dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'

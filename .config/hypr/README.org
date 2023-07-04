@@ -172,7 +172,7 @@ $mainMod = SUPER
 $localBin = $HOME/.local/bin
 $scriptsDir = $HOME/.config/hypr/scripts
 
-$term = alacritty
+$term = kitty
 $menu = $scriptsDir/menu
 $powermenu = $scriptsDir/powermenu  # redundant because of wlogout and never used
 $volume = $scriptsDir/volume
