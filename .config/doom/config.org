@@ -103,7 +103,7 @@ This download all the imports down below:
 
 #+begin_src bash :tangle install-packages.sh
 #!/bin/bash
-yay -Syu --noconfirm --needed emacs-nativecomp hunspell hunspell-en_us libvterm languagetool nodejs npm yarn lldb gdb unzip docker docker-compose docker-machine editorconfig-checker sqlite ripgrep git wl-clipboard clang ccls go gopls jdk11-openjdk texlive-most gnuplot marked python pyright rubocop rustup mpd mpc maim scrot gnome-screenshot rust-analyzer tidy stylelint python-pipenv curl gcc make ncurses man-pages xdg-utils dockerfile-language-server wordnet-cli cmake-language-server proselint ktlint shellcheck-bin js-beautify ttf-jetbrains-mono
+yay -Syu --noconfirm --needed emacs-nativecomp hunspell hunspell-en_us libvterm languagetool nodejs npm vue yarn lldb gdb unzip docker docker-compose docker-machine editorconfig-checker sqlite ripgrep git wl-clipboard clang ccls go gopls jdk11-openjdk texlive-most gnuplot marked python pyright rubocop rustup mpd mpc maim scrot gnome-screenshot rust-analyzer tidy stylelint python-pipenv curl gcc make ncurses man-pages xdg-utils dockerfile-language-server wordnet-cli cmake-language-server proselint ktlint shellcheck-bin js-beautify ttf-jetbrains-mono
 
 # pip installs
 pip install pytest nose black pyflakes isort python-language-server grib
@@ -187,6 +187,7 @@ go install github.com/fatih/gomodifytags@latest
 
 *** Yay Installs
 + [[https://aur.archlinux.org/packages/dockerfile-language-server][dockerfile-language-server]] language server for Dockerfiles
++ vue
 + [[https://aur.archlinux.org/packages/wordnet-cli][wordnet-cli]] A CLI fontend for the WordNet Database
 + [[https://github.com/regen100/cmake-language-server][cmake-language-server]] CMake LSP Implementation.
 + [[https://github.com/amperser/proselint][proselint]] A linter for prose
@@ -1719,4 +1720,8 @@ Can't remember what it was for 🙃
   (setq projectile-project-root-files-bottom-up
         (remove ".git" projectile-project-root-files-bottom-up)))
 (setq pdf-latex-command "lualatex")
+(use-package vue-mode
+  :mode "\\.vue\\'"
+  :config
+  (add-hook 'vue-mode-hook #'lsp))
 #+END_SRC

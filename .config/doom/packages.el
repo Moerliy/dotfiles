@@ -83,6 +83,8 @@
 (package! minimap)
 (package! olivetti)
 (package! go-translate)
+(package! vue-mode)
+(package! vue-html-mode)
 (package! copilot
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
 (package! org-appear
