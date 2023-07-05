@@ -126,6 +126,8 @@ go install golang.org/x/tools/cmd/guru@latest
 go install github.com/cweill/gotests/gotests@latest
 go install github.com/fatih/gomodifytags@latest
 
+sudo npm install -g vue-tsc
+
 # ghcup installs
 #if ! command -v ghcup &> $HOME/.ghcup/bin/ghcup; then
 #    curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
@@ -225,6 +227,9 @@ go install github.com/fatih/gomodifytags@latest
 + [[https://github.com/alvarolm/GoGuru][guru]] answering questions about Go source code
 + [[https://pkg.go.dev/github.com/cweill/gotests][gotests]] Go tests
 + [[https://pkg.go.dev/github.com/fatih/gomodifytags][gomodifytags]] Go tool to modify/update field tags
+
+*** npm Installs
++ vue-tsc
 
 * Beacon
 Never lose your cursor. When you scroll, your cursor will shine. This is a global minor-mode. Turn it on everywhere with:

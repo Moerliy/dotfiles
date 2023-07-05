@@ -22,6 +22,8 @@ go install golang.org/x/tools/cmd/guru@latest
 go install github.com/cweill/gotests/gotests@latest
 go install github.com/fatih/gomodifytags@latest
 
+sudo npm install -g vue-tsc
+
 # ghcup installs
 #if ! command -v ghcup &> $HOME/.ghcup/bin/ghcup; then
 #    curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
