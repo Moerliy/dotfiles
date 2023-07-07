@@ -237,7 +237,9 @@
        :desc "Evaluate last sexpression" "l" #'eval-last-sexp
        :desc "Evaluate elisp in region" "r" #'eval-region))
 
-(setq browse-url-browser-function 'eww-browse-url)
+;; (setq browse-url-browser-function 'eww-browse-url)
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "firefox")
 (map! :leader
       :desc "Search web for text between BEG/END"
       "s w" #'eww-search-words

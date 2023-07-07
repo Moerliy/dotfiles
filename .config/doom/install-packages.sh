@@ -1,8 +1,8 @@
 #!/bin/bash
-yay -Syu --noconfirm --needed emacs-nativecomp hunspell hunspell-en_us libvterm languagetool nodejs npm vue yarn lldb gdb unzip docker docker-compose docker-machine editorconfig-checker sqlite ripgrep git wl-clipboard clang ccls go gopls jdk11-openjdk texlive-most gnuplot marked python pyright rubocop rustup mpd mpc maim scrot gnome-screenshot rust-analyzer tidy stylelint python-pipenv curl gcc make ncurses man-pages xdg-utils dockerfile-language-server wordnet-cli cmake-language-server proselint ktlint shellcheck-bin js-beautify ttf-jetbrains-mono
+yay -Syu --noconfirm --needed emacs-nativecomp hunspell hunspell-en_us libvterm languagetool nodejs npm vue yarn lldb gdb unzip docker docker-compose docker-machine editorconfig-checker sqlite ripgrep git wl-clipboard clang ccls go gopls jdk11-openjdk texlive-most gnuplot marked python pyright rubocop rustup mpd mpc maim scrot gnome-screenshot rust-analyzer tidy stylelint python-pipenv curl gcc make ncurses man-pages xdg-utils dockerfile-language-server wordnet-cli cmake-language-server proselint ktlint shellcheck-bin js-beautify ttf-jetbrains-mono python-grip-git python-pytest python-nose python-black python-pyflakes python-isort
 
-# pip installs
-pip install pytest nose black pyflakes isort python-language-server grib
+# pip installs aren't working anymore
+#pip install python-language-server
 
 # rustup component
 rustup default stable

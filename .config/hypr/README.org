@@ -68,7 +68,7 @@ This will import all the packages listed below:
 
 #+begin_src bash :tangle install-packages.sh
 #!/bin/bash
-yay -Syu --noconfirm --needed hyprland-git mako pipewire wireplumber alsa-utils pipewire-alsa pipewire-pulse bluez bluez-utils xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox discord-screenaudio youtubemusic-nativefier nextcloud-client nautilus electron20-bin electron24-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swaybg wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git fish starship neofetch btop htop vim neovim exa packer breeze bat-extras checkupdates+aur waybar-mpris-git
+yay -Syu --noconfirm --needed hyprland-git mako pipewire wireplumber alsa-utils pipewire-alsa pipewire-pulse bluez bluez-utils xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox discord-screenaudio youtubemusic-nativefier nextcloud-client nautilus electron20-bin electron24-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swaybg wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git fish starship neofetch btop htop vim neovim exa packer breeze bat-extras checkupdates+aur waybar-mpris-git postman-bin
 
 # oh my fish instalation
 # if [ ! -d "$HOME/.local/share/omf" ]; then
@@ -129,6 +129,7 @@ yay -Syu --noconfirm nerd-fonts ttf-hack ttf-ubuntu-font-family ttf-kanjistrokeo
 + [[https://github.com/nextcloud][nextcloud]] file sync (not working)
 + [[https://github.com/GNOME/nautilus][nautilus]] file viewer
 + [[https://github.com/electron/electron][electorn]]
++ postman
 + emacs (doom) custom IDE
 + vim
 + neovim
@@ -424,6 +425,8 @@ bind = , A, exec, $HOME/.local/bin/anki
 bind = , A, submap, reset
 bind = , S, exec, emacsclient -e '(make-orgcapture-frame)'
 bind = , S, submap, reset
+bind = , P, exec, postman $electron_flags
+bind = , P, submap, reset
 
 submap = reset
 #+end_src
