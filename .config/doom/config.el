@@ -948,3 +948,5 @@
   :mode "\\.vue\\'"
   :config
   (add-hook 'vue-mode-hook #'lsp))
+(use-package color-identifiers-mode)
+(add-hook 'after-init-hook 'global-color-identifiers-mode)

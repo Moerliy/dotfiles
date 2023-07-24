@@ -90,3 +90,4 @@
 (package! org-appear
   :recipe (:host github :repo "awth13/org-appear" :files ("*.el")))
 (package! anki-editor)
+(package! color-identifiers-mode)
