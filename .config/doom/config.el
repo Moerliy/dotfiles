@@ -940,6 +940,13 @@
     (delete-other-windows)
     )
 
+(map! :leader
+      (:prefix ("j" . "ace jump")
+       :desc "jump line mode" "l" #'ace-jump-line-mode
+       :desc "jump word mode" "w" #'ace-jump-word-mode
+       :desc "jump char mode" "c" #'ace-jump-char-mode
+       :desc "jump to previous point" "p" #'ace-jump-mode-pop-mark))
+
 (after! projectile
   (setq projectile-project-root-files-bottom-up
         (remove ".git" projectile-project-root-files-bottom-up)))
