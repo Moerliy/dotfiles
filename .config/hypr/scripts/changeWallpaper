@@ -10,4 +10,4 @@ if [[ $(pidof swaybg) ]]; then
 fi
 
 notify-send -i ${DIR}/${RANDOMPICS} "Wallpaper Changed" ${RANDOMPICS}
-swaybg -m fill -i ${DIR}/${RANDOMPICS}
+swww img --transition-type wipe --transition-angle 300 ${DIR}/${RANDOMPICS}

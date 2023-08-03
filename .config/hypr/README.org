@@ -40,6 +40,7 @@ I also want to mention that this repo was build on [[https://github.com/nawfalmr
   - [[#resize][Resize]]
   - [[#move][Move]]
   - [[#focus][Focus]]
+  - [[#grimblast][Grimblast]]
   - [[#keychordless][Keychordless]]
   - [[#not-working][Not Working]]
 - [[#dispatchers][Dispatchers]]
@@ -68,7 +69,7 @@ This will import all the packages listed below:
 
 #+begin_src bash :tangle install-packages.sh
 #!/bin/bash
-yay -Syu --noconfirm --needed hyprland-git mako pipewire wireplumber alsa-utils pipewire-alsa pipewire-pulse bluez bluez-utils xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox discord-screenaudio youtubemusic-nativefier nextcloud-client nautilus electron20-bin electron24-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swaybg wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git fish starship neofetch btop htop vim neovim exa packer breeze bat-extras checkupdates+aur waybar-mpris-git postman-bin
+yay -Syu --noconfirm --needed hyprland-git mako pipewire wireplumber alsa-utils pipewire-alsa pipewire-pulse bluez bluez-utils xdg-desktop-portal-hyprland-git polkit-kde-agent qt5-wayland qt6-wayland sddm-catppuccin-git waybar-hyprland-git alacritty kitty qt5ct lxappearance catppuccin-gtk-theme-mocha firefox discord-screenaudio youtubemusic-nativefier nextcloud-client nautilus electron20-bin electron24-bin wlogout swayidle swaylock-effects wofi pamixer playerctl slurp grim jq swww-git wf-recorder wl-clipboard copyq wlroots light xorg-xwayland yad viewnior mpv bemenu-wayland hyprpicker-git fish starship neofetch btop htop vim neovim exa packer breeze bat-extras checkupdates+aur waybar-mpris-git postman-bin
 
 # oh my fish instalation
 # if [ ! -d "$HOME/.local/share/omf" ]; then
@@ -151,7 +152,7 @@ Programs that are used in scripts will interact most likely with hyprland or oth
 + [[https://github.com/emersion/slurp][slurp]] region selector for wayland
 + [[https://github.com/GrimAnticheat/Grim][grim]] screenshot utility
 + [[https://github.com/stedolan/jq][jq]] json utility to parse hyprctl
-+ [[https://github.com/swaywm/swaybg][swaybg]] wallpaper utility
++ [[https://github.com/Horus645/swww][swww]] wallpaper utility
 + [[https://github.com/ammen99/wf-recorder][wf-recorder]] screen recorder
 + [[https://github.com/bugaevc/wl-clipboard][wl-clipboard]] clipboard
 + [[https://github.com/hluk/CopyQ][copyq]] advanced clipboard
@@ -188,7 +189,7 @@ $files = nautilus
 $browser = firefox
 $electron_flags = -enable-features=UseOzonePlatform -ozone-platform=wayland
 $music = youtubemusic-nativefier
-$discord = discord-screenaudio
+$discord = armcord $electron_flags
 #+end_src
 
 * Env-Variables
@@ -223,9 +224,9 @@ env = ANKI_WAYLAND,1
 #env = MESA_GLSL_VERSION_OVERRIDE,330
 #env = MESA_GLES_VERSION_OVERRIDE,3.1
 
-#env = GTK_IM_MODULE,ibus
-#env = QT_IM_MODULE,ibus
-#env = XMODIFIERS,@im=ibus
+env = GTK_IM_MODULE,ibus
+env = QT_IM_MODULE,ibus
+env = XMODIFIERS,@im=ibus
 
 # env = HYPRLAND_LOG_WLR=1
 #+end_src
@@ -396,6 +397,7 @@ bind = , V, submap, volume
 bind = , R, submap, resize
 bind = , M, submap, move
 bind = , F, submap, focus
+bind = , G, submap, grimblast
 bind = , S, togglespecialworkspace,
 bind = , S, submap, reset
 bind = SHIFT, S, movetoworkspace, special
@@ -546,6 +548,20 @@ bind = SHIFT, right, exec, hyprctl dispatch workspace e+1
 submap = reset
 #+end_src
 
+** Grimblast
+#+begin_src conf
+submap = grimblast
+bind = , escape, submap, reset
+bind = , O, exec, $scriptsDir/grimblast -n copy output
+bind = , O, submap, reset
+bind = , S, exec, $scriptsDir/grimblast -n copy screen
+bind = , S, submap, reset
+bind = , W, exec, $scriptsDir/grimblast -n copy active
+bind = , W, submap, reset
+bind = , A, exec, $scriptsDir/grimblast -n copy area
+bind = , A, submap, reset
+submap = reset
+#+end_src
 ** Keychordless
 #+begin_src conf
 bind = $mainMod, Q, killactive,
@@ -663,11 +679,12 @@ bindr = $mainMod SHIFT, Y, exec, pkill wofi || $wofi_beats  # not working
 * Dispatchers
 #+begin_src conf
 exec-once = nmcli device connect wlan0
-exec-once = swaybg -m fill -i $HOME/.config/hypr/bg/wave_japanese.jpg
 exec-once = $scriptsDir/startup
+exec-once = swww-daemon
 exec-once = /usr/lib/polkit-kde-authentication-agent-1
 exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec-once = swww img $HOME/.config/hypr/bg/nature-arch.jpg
 exec-once = [workspace special silent] $term
 exec-once = [workspace 1 silent] emacsclient -c -a emacs
 # exec-once = $scriptsDir/portal

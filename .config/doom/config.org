@@ -1722,6 +1722,7 @@ Brings quick an easy translations to Emacs with [[https://github.com/lorniu/go-t
 
 * Ace Jump
 Ace jump mode is a minor mode of emacs, which help you to move the cursor within Emacs. You can move your cursor to ANY position ( across window and frame ) in emacs by using only 3 times key press.
+
 #+begin_src emacs-lisp
 (map! :leader
       (:prefix ("j" . "ace jump")
