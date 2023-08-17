@@ -33,6 +33,7 @@ I also want to mention that this repo was build on [[https://gitlab.com/dwt1/dot
   - [[#keybindings-within-dired-with-peep-dired-mode-enabled][Keybindings Within Dired With Peep-Dired-Mode Enabled]]
   - [[#making-deleted-files-go-to-trash-can][Making Deleted Files Go To Trash Can]]
 - [[#doom-theme][Doom theme]]
+- [[#transparency][Transparency]]
 - [[#elfeed][Elfeed]]
 - [[#emms][Emms]]
 - [[#emojis][Emojis]]
@@ -550,6 +551,11 @@ Setting the theme to doom-one. To try out new themes, I set a keybinding for cou
       :desc "Load new theme" "h t" #'counsel-load-theme)
 #+END_SRC
 
+* Transparency
+With Emacs 29, true transparency has been added.
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(alpha-background . 90))
+#+end_src
 * Elfeed
 An RSS newsfeed reader for Emacs.
 
@@ -1745,4 +1751,10 @@ Can't remember what it was for 🙃
   (add-hook 'vue-mode-hook #'lsp))
 (use-package color-identifiers-mode)
 (add-hook 'after-init-hook 'global-color-identifiers-mode)
+
+(setq redisplay-dont-pause t
+  scroll-margin 1
+  scroll-step 1
+  scroll-conservatively 10000
+  scroll-preserve-screen-position 1)
 #+END_SRC

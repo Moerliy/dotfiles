@@ -158,6 +158,8 @@
 (map! :leader
       :desc "Load new theme" "h t" #'counsel-load-theme)
 
+(add-to-list 'default-frame-alist '(alpha-background . 90))
+
 (use-package! elfeed-goodies)
 (elfeed-goodies/setup)
 (setq elfeed-goodies/entry-pane-size 0.5)
@@ -957,3 +959,9 @@
   (add-hook 'vue-mode-hook #'lsp))
 (use-package color-identifiers-mode)
 (add-hook 'after-init-hook 'global-color-identifiers-mode)
+
+(setq redisplay-dont-pause t
+  scroll-margin 1
+  scroll-step 1
+  scroll-conservatively 10000
+  scroll-preserve-screen-position 1)

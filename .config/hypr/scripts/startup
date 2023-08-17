@@ -3,7 +3,7 @@
 SCRIPTSDIR=$HOME/.config/hypr/scripts
 
 # Kill already running process
-_ps=(waybar mako)
+_ps=(waybar mako swww)
 for _prs in "${_ps[@]}"; do
   if [[ $(pidof ${_prs}) ]]; then
     killall -9 ${_prs}
@@ -18,6 +18,9 @@ ${SCRIPTSDIR}/notifications &
 
 # Lauch statusbar (waybar)
 ${SCRIPTSDIR}/statusbar &
+
+# launch wallpaper daemon
+${SCRIPTSDIR}/wallpaper.sh &
 
 # Start swhkd
 # ${SCRIPTSDIR}hotkeys &
