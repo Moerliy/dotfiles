@@ -207,16 +207,16 @@
   "custom/waybar-mpris": {
     // "format": "<span rise='1000'>⁙</span> {} <span rise='1000'>⁙</span>",
     "return-type": "json",
-    "exec": "waybar-mpris --position --autofocus --order 'SYMBOL:POSITION' --separator string '⁙'",
-    "on-click": "waybar-mpris --send toggle",
+    "exec": "waybar-mpris --pause '\udb80\udfe4' --play '\udb81\udc0a' --position --autofocus --order 'SYMBOL:POSITION' --separator string '⁙'",
+    "on-click": "waybar-mpris --pause '\udb80\udfe4' --play '\udb81\udc0a' --send toggle",
     // This option will switch between players on right click.
-    "on-click-right": "waybar-mpris --send player-next",
+    "on-click-right": "waybar-mpris --pause '\udb80\udfe4' --play '\udb81\udc0a' --send player-next",
     // The options below will switch the selected player on scroll
-    // "on-scroll-up": "waybar-mpris --send player-next",
-    // "on-scroll-down": "waybar-mpris --send player-prev",
+    // "on-scroll-up": "waybar-mpris --pause '\udb80\udfe4' --play '\udb81\udc0a' --send player-next",
+    // "on-scroll-down": "waybar-mpris --pause '\udb80\udfe4' --play '\udb81\udc0a' --send player-prev",
     // The options below will go to next/previous track on scroll
-    "on-scroll-up": "waybar-mpris --send next",
-    "on-scroll-down": "waybar-mpris --send prev",
+    "on-scroll-up": "waybar-mpris --pause '\udb80\udfe4' --play '\udb81\udc0a' --send next",
+    "on-scroll-down": "waybar-mpris --pause '\udb80\udfe4' --play '\udb81\udc0a' --send prev",
     "escape": true,
   },
 
