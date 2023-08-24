@@ -419,6 +419,8 @@ bind = , Q, killactive
 bind = , Q, submap, reset
 bind = , T, exec, $term
 bind = , T, submap, reset
+bind = , F, exec, $files
+bind = , F, submap, reset
 bind = , E, exec, emacsclient -c -a emacs
 bind = , E, submap, reset
 bind = , B, exec, [workspace 2] MOZ_USE_XINPUT2=1 $browser
