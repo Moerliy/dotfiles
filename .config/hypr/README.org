@@ -189,7 +189,7 @@ $files = nautilus
 $browser = firefox
 $electron_flags = -enable-features=UseOzonePlatform -ozone-platform=wayland
 $music = youtubemusic-nativefier
-$discord = armcord
+$discord = armcord --ozone-platform-hint=auto
 #+end_src
 
 * Env-Variables
