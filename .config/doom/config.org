@@ -105,7 +105,7 @@ This download all the imports down below:
 
 #+begin_src bash :tangle install-packages.sh
 #!/bin/bash
-yay -Syu --noconfirm --needed emacs-nativecomp hunspell hunspell-en_us libvterm languagetool nodejs npm vue yarn lldb gdb unzip docker docker-compose docker-machine editorconfig-checker sqlite ripgrep git wl-clipboard clang ccls go gopls jdk11-openjdk texlive-most gnuplot marked python pyright rubocop rustup mpd mpc maim scrot gnome-screenshot rust-analyzer tidy stylelint python-pipenv curl gcc make ncurses man-pages xdg-utils dockerfile-language-server wordnet-cli cmake-language-server proselint ktlint shellcheck-bin js-beautify ttf-jetbrains-mono python-grip-git python-pytest python-nose python-black python-pyflakes python-isort
+yay -Syu --noconfirm --needed emacs-nativecomp hunspell hunspell-en_us libvterm languagetool nodejs npm pnpm vue yarn lldb gdb unzip docker docker-compose docker-machine editorconfig-checker sqlite ripgrep git wl-clipboard clang ccls go gopls jdk11-openjdk texlive-most gnuplot marked python pyright rubocop rustup mpd mpc maim scrot gnome-screenshot rust-analyzer tidy stylelint python-pipenv curl gcc make ncurses man-pages xdg-utils dockerfile-language-server wordnet-cli cmake-language-server proselint ktlint shellcheck-bin js-beautify ttf-jetbrains-mono python-grip-git python-pytest python-nose python-black python-pyflakes python-isort
 
 # pip installs aren't working anymore
 #pip install python-language-server
@@ -146,6 +146,7 @@ sudo npm install -g vue-tsc
 + hunspell-en_us
 + [[https://github.com/nodejs/node][nodejs]] JavaScript runtime environment
 + [[https://github.com/npm/cli][npm]] JavaScript package manager
++ [[https://github.com/pnpm/pnpm][pnpm]] JavaScript package manager
 + [[https://github.com/yarnpkg][yarn]] JavaScript package manager
 + [[https://archlinux.org/packages/extra/x86_64/lldb/][lldb]] debugger
 + [[https://archlinux.org/packages/extra/x86_64/gdb/][gdb]] GNU debugger
