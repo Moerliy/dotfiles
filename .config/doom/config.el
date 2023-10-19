@@ -965,3 +965,5 @@
   scroll-step 1
   scroll-conservatively 10000
   scroll-preserve-screen-position 1)
+
+(setq lsp-volar-take-over-mode nil)
