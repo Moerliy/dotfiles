@@ -10,7 +10,7 @@
       "smooth-scrolling-threshold": 1,
   },
 
-  "wlr/workspaces": {
+  "hyprland/workspaces": {
     "format": "<span font='12' rise='1500'>{icon}</span>",
     "on-click": "activate",
     "all-outputs": true,
