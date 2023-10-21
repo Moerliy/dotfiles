@@ -1,4 +1,4 @@
-(setq Home '"~/.config/emacs-from-scratch/")
+(setq Home '"~/.config/emacs/")
 
 ;; Install use-package support
 (elpaca elpaca-use-package
@@ -41,7 +41,7 @@
 (use-package evil-collection
   :after evil
   :config
-  (setq evil-collection-mode-list '(dashboard dired ibuffer))
+  (setq evil-collection-mode-list '(calendar dashboard dired ediff info magit ibuffer))
   (evil-collection-init))
 (use-package evil-tutor)
 ;; Using RETURN to follow links in Org/Evil
@@ -68,18 +68,32 @@
   (mg/leader-keys
    "." '(find-file :wk "Find file")
    ":" '(counsel-M-x :wk "Counsel M-x")
-   "f c" '((lambda () (interactive) (find-file (concat Home "config.org"))) :wk "Edit emacs config")
-   "f r" '(counser-recentf :wk "Find recent files")
-   "TAB TAB" '(comment-line :wk "Comment lines"))
+   "TAB" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
+   "; ;" '(comment-line :wk "Comment lines"))
 
   (mg/leader-keys
-   "b" '(:ignore t :wk "buffer")
+   "a" '(:ignore t :wk "Ace Jump")
+   "a c" '(ace-jump-char-mode :wk "Jump to a char")
+   "a l" '(ace-jump-line-mode :wk "Jump to a line")
+   "a p" '(ace-jump-mode-pop-mark :wk "Jump to previous point")
+   "a a" '(ace-jump-word-mode :wk "Jump to a word"))
+
+  (mg/leader-keys
+   "b" '(:ignore t :wk "Buffer/Bookmark")
    "b b" '(switch-to-buffer :wk "Switch buffer")
+   "b d" '(bookmark-delete :wk "Delete bookmark")
    "b i" '(ibuffer :wk "Ibuffer")
-   "b k" '(kill-this-buffer :wk "Kill buffer")
+   "b k" '(kill-this-buffer :wk "Kill current buffer")
+   "b K" '(kill-some-buffer :wk "Kill multible buffers")
+   "b l" '(list-bookmarks :wk "List bookmarks")
+   "b m" '(bookmark-set :wk "Set bookmark")
    "b n" '(next-buffer :wk "Next buffer")
    "b p" '(previous-buffer :wk "Previous buffer")
-   "b r" '(revert-buffer :wk "Reloade buffer"))
+   "b r" '(revert-buffer :wk "Reloade buffer")
+   "b R" '(rename-buffer :wk "Rename buffer")
+   "b s" '(basic-save-buffer :wk "Save buffer")
+   "b S" '(save-some-buffers :wk "Save multiple buffers")
+   "b w" '(bookmark-save :wk "Save current bookmarks to bookmark file"))
 
   (mg/leader-keys
    "d" '(:ignore t :wk "Dired")
@@ -89,26 +103,158 @@
    "d p" '(peep-dired :wk "Peep-dired"))
 
   (mg/leader-keys
-   "e" '(:ignore t :wk "evaluate")
+   "e" '(:ignore t :wk "Evaluate/Eshell")
    "e b" '(switch-to-buffer :wk "Evaluate elisp in buffer")
    "e d" '(kill-this-buffer :wk "Evaluate defun containing or after point")
    "e e" '(next-buffer :wk "Evaluate and elisp expression")
+   "e h" '(counsel-esh-history :which-key "Eshell history")
    "e l" '(previous-buffer :wk "Evaluate elist expression before point")
-   "e r" '(revert-buffer :wk "Evaluate elisp in region"))
+   "e r" '(revert-buffer :wk "Evaluate elisp in region")
+   "e s" '(eshell :which-key "Eshell"))
 
   (mg/leader-keys
-   "h" '(:ignore t :wk "help")
+   "f" '(:ignore t :wk "Focus Windows/Files")
+   ;; Window motions
+   "f h" '(evil-window-left :wk "Window left")
+   "f j" '(evil-window-down :wk "Window down")
+   "f k" '(evil-window-up :wk "Window up")
+   "f l" '(evil-window-right :wk "Window right")
+   "f <left>" '(evil-window-left :wk "Window left")
+   "f <down>" '(evil-window-down :wk "Window down")
+   "f <up>" '(evil-window-up :wk "Window up")
+   "f <right>" '(evil-window-right :wk "Window right")
+   ;; Files
+   "f b" '((lambda () (interactive) 
+	          (find-file (concat Home "vim-cheat-sheet.org"))) 
+	        :wk "Open evil keybind cheat sheet")
+   "f c" '((lambda () (interactive) 
+	          (find-file (concat Home "config.org"))) 
+	        :wk "Edit emacs config")
+   "f d" '(find-grep-dired :wk "Search for string in files in DIR")
+   "f e" '((lambda () (interactive)
+              (dired Home)) 
+            :wk "Open user-emacs-directory in dired")
+   "f f" '(find-file :wk "Find file")
+   "f g" '(counsel-grep-or-swiper :wk "Search for string current file")
+   "f i" '((lambda () (interactive)
+              (find-file (concat Home "init.el"))) 
+            :wk "Open emacs init.el")
+   "f s" '(counsel-locate :wk "Locate a file")
+   "f r" '(counser-recentf :wk "Find recent files")
+   "f u" '(sudo-edit-find-file :wk "Sudo find file")
+   "f U" '(sudo-edit :wk "Sudo edit file"))
+
+  (mg/leader-keys
+   "g" '(:ignore t :wk "Git")
+   "g /" '(magit-displatch :wk "Magit dispatch")
+   "g ." '(magit-file-displatch :wk "Magit file dispatch")
+   "g b" '(magit-branch-checkout :wk "Switch branch")
+   "g c" '(:ignore t :wk "Create") 
+   "g c b" '(magit-branch-and-checkout :wk "Create branch and checkout")
+   "g c c" '(magit-commit-create :wk "Create commit")
+   "g c f" '(magit-commit-fixup :wk "Create fixup commit")
+   "g C" '(magit-clone :wk "Clone repo")
+   "g f" '(:ignore t :wk "Find") 
+   "g f c" '(magit-show-commit :wk "Show commit")
+   "g f f" '(magit-find-file :wk "Magit find file")
+   "g f g" '(magit-find-git-config-file :wk "Find gitconfig file")
+   "g F" '(magit-fetch :wk "Git fetch")
+   "g g" '(magit-status :wk "Magit status")
+   "g i" '(magit-init :wk "Initialize git repo")
+   "g l" '(magit-log-buffer-file :wk "Magit buffer log")
+   "g r" '(vc-revert :wk "Git revert file")
+   "g s" '(magit-stage-file :wk "Git stage file")
+   "g t" '(git-timemachine :wk "Git time machine")
+   "g u" '(magit-stage-file :wk "Git unstage file"))
+
+  (mg/leader-keys
+   "h" '(:ignore t :wk "Help")
+   "h a" '(counsel-apropos :wk "Apropos")
+   "h b" '(describe-bindings :wk "Describe bindings")
+   "h c" '(describe-char :wk "Describe character under cursor")
+   "h d" '(:ignore t :wk "Emacs documentation")
+   "h d a" '(about-emacs :wk "About Emacs")
+   "h d d" '(view-emacs-debugging :wk "View Emacs debugging")
+   "h d f" '(view-emacs-FAQ :wk "View Emacs FAQ")
+   "h d m" '(info-emacs-manual :wk "The Emacs manual")
+   "h d n" '(view-emacs-news :wk "View Emacs news")
+   "h d o" '(describe-distribution :wk "How to obtain Emacs")
+   "h d p" '(view-emacs-problems :wk "View Emacs problems")
+   "h d t" '(view-emacs-todo :wk "View Emacs todo")
+   "h d w" '(describe-no-warranty :wk "Describe no warranty")
+   "h e" '(view-echo-area-messages :wk "View echo area messages")
    "h f" '(describe-function :wk "Describe function")
-   "h v" '(describe-variable :wk "Describe variable")
+   "h F" '(describe-face :wk "Describe face")
+   "h g" '(describe-gnu-project :wk "Describe GNU Project")
+   "h i" '(info :wk "Info")
+   "h I" '(describe-input-method :wk "Describe input method")
+   "h k" '(describe-key :wk "Describe key")
+   "h l" '(view-lossage :wk "Display recent keystrokes and the commands run")
+   "h L" '(describe-language-environment :wk "Describe language environment")
+   "h m" '(describe-mode :wk "Describe mode")
+   "h r" '(:ignore t :wk "Reload")
    "h r r" '((lambda () (interactive)
                 (load-file (concat Home "init.el"))
                 (ignore (elpaca-process-queues)))
-              :wk "Reload emacs config"))
+              :wk "Reload emacs config")
+   "h t" '(load-theme :wk "Load theme")
+   "h v" '(describe-variable :wk "Describe variable")
+   "h w" '(where-is :wk "Prints keybinding for command if set")
+   "h x" '(describe-command :wk "Display full documentation for command"))
 
   (mg/leader-keys
-   "t" '(:ignore t :wk "toggle")
+   "m" '(:ignore t :wk "Move Windows/Org")
+   ;; Move Windows
+   "m h" '(buf-move-left :wk "Buffer move left")
+   "m j" '(buf-move-down :wk "Buffer move down")
+   "m k" '(buf-move-up :wk "Buffer move up")
+   "m l" '(buf-move-right :wk "Buffer move right")
+   "m <left>" '(buf-move-left :wk "Buffer move left")
+   "m <down>" '(buf-move-down :wk "Buffer move down")
+   "m <up>" '(buf-move-up :wk "Buffer move up")
+   "m <right>" '(buf-move-right :wk "Buffer move right")
+   ;; Org
+   "m a" '(org-agenda :wk "Org agenda")
+   "m B" '(org-babel-tangle :wk "Org babel tangle")
+   "m d" '(:ignore t :wk "Date/deadline")
+   "m d t" '(org-time-stamp :wk "Org time stamp")
+   "m e" '(org-export-dispatch :wk "Org export dispatch")
+   "m i" '(org-toggle-item :wk "Org toggle item")
+   "m t" '(org-todo :wk "Org todo")
+   "m T" '(org-todo-list :wk "Org todo list"))
+
+  (mg/leader-keys
+   "o" '(:ignore t :wk "Open")
+   "o f" '(make-frame :wk "Open buffer in new frame")
+   "o F" '(select-frame-by-name :wk "Select frame by name"))
+
+  ;; projectile-command-map already has a ton of bindings 
+  ;; set for us, so no need to specify each individually.
+  (mg/leader-keys
+   "p" '(projectile-command-map :wk "Projectile"))
+  
+  ;; projectile-command-map already has a ton of bindings 
+  ;; set for us, so no need to specify each individually.
+  ;; (mg/leader-keys
+  ;;  "l" '(lsp-command-map :wk "LSP"))
+
+  (mg/leader-keys
+    "s" '(:ignore t :wk "Search/Snippets")
+    "s c" '(yas-load-snippet-buffer-and-close :wk "Save the new created snippet")
+    "s d" '(dictionary-search :wk "Search dictionary")
+    "s m" '(man :wk "Man pages")
+    "s n" '(yas-new-snippet :wk "Create a new snippet")
+    "s s" '(ivy-yasnippet :wk "Searches and past's snippet")
+    "s t" '(tldr :wk "Lookup TLDR docs for a command"))
+
+  (mg/leader-keys
+   "t" '(:ignore t :wk "Toggle")
+   "t a" '(org-appear-mode :wk "Toggle rendered text to original form")
+   "t e" '(eshell-toggle :wk "Toggle eshell")
+   "t f" '(flycheck-mode :wk "Toggle flycheck")
    "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
    "t n" '(neotree-toggle :wk "Toggle neotree file viewer")
+   "t r" '(rainbow-mode :wk "Toggle rainbow mode")
    "t t" '(visual-line-mode :wk "Toggle truncated lines")
    "t v" '(vterm-toggle :wk "Toggle vtert"))
 
@@ -120,31 +266,6 @@
    "w s" '(evil-window-split :wk "Horizontal split window")
    "w v" '(evil-window-vsplit :wk "Vertical split window")
    "w w" '(evil-window-next :wk "Goto next window"))
-
-  (mg/leader-keys
-   "f" '(:ignore t :wk "focus windows")
-   ;; Window motions
-   "f h" '(evil-window-left :wk "Window left")
-   "f j" '(evil-window-down :wk "Window down")
-   "f k" '(evil-window-up :wk "Window up")
-   "f l" '(evil-window-right :wk "Window right")
-   "f <left>" '(evil-window-left :wk "Window left")
-   "f <down>" '(evil-window-down :wk "Window down")
-   "f <up>" '(evil-window-up :wk "Window up")
-   "f <right>" '(evil-window-right :wk "Window right"))
-
-  (mg/leader-keys
-   "m" '(:ignore t :wk "move windows")
-   ;; Move Windows
-   "m H" '(buf-move-left :wk "Buffer move left")
-   "m J" '(buf-move-down :wk "Buffer move down")
-   "m K" '(buf-move-up :wk "Buffer move up")
-   "m L" '(buf-move-right :wk "Buffer move right")
-   "m <left>" '(buf-move-left :wk "Buffer move left")
-   "m <down>" '(buf-move-down :wk "Buffer move down")
-   "m <up>" '(buf-move-up :wk "Buffer move up")
-   "m <right>" '(buf-move-right :wk "Buffer move right"))
-
   )
 
 (use-package all-the-icons
@@ -154,7 +275,13 @@
 (use-package all-the-icons-dired
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 
+(use-package ace-jump-mode)
+
 (setq backup-directory-alist '((".*" . "~/Papierkorb/")))
+
+(use-package beacon
+  :config 
+  (beacon-mode 1))
 
 (require 'windmove)
 
@@ -241,6 +368,13 @@ one, an error is signaled."
   :diminish
   :hook (company-mode . company-box-mode))
 
+(use-package color-identifiers-mode
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (typescript-mode . color-identifiers-mode)
+         (web-mode . color-identifiers-mode)
+         (json-mode . color-identifiers-mode)
+         (vue-mode . color-identifiers-mode)))
+
 (use-package dired-open
   :config
   (setq dired-open-extensions '(("gif" . "sxiv")
@@ -267,6 +401,17 @@ one, an error is signaled."
 (add-hook 'peep-dired-hook 'evil-normalize-keymaps)
 
 (use-package diminish)
+
+(use-package dimmer
+  :config
+  (dimmer-configure-which-key)
+  (dimmer-mode t)
+  (setq dimmer-fraction 0.25))
+
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
 
 (set-face-attribute 'default nil
   :font "JetBrains Mono"
@@ -315,7 +460,9 @@ one, an error is signaled."
     (evil-define-key 'normal git-timemachine-mode-map (kbd "C-k") 'git-timemachine-show-next-revision)
 )
 
-(use-package magit)
+(use-package magit
+  :config
+    (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
 (use-package magit-todos)
 
 (use-package hl-todo
@@ -330,6 +477,12 @@ one, an error is signaled."
           ("REVIEW"     font-lock-keyword-face bold)
           ("NOTE"       success bold)
           ("DEPRECATED" font-lock-doc-face bold))))
+
+(use-package highlight-indent-guides
+  :hook ((prog-mode . highlight-indent-guides-mode))
+  :config
+  (setq highlight-indent-guides-method 'column
+	highlight-indent-guides-responsive 'stack))
 
 (use-package counsel
   :after ivy
@@ -369,6 +522,35 @@ one, an error is signaled."
 (use-package json-mode)
 (use-package typescript-mode)
 (use-package lua-mode)
+(use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
+(use-package vue-mode
+  :mode "\\.vue\\'")
+(setq lsp-volar-take-over-mode nil)  ;; uses typescript sever in ts files. Is performanec hungtey because two ls run in one vue project
+
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (prog-mode . lsp)
+         (web-mode . lsp)
+         (json-mode . lsp)
+         (vue-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-ui :commands lsp-ui-mode)
+;; The flycheck does not work in typescript, html and javascript blocks in vue-mode. How to fix that?
+(with-eval-after-load 'lsp-mode
+  (mapc #'lsp-flycheck-add-mode '(typescript-mode js-mode css-mode vue-html-mode)))
+;; performance changes
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq lsp-idle-delay 0.500)  ;; This variable determines how often lsp-mode will refresh the highlights, lenses, links, etc while you type
+(setq gc-cons-threshold 100000000)
 
 (global-set-key [escape] 'keyboard-escape-quit)
 
@@ -378,18 +560,43 @@ one, an error is signaled."
   :config
   (setq doom-modeline-height 35      ;; sets modeline height
         doom-modeline-bar-width 5    ;; sets right bar width
+	  doom-modeline-icon t         ;; Whether display icons in the mode-line
+	  doom-modeline-major-mode-icon t  ;; Whether display the icon for `major-mode'
+	  doom-modeline-major-mode-color-icon t
+	  doom-modeline-buffer-state-icon t  ;; Whether display the icon for the buffer state
+	  doom-modeline-buffer-modification-icon t  ;; Whether display the modification icon for the buffer
+	  doom-modeline-time-icon t    ;; Whether display the time icon
+	  doom-modeline-buffer-name t  ;; Whether display the buffer name
+	  doom-modeline-buffer-encoding t  ;; Whether display the buffer encoding
+	  doom-modeline-indent-info t  ;; Whether display the indentation information
+	  doom-modeline-display-default-persp-name t  ;; If non nil the default perspective name is displayed in the mode-line
         doom-modeline-persp-name t   ;; adds perspective name to modeline
-        doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
+        doom-modeline-persp-icon t   ;; adds folder icon next to persp name
+	  doom-modeline-lsp t          ;; Whether display the `lsp' state
+	  doom-modeline-modal t        ;; Including `evil', `overwrite', `god', `ryo' and `xah-fly-keys', etc
+	  doom-modeline-modal-icon t   ;; Including `evil', `overwrite', `god', `ryo' and `xah-fly-keys', etc
+	  doom-modeline-modal-modern-icon t  ;; Whether display the modern icons for modals
+	  doom-modeline-gnus t         ;; Whether display the gnus notifications
+	  doom-modeline-gnus-timer 2   ;; Whether gnus should automatically be updated and how often (set to 0 or smaller than 0 to disable)
+	  doom-modeline-time t         ;; Whether display the time
+	  doom-modeline-env-version t  ;; Whether display the environment version
+))
+
+(use-package centered-cursor-mode
+  :demand
+  :config
+  ;; Optional, enables centered-cursor-mode in all buffers.
+  (global-centered-cursor-mode)
+  (setq ccm-recenter-at-end-of-file t))
 
 (use-package neotree
   :after doom-themes
   :config
-  (setq neo-smart-open t
+  (setq neo-smart-open nil
         neo-show-hidden-files t
         neo-window-width 40
         neo-window-fixed-size nil
-        inhibit-compacting-font-caches t
-        projectile-switch-project-action 'neotree-projectile-action)
+        inhibit-compacting-font-caches t)
         ;; truncate long file names in neotree
         (add-hook 'neo-after-create-hook
            #'(lambda (_)
@@ -399,6 +606,11 @@ one, an error is signaled."
                  (make-local-variable 'auto-hscroll-mode)
                  (setq auto-hscroll-mode nil)))))
 
+(use-package org-appear
+  :hook (org-mode . org-appear-mode)
+  :config
+  (setq org-appear-autolinks t))
+
 (use-package toc-org
     :commands toc-org-enable
     :init (add-hook 'org-mode-hook 'toc-org-enable))
@@ -406,6 +618,8 @@ one, an error is signaled."
 (add-hook 'org-mode-hook 'org-indent-mode)
 (use-package org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+(setq org-hide-emphasis-markers t)
 
 (eval-after-load 'org-indent '(diminish 'org-indent-mode))
 
@@ -442,18 +656,42 @@ one, an error is signaled."
 ;; Automatically save perspective states to file when Emacs exits.
 (add-hook 'kill-emacs-hook #'persp-state-save)
 
+;; Globally prettify symbols
+(defun configure-prettify-symbols-alist ()
+  "Set prettify symbols alist."
+  (setq prettify-symbols-alist '(
+				 ("lambda" . ?λ)
+				 ("->" . ?→)
+                                 ("=>" . ?⇒)
+                                 ("/=" . ?≠)
+                                 ("!=" . ?≠)
+                                 ("==" . ?≡)
+                                 ("<=" . ?≤)
+                                 (">=" . ?≥)
+                                 ("&&" . ?∧)
+                                 ("||" . ?∨)
+                                 ("not" . ?¬)
+				 ))
+(prettify-symbols-mode 1))
+(add-hook 'prog-mode-hook 'configure-prettify-symbols-alist)
+;; (add-hook 'org-mode-hook 'configure-prettify-symbols-alist)
+
 (use-package projectile
   :config
-  (projectile-mode 1))
+  (projectile-mode 1)
+  (setq projectile-switch-project-action 'projectile-find-file))
+(use-package consult-projectile)
+(use-package persp-projectile)
 
 (use-package rainbow-delimiters
-  :hook ((emacs-lisp-mode . rainbow-delimiters-mode)
+  :hook ((prog-mode . rainbow-delimiters-mode)
          (clojure-mode . rainbow-delimiters-mode)))
 
 (use-package rainbow-mode
   :diminish
   :hook org-mode prog-mode)
 
+(setq warning-minimum-level :error)
 (delete-selection-mode 1)    ;; You can select text and delete it by typing.
 (electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
 (electric-pair-mode 1)       ;; Turns on automatic parens pairing
@@ -470,6 +708,8 @@ one, an error is signaled."
 (scroll-bar-mode -1)         ;; Disable the scroll bar
 (tool-bar-mode -1)           ;; Disable the tool bar
 (setq org-edit-src-content-indentation 0) ;; Set src block automatic indent to 0 instead of 2.
+(setq mouse-wheel-scroll-amount '(3))  ;; faster scroll speed
+(setq mouse-wheel-progressive-speed nil)  ;; no scroll exelleration
 
 ;;(use-package eshell-syntax-highlighting
 ;;  :after esh-mode
@@ -490,8 +730,8 @@ one, an error is signaled."
 ;;      eshell-visual-commands'("bash" "fish" "htop" "ssh" "top" "zsh"))
 
 (use-package vterm
-:config
-(setq shell-file-name "/bin/zsh"
+  :config
+  (setq shell-file-name "/bin/bash"
       vterm-max-scrollback 5000))
 
 (use-package vterm-toggle
@@ -512,24 +752,6 @@ one, an error is signaled."
                   ;;(dedicated . t) ;dedicated is supported in emacs27
                   (reusable-frames . visible)
                   (window-height . 0.3))))
-
-(setq initial-buffer-choice (concat Home "start.org"))
-
-;; (define-minor-mode start-mode
-;;   "Provide functions for custom start page."
-;;   :lighter " start"
-;;   :keymap (let ((map (make-sparse-keymap)))
-;;           ;;(define-key map (kbd "M-z") 'eshell)
-;;             (evil-define-key 'normal start-mode-map
-;;               (kbd "1") '(lambda () (interactive) (find-file (concat Home "config.org")))
-;;               (kbd "2") '(lambda () (interactive) (find-file (concat Home "init.el")))
-;;               (kbd "3") '(lambda () (interactive) (find-file (concat Home "packages.el")))
-;;               (kbd "4") '(lambda () (interactive) (find-file (concat Home "eshell/aliases")))
-;;               (kbd "5") '(lambda () (interactive) (find-file (concat Home "eshell/profile"))))
-;;           map))
-
-(add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
-;; (provide 'start-mode)
 
 (use-package sudo-edit
   :config
@@ -571,7 +793,35 @@ one, an error is signaled."
 	  which-key-min-display-lines 6
 	  which-key-side-window-slot -10
 	  which-key-side-window-max-height 0.25
-	  which-key-idle-delay 0.8
+	  which-key-idle-delay 0.35
 	  which-key-max-description-length 25
 	  which-key-allow-imprecise-window-fit nil
 	  which-key-separator " → " ))
+
+(use-package yasnippet
+  :config
+  (add-to-list 'yas-snippet-dirs (concat Home "snippets"))
+  (yas-global-mode 1))
+(use-package yasnippet-snippets
+   :requires yasnippet)
+(use-package ivy-yasnippet
+  :requires yasnippet)
+
+(elpaca-wait)
+(setq initial-buffer-choice (concat Home "start.org"))
+
+(define-minor-mode start-mode
+  "Provide functions for custom start page."
+  :lighter " start"
+  :keymap (let ((map (make-sparse-keymap)))
+          ;;(define-key map (kbd "M-z") 'eshell)
+          ;;   (evil-define-key 'normal start-mode-map
+          ;;     (kbd "1") '(lambda () (interactive) (find-file (concat Home "config.org")))
+          ;;     (kbd "2") '(lambda () (interactive) (find-file (concat Home "init.el")))
+          ;;     (kbd "3") '(lambda () (interactive) (find-file (concat Home "packages.el")))
+          ;;     (kbd "4") '(lambda () (interactive) (find-file (concat Home "eshell/aliases")))
+          ;;     (kbd "5") '(lambda () (interactive) (find-file (concat Home "eshell/profile"))))
+          map))
+
+(add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
+;; (provide 'start-mode)
