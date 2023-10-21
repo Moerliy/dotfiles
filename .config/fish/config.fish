@@ -94,3 +94,6 @@ alias npm='/usr/bin/pnpm'
 # the terminal rickroll
 alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
 
+# find with fzf
+alias pfzf='rg --heading --line-number --column . | fzf --layout=reverse'
+alias pfzff='rg --heading --line-number --column --files . | fzf --layout=reverse'

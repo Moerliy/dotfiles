@@ -232,6 +232,9 @@ env = GBM_BACKEND,nvidia-drm
 env = __GLX_VENDOR_LIBRARY_NAME,nvidia
 env = LIBVA_DRIVER_NAME,nvidia
 
+env = LSP_USE_PLISTS,true
+
+
 #env = EGL_PLATFORM,surfaceless
 
 # env = HYPRLAND_LOG_WLR=1
@@ -258,7 +261,6 @@ general {
 #+begin_src conf
 decoration {
   rounding = 5
-  multisample_edges = true
   active_opacity = 1.0
   # inactive_opacity = 0.9
   fullscreen_opacity = 1.0
@@ -511,6 +513,7 @@ submap = reset
 #+begin_src conf
 submap = move
 bind = , escape, submap, reset
+bind = , F, submap, focus
 bind = , H, movewindow, l
 bind = , L, movewindow, r
 bind = , K, movewindow, u
@@ -541,6 +544,7 @@ submap = reset
 submap = focus
 bind = , Q, killactive
 bind = , escape, submap, reset
+bind = , M, submap, move
 bind = , left, movefocus, l
 bind = , right, movefocus, r
 bind = , up, movefocus, u
