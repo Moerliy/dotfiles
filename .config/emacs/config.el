@@ -31,9 +31,6 @@
 ;; Dont install anything. Defer execution of BODY
 ;;(elpaca nil (message "deferred"))
 
-(elpaca-wait)
-(setq initial-buffer-choice (concat Home "start.org"))
-
 (use-package evil
   :init
   (setq evil-want-integration t)
@@ -377,6 +374,14 @@ one, an error is signaled."
          (web-mode . color-identifiers-mode)
          (json-mode . color-identifiers-mode)
          (vue-mode . color-identifiers-mode)))
+
+;; use-package with Elpaca:
+(use-package dashboard
+  :elpaca t
+  :config
+  (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
+  (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
+  (dashboard-setup-startup-hook))
 
 (use-package dired-open
   :config
@@ -829,19 +834,3 @@ one, an error is signaled."
    :requires yasnippet)
 (use-package ivy-yasnippet
   :requires yasnippet)
-
-(define-minor-mode start-mode
-  "Provide functions for custom start page."
-  :lighter " start"
-  :keymap (let ((map (make-sparse-keymap)))
-          ;;(define-key map (kbd "M-z") 'eshell)
-          ;;   (evil-define-key 'normal start-mode-map
-          ;;     (kbd "1") '(lambda () (interactive) (find-file (concat Home "config.org")))
-          ;;     (kbd "2") '(lambda () (interactive) (find-file (concat Home "init.el")))
-          ;;     (kbd "3") '(lambda () (interactive) (find-file (concat Home "packages.el")))
-          ;;     (kbd "4") '(lambda () (interactive) (find-file (concat Home "eshell/aliases")))
-          ;;     (kbd "5") '(lambda () (interactive) (find-file (concat Home "eshell/profile"))))
-          map))
-
-(add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
-;; (provide 'start-mode)
