@@ -17,6 +17,7 @@
 - [[#buffer-move][Buffer Move]]
 - [[#company][Company]]
 - [[#color-identifiers][Color Identifiers]]
+- [[#dashboard][Dashboard]]
 - [[#dired][Dired]]
 - [[#diminish][Diminish]]
 - [[#dimmer][Dimmer]]
@@ -61,7 +62,6 @@
 - [[#transparency][Transparency]]
 - [[#which-key][Which-Key]]
 - [[#yasnippet][YASnippet]]
-- [[#start-page][Start Page]]
 
 * Variables
 #+begin_src emacs-lisp
@@ -489,6 +489,18 @@ one, an error is signaled."
          (json-mode . color-identifiers-mode)
          (vue-mode . color-identifiers-mode)))
 #+end_src
+* Dashboard
+An extensible emacs startup screen showing you what’s most important.
+
+#+begin_src emacs-lisp
+;; use-package with Elpaca:
+(use-package dashboard
+  :elpaca t
+  :config
+  (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
+  (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
+  (dashboard-setup-startup-hook))
+#+end_src
 * Dired
 #+begin_src emacs-lisp
 (use-package dired-open
@@ -705,7 +717,6 @@ This [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][ar
   (global-treesit-auto-mode)
   (add-to-list 'auto-mode-alist '("\\.sh\\'" . bash-ts-mode)))
 #+end_src
-
 
 * Language Support
 Emacs has built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM, AWK, C, C++, Fortran, Icon, IDL (CORBA), IDLWAVE, Java, Javascript, M4, Makefiles, Metafont, Modula2, Object Pascal, Objective-C, Octave, Pascal, Perl, Pike, PostScript, Prolog, Python, Ruby, Simula, SQL, Tcl, Verilog, and VHDL.  Other languages will require you to install additional modes.
@@ -1160,31 +1171,4 @@ Is a template system for Emacs. It allows you to type an abbreviation and automa
    :requires yasnippet)
 (use-package ivy-yasnippet
   :requires yasnippet)
-#+end_src
-
-* Start Page
-Instead of using Doom’s Dashboard or the Emacs Dashboard program, I have decided to just set an custom start file as my “dashboard” since it allows me more customization options.
-I have added to the =start-mode-hook= the argument =read-only-mode=.
-This is to prevent accidental editing of the start file, and to prevent clashes with the =start-mode= specific keybindings.
-You can toggle on/off read-only-mode with =SPC t r=.
-
-#+begin_src emacs-lisp
-(elpaca-wait)
-(setq initial-buffer-choice (concat Home "start.org"))
-
-(define-minor-mode start-mode
-  "Provide functions for custom start page."
-  :lighter " start"
-  :keymap (let ((map (make-sparse-keymap)))
-          ;;(define-key map (kbd "M-z") 'eshell)
-          ;;   (evil-define-key 'normal start-mode-map
-          ;;     (kbd "1") '(lambda () (interactive) (find-file (concat Home "config.org")))
-          ;;     (kbd "2") '(lambda () (interactive) (find-file (concat Home "init.el")))
-          ;;     (kbd "3") '(lambda () (interactive) (find-file (concat Home "packages.el")))
-          ;;     (kbd "4") '(lambda () (interactive) (find-file (concat Home "eshell/aliases")))
-          ;;     (kbd "5") '(lambda () (interactive) (find-file (concat Home "eshell/profile"))))
-          map))
-
-(add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
-;; (provide 'start-mode)
 #+end_src
