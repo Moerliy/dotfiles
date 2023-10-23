@@ -30,6 +30,7 @@
 - [[#highlight-todo][Highlight TODO]]
 - [[#highlight-indent-guids][Highlight Indent Guids]]
 - [[#ivy][Ivy]]
+- [[#tree-sitter][Tree Sitter]]
 - [[#language-support][Language Support]]
 - [[#language-server-protokoll][Language Server Protokoll]]
 - [[#mini-buffer-escape][Mini-buffer Escape]]
@@ -462,27 +463,28 @@ one, an error is signaled."
 [[https://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for "complete anything".  Completion will start automatically after you type a few letters. Use M-n and M-p to select, <return> to complete or <tab> to complete the common part.
 
 #+begin_src emacs-lisp
-(use-package company
-  :defer 2
-  :diminish
-  :custom
-  (company-begin-commands '(self-insert-command))
-  (company-idle-delay .1)
-  (company-minimum-prefix-length 2)
-  (company-show-numbers t)
-  (company-tooltip-align-annotations 't)
-  (global-company-mode t))
+;; (use-package company
+;;   :defer 2
+;;   :diminish
+;;   :custom
+;;   (company-begin-commands '(self-insert-command))
+;;   (company-idle-delay .1)
+;;   (company-minimum-prefix-length 2)
+;;   (company-show-numbers t)
+;;   (company-tooltip-align-annotations 't)
+;;   (global-company-mode t))
 
-(use-package company-box
-  :after company
-  :diminish
-  :hook (company-mode . company-box-mode))
+;; (use-package company-box
+;;   :after company
+;;   :diminish
+;;   :hook (company-mode . company-box-mode))
 #+end_src
+
 * Color Identifiers
 #+begin_src emacs-lisp
 (use-package color-identifiers-mode
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (typescript-mode . color-identifiers-mode)
+         (prog-mode . color-identifiers-mode)
          (web-mode . color-identifiers-mode)
          (json-mode . color-identifiers-mode)
          (vue-mode . color-identifiers-mode)))
@@ -523,13 +525,17 @@ This package implements hiding or abbreviation of the modeline displays (lighter
 #+end_src
 
 * Dimmer
-This package provides a minor mode that indicates which buffer is currently active by dimming the faces in the other buffers.
+This package provides a minor mode that indicates which buffer is currently active by dimming the faces in the other buffers. 
+Doesn't works good with lsp-bridge
 #+begin_src emacs-lisp
-(use-package dimmer
-  :config
-  (dimmer-configure-which-key)
-  (dimmer-mode t)
-  (setq dimmer-fraction 0.25))
+;; (use-package dimmer
+;;   :config
+;;   (dimmer-configure-which-key)
+;;   (dimmer-mode t)
+;;   (setq dimmer-fraction 0.25)
+;;   (add-to-list 'dimmer-buffer-exclusion-regexps "^ \\*acm-buffer\\*$")
+;;   (add-to-list 'dimmer-buffer-exclusion-regexps "^ \\*acm-doc-buffer\\*$")
+;;   )
 #+end_src
 
 * Editor Config
@@ -691,11 +697,24 @@ This minor mode highlights indentation levels via font-lock. Indent widths are d
 
 #+end_src
 
+* Tree Sitter
+This [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][article]] was pretty usefull
+#+begin_src emacs-lisp
+(use-package treesit-auto
+  :config
+  (global-treesit-auto-mode)
+  (add-to-list 'auto-mode-alist '("\\.sh\\'" . bash-ts-mode)))
+#+end_src
+
+
 * Language Support
 Emacs has built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM, AWK, C, C++, Fortran, Icon, IDL (CORBA), IDLWAVE, Java, Javascript, M4, Makefiles, Metafont, Modula2, Object Pascal, Objective-C, Octave, Pascal, Perl, Pike, PostScript, Prolog, Python, Ruby, Simula, SQL, Tcl, Verilog, and VHDL.  Other languages will require you to install additional modes.
 
 #+begin_src emacs-lisp
-(use-package web-mode)
+(use-package yaml-mode)
+(use-package web-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode)))
 (use-package json-mode)
 (use-package typescript-mode)
 (use-package lua-mode)
@@ -703,34 +722,43 @@ Emacs has built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM,
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "multimarkdown"))
-(use-package vue-mode
-  :mode "\\.vue\\'")
-(setq lsp-volar-take-over-mode nil)  ;; uses typescript sever in ts files. Is performanec hungtey because two ls run in one vue project
+;; (use-package vue-mode
+;;   :mode "\\.vue\\'")
+;;(setq lsp-volar-take-over-mode nil)  ;; uses typescript sever in ts files. Is performanec hungtey because two ls run in one vue project
 #+end_src
 
 * Language Server Protokoll
 Client for Language Server Protocol (v3.14). lsp-mode aims to provide IDE-like experience by providing optional integration with the most popular Emacs packages like company, flycheck and projectile.
 #+begin_src emacs-lisp
-(use-package lsp-mode
+(use-package lsp-bridge
+  :elpaca '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge"
+            :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
+            :build (:not compile))
   :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (prog-mode . lsp)
-         (web-mode . lsp)
-         (json-mode . lsp)
-         (vue-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-(use-package lsp-ui :commands lsp-ui-mode)
-;; The flycheck does not work in typescript, html and javascript blocks in vue-mode. How to fix that?
-(with-eval-after-load 'lsp-mode
-  (mapc #'lsp-flycheck-add-mode '(typescript-mode js-mode css-mode vue-html-mode)))
-;; performance changes
+  (global-lsp-bridge-mode)
+  :config
+  (setq lsp-bridge-user-multiserver-dir (concat Home "lsp-multiserver-conf")))
+
+;; (use-package lsp-mode
+;;   :init
+;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+;;   (setq lsp-keymap-prefix "C-c l")
+;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;          ;;(prog-mode . lsp)
+;;          (web-mode . lsp)
+;;          (json-mode . lsp)
+;;          (vue-mode . lsp)
+;;          ;; if you want which-key integration
+;;          (lsp-mode . lsp-enable-which-key-integration))
+;;   :commands lsp)
+;; (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+;; (use-package lsp-ui :commands lsp-ui-mode)
+;; ;; The flycheck does not work in typescript, html and javascript blocks in vue-mode. How to fix that?
+;; (with-eval-after-load 'lsp-mode
+;;   (mapc #'lsp-flycheck-add-mode '(typescript-mode js-mode css-mode vue-html-mode)))
+;; ;; performance changes
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
-(setq lsp-idle-delay 0.500)  ;; This variable determines how often lsp-mode will refresh the highlights, lenses, links, etc while you type
+;; (setq lsp-idle-delay 0.500)  ;; This variable determines how often lsp-mode will refresh the highlights, lenses, links, etc while you type
 (setq gc-cons-threshold 100000000)
 #+end_src
 
