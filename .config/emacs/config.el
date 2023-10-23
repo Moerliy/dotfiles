@@ -31,6 +31,9 @@
 ;; Dont install anything. Defer execution of BODY
 ;;(elpaca nil (message "deferred"))
 
+(elpaca-wait)
+(setq initial-buffer-choice (concat Home "start.org"))
+
 (use-package evil
   :init
   (setq evil-want-integration t)
@@ -352,25 +355,25 @@ one, an error is signaled."
       (set-window-buffer other-win buf-this-buf)
       (select-window other-win))))
 
-(use-package company
-  :defer 2
-  :diminish
-  :custom
-  (company-begin-commands '(self-insert-command))
-  (company-idle-delay .1)
-  (company-minimum-prefix-length 2)
-  (company-show-numbers t)
-  (company-tooltip-align-annotations 't)
-  (global-company-mode t))
+;; (use-package company
+;;   :defer 2
+;;   :diminish
+;;   :custom
+;;   (company-begin-commands '(self-insert-command))
+;;   (company-idle-delay .1)
+;;   (company-minimum-prefix-length 2)
+;;   (company-show-numbers t)
+;;   (company-tooltip-align-annotations 't)
+;;   (global-company-mode t))
 
-(use-package company-box
-  :after company
-  :diminish
-  :hook (company-mode . company-box-mode))
+;; (use-package company-box
+;;   :after company
+;;   :diminish
+;;   :hook (company-mode . company-box-mode))
 
 (use-package color-identifiers-mode
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (typescript-mode . color-identifiers-mode)
+         (prog-mode . color-identifiers-mode)
          (web-mode . color-identifiers-mode)
          (json-mode . color-identifiers-mode)
          (vue-mode . color-identifiers-mode)))
@@ -402,11 +405,14 @@ one, an error is signaled."
 
 (use-package diminish)
 
-(use-package dimmer
-  :config
-  (dimmer-configure-which-key)
-  (dimmer-mode t)
-  (setq dimmer-fraction 0.25))
+;; (use-package dimmer
+;;   :config
+;;   (dimmer-configure-which-key)
+;;   (dimmer-mode t)
+;;   (setq dimmer-fraction 0.25)
+;;   (add-to-list 'dimmer-buffer-exclusion-regexps "^ \\*acm-buffer\\*$")
+;;   (add-to-list 'dimmer-buffer-exclusion-regexps "^ \\*acm-doc-buffer\\*$")
+;;   )
 
 (use-package editorconfig
   :ensure t
@@ -518,7 +524,15 @@ one, an error is signaled."
   (ivy-set-display-transformer 'ivy-switch-buffer
                                'ivy-rich-switch-buffer-transformer))
 
-(use-package web-mode)
+(use-package treesit-auto
+  :config
+  (global-treesit-auto-mode)
+  (add-to-list 'auto-mode-alist '("\\.sh\\'" . bash-ts-mode)))
+
+(use-package yaml-mode)
+(use-package web-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode)))
 (use-package json-mode)
 (use-package typescript-mode)
 (use-package lua-mode)
@@ -526,30 +540,39 @@ one, an error is signaled."
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "multimarkdown"))
-(use-package vue-mode
-  :mode "\\.vue\\'")
-(setq lsp-volar-take-over-mode nil)  ;; uses typescript sever in ts files. Is performanec hungtey because two ls run in one vue project
+;; (use-package vue-mode
+;;   :mode "\\.vue\\'")
+;;(setq lsp-volar-take-over-mode nil)  ;; uses typescript sever in ts files. Is performanec hungtey because two ls run in one vue project
 
-(use-package lsp-mode
+(use-package lsp-bridge
+  :elpaca '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge"
+            :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
+            :build (:not compile))
   :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (prog-mode . lsp)
-         (web-mode . lsp)
-         (json-mode . lsp)
-         (vue-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-(use-package lsp-ui :commands lsp-ui-mode)
-;; The flycheck does not work in typescript, html and javascript blocks in vue-mode. How to fix that?
-(with-eval-after-load 'lsp-mode
-  (mapc #'lsp-flycheck-add-mode '(typescript-mode js-mode css-mode vue-html-mode)))
-;; performance changes
+  (global-lsp-bridge-mode)
+  :config
+  (setq lsp-bridge-user-multiserver-dir (concat Home "lsp-multiserver-conf")))
+
+;; (use-package lsp-mode
+;;   :init
+;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+;;   (setq lsp-keymap-prefix "C-c l")
+;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;          ;;(prog-mode . lsp)
+;;          (web-mode . lsp)
+;;          (json-mode . lsp)
+;;          (vue-mode . lsp)
+;;          ;; if you want which-key integration
+;;          (lsp-mode . lsp-enable-which-key-integration))
+;;   :commands lsp)
+;; (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+;; (use-package lsp-ui :commands lsp-ui-mode)
+;; ;; The flycheck does not work in typescript, html and javascript blocks in vue-mode. How to fix that?
+;; (with-eval-after-load 'lsp-mode
+;;   (mapc #'lsp-flycheck-add-mode '(typescript-mode js-mode css-mode vue-html-mode)))
+;; ;; performance changes
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
-(setq lsp-idle-delay 0.500)  ;; This variable determines how often lsp-mode will refresh the highlights, lenses, links, etc while you type
+;; (setq lsp-idle-delay 0.500)  ;; This variable determines how often lsp-mode will refresh the highlights, lenses, links, etc while you type
 (setq gc-cons-threshold 100000000)
 
 (global-set-key [escape] 'keyboard-escape-quit)
@@ -806,9 +829,6 @@ one, an error is signaled."
    :requires yasnippet)
 (use-package ivy-yasnippet
   :requires yasnippet)
-
-(elpaca-wait)
-(setq initial-buffer-choice (concat Home "start.org"))
 
 (define-minor-mode start-mode
   "Provide functions for custom start page."
