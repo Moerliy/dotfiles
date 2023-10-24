@@ -95,6 +95,33 @@
    "b S" '(save-some-buffers :wk "Save multiple buffers")
    "b w" '(bookmark-save :wk "Save current bookmarks to bookmark file"))
 
+
+  (mg/leader-keys
+   "c" '(:ignore t :wk "LSP")
+   "c a" '(lsp-bridge-code-action :wk "Code action")
+   "c R" '(lsp-bridge-rename :wk "Rename/Refactor")
+   "c p" '(lsp-bridge-find-def-return :wk "Return definiton")
+   "c m" '(lsp-bridge-popup-documentation :wk "Docutenmation popup")
+   "c u" '(lsp-bridge-popup-documentation-scroll-down :wk "Scroll under current documentation popup")
+   "c d" '(lsp-bridge-find-def :wk "Find definition")
+   "c i" '(lsp-bridge-find-impl :wk "Find implimentation")
+   "c r" '(lsp-bridge-find-references :wk "Find refferences")
+   "c e" '(:ignore :wk "Errors")
+   "c e e" '(lsp-bridge-diagnostic-list :wk "List diagnostic information")
+   "c e n" '(lsp-bridge-diagnostic-jump-next :wk "Jump to next diagnostic position")
+   "c e p" '(lsp-bridge-diagnostic-jump-prev :wk "Jump to previous diagnostic position")
+   "c e c" '(lsp-bridge-diagnostic-copy :wk "Copy diagnostic info to clipboard")
+   "c s" '(:ignore :wk "Peek")
+   "c s s" '(lsp-bridge-peek :wk "Peek inside symbole")
+   "c s m" '(lsp-bridge-peek-through :wk "Peek even deeper")
+   "c s e" '(lsp-bridge-peek-abort :wk "Close peek window")
+   "c s j" '(lsp-bridge-peek-jump :wk "Jump to peek")
+   "c s b" '(lsp-bridge-peek-jump-back :wk "Jump back from peek")
+   "c s n" '(lsp-bridge-peek-list-next-line :wk "Next element in peek window")
+   "c s p" '(lsp-bridge-peek-list-prev-line :wk "Previuos element in peek window")
+   "c s d" '(lsp-bridge-peek-file-content-next-line :wk "Peek window down")
+   "c s u" '(lsp-bridge-peek-file-content-prev-line :wk "Peek window up"))
+
   (mg/leader-keys
    "d" '(:ignore t :wk "Dired")
    "d d" '(dired :wk "Open dired")
@@ -233,11 +260,6 @@
   (mg/leader-keys
    "p" '(projectile-command-map :wk "Projectile"))
   
-  ;; projectile-command-map already has a ton of bindings 
-  ;; set for us, so no need to specify each individually.
-  ;; (mg/leader-keys
-  ;;  "l" '(lsp-command-map :wk "LSP"))
-
   (mg/leader-keys
     "s" '(:ignore t :wk "Search/Snippets")
     "s c" '(yas-load-snippet-buffer-and-close :wk "Save the new created snippet")
@@ -375,13 +397,37 @@ one, an error is signaled."
          (json-mode . color-identifiers-mode)
          (vue-mode . color-identifiers-mode)))
 
-;; use-package with Elpaca:
 (use-package dashboard
   :elpaca t
   :config
   (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
   (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
-  (dashboard-setup-startup-hook))
+  (dashboard-setup-startup-hook)
+  (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard"
+	dashboard-startup-banner (concat Home "japan-logo-smaler.png")
+	dashboard-center-content t
+	dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)
+                          (registers . 5))
+	dashboard-icon-type 'all-the-icons
+	dashboard-set-file-icons t
+	dashboard-set-navigator t
+	;; Format: "(icon title help action face prefix suffix)"
+	dashboard-navigator-buttons
+	`(;; line1
+          ((,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
+            "Homepage"
+            "Browse homepage"
+            (lambda (&rest _) (browse-url "https://github.com/Moerliy")))
+           ("★" "Star" "Show stars" (lambda (&rest _) (browse-url "https://github.com/Moerliy?tab=stars")) warning)
+           ("?" "" "?/h" #'show-help nil "<" ">")))
+	dashboard-set-init-info t
+	dashboard-projects-switch-function 'projectile-persp-switch-project
+	dashboard-week-agenda t
+	))
+(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 
 (use-package dired-open
   :config
@@ -556,7 +602,23 @@ one, an error is signaled."
   :init
   (global-lsp-bridge-mode)
   :config
-  (setq lsp-bridge-user-multiserver-dir (concat Home "lsp-multiserver-conf")))
+  (setq lsp-bridge-user-multiserver-dir (concat Home "lsp-multiserver-conf")
+	lsp-bridge-find-def-select-in-open-windows t
+	lsp-bridge-enable-hover-diagnostic t
+	;; lsp-bridge-enable-auto-format-code t  ;; all files are all the time not saved and it breaks finding and switching buffers
+	lsp-bridge-enable-org-babel t
+	lsp-bridge-peek-file-content-height 16
+	lsp-bridge-peek-scroll-margin 3
+	acm-enable-tabnine nil
+	acm-enable-codeium t
+	acm-enable-copilot nil
+	acm-enable-preview t
+)
+  ;; hides the modeline in lsp box buffers
+  (add-to-list 'auto-mode-alist '("\\*acm-buffer*\\'" . hide-mode-line))
+  (add-to-list 'auto-mode-alist '("\\*acm-doc-buffer*\\'" . hide-mode-line))
+)
+
 
 ;; (use-package lsp-mode
 ;;   :init
@@ -609,6 +671,7 @@ one, an error is signaled."
 	  doom-modeline-time t         ;; Whether display the time
 	  doom-modeline-env-version t  ;; Whether display the environment version
 ))
+(use-package hide-mode-line)
 
 (use-package centered-cursor-mode
   :demand
