@@ -37,6 +37,7 @@
   (setq evil-want-keybinding nil)
   (setq evil-vsplit-window-right t)
   (setq evil-split-window-below t)
+  (setq evil-undo-system 'undo-fu)
   (evil-mode))
 (use-package evil-collection
   :after evil
@@ -608,10 +609,10 @@ one, an error is signaled."
 	;; lsp-bridge-enable-auto-format-code t  ;; all files are all the time not saved and it breaks finding and switching buffers
 	lsp-bridge-enable-org-babel t
 	lsp-bridge-peek-file-content-height 16
-	lsp-bridge-peek-scroll-margin 3
+	lsp-bridge-peek-file-content-scroll-margin 3
 	acm-enable-tabnine nil
-	acm-enable-codeium t
-	acm-enable-copilot nil
+	acm-enable-codeium nil
+	acm-enable-copilot t
 	acm-enable-preview t
 )
   ;; hides the modeline in lsp box buffers
@@ -871,6 +872,12 @@ one, an error is signaled."
 (use-package tldr)
 
 (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
+
+(use-package undo-fu)
+(use-package undo-fu-session
+  :config
+  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+  (undo-fu-session-global-mode))
 
 (use-package which-key
   :init
