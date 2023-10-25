@@ -711,6 +711,7 @@ exec-once = [workspace special silent] $term
 exec-once = copyq
 exec-once = [workspace 2 silent] $browser
 exec-once = [workspace 8 silent] $discord
+exec-once = nextcloud
 # exec-once = swayidle -w timeout 900 '$lock' timeout 1800 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on' before-sleep '$lock'
 exec-once = swayidle -w timeout 900 '$lock'
 # exec-once = ibus-daemon -rxR
