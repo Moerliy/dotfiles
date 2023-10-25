@@ -42,7 +42,7 @@
 (use-package evil-collection
   :after evil
   :config
-  (setq evil-collection-mode-list '(calendar dashboard dired ediff info magit ibuffer))
+  ;; (setq evil-collection-mode-list '(calendar dashboard dired ediff info magit ibuffer))
   (evil-collection-init))
 (use-package evil-tutor)
 ;; Using RETURN to follow links in Org/Evil
@@ -58,6 +58,21 @@
   :config
   (general-evil-setup)
 
+  ;; fix for general keybinds so that escape can exit magit popups
+  (general-define-key
+   :keymaps 'transient-base-map
+   "<escape>" 'transient-quit-one)
+
+  (evil-define-minor-mode-key 'normal 'lsp-bridge-peek-mode
+    (kbd "<escape>") 'lsp-bridge-peek-abort
+    (kbd "q") 'lsp-bridge-peek-abort
+    (kbd "<down>") 'lsp-bridge-peek-file-content-next-line
+    (kbd "<up>") 'lsp-bridge-peek-file-content-prev-line
+    (kbd "<right>") 'lsp-bridge-peek-list-next-line
+    (kbd "<left>") 'lsp-bridge-peek-list-prev-line
+    (kbd "m") 'lsp-bridge-peek-through
+    (kbd "j") 'lsp-bridge-peek-jump)
+
   ;; set up SPC as the global leader key
   (general-create-definer mg/leader-keys
     :states '(normal insert visual emacs)
@@ -65,201 +80,199 @@
     :prefix "SPC" ;; set leader
     :global-prefix "M-SPC") ;; access leader in insert mode
 
+  (mg/leader-keys
+    "." '(find-file :wk "Find file")
+    ":" '(counsel-M-x :wk "Counsel M-x")
+    "TAB" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
+    "; ;" '(comment-line :wk "Comment lines"))
 
   (mg/leader-keys
-   "." '(find-file :wk "Find file")
-   ":" '(counsel-M-x :wk "Counsel M-x")
-   "TAB" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
-   "; ;" '(comment-line :wk "Comment lines"))
+    "a" '(:ignore t :wk "Ace Jump")
+    "a c" '(ace-jump-char-mode :wk "Jump to a char")
+    "a l" '(ace-jump-line-mode :wk "Jump to a line")
+    "a p" '(ace-jump-mode-pop-mark :wk "Jump to previous point")
+    "a a" '(ace-jump-word-mode :wk "Jump to a word"))
 
   (mg/leader-keys
-   "a" '(:ignore t :wk "Ace Jump")
-   "a c" '(ace-jump-char-mode :wk "Jump to a char")
-   "a l" '(ace-jump-line-mode :wk "Jump to a line")
-   "a p" '(ace-jump-mode-pop-mark :wk "Jump to previous point")
-   "a a" '(ace-jump-word-mode :wk "Jump to a word"))
+    "b" '(:ignore t :wk "Buffer/Bookmark")
+    "b b" '(switch-to-buffer :wk "Switch buffer")
+    "b d" '(bookmark-delete :wk "Delete bookmark")
+    "b i" '(ibuffer :wk "Ibuffer")
+    "b k" '(kill-this-buffer :wk "Kill current buffer")
+    "b K" '(kill-some-buffer :wk "Kill multible buffers")
+    "b l" '(list-bookmarks :wk "List bookmarks")
+    "b m" '(bookmark-set :wk "Set bookmark")
+    "b n" '(next-buffer :wk "Next buffer")
+    "b p" '(previous-buffer :wk "Previous buffer")
+    "b r" '(revert-buffer :wk "Reloade buffer")
+    "b R" '(rename-buffer :wk "Rename buffer")
+    "b s" '(basic-save-buffer :wk "Save buffer")
+    "b S" '(save-some-buffers :wk "Save multiple buffers")
+    "b w" '(bookmark-save :wk "Save current bookmarks to bookmark file"))
 
   (mg/leader-keys
-   "b" '(:ignore t :wk "Buffer/Bookmark")
-   "b b" '(switch-to-buffer :wk "Switch buffer")
-   "b d" '(bookmark-delete :wk "Delete bookmark")
-   "b i" '(ibuffer :wk "Ibuffer")
-   "b k" '(kill-this-buffer :wk "Kill current buffer")
-   "b K" '(kill-some-buffer :wk "Kill multible buffers")
-   "b l" '(list-bookmarks :wk "List bookmarks")
-   "b m" '(bookmark-set :wk "Set bookmark")
-   "b n" '(next-buffer :wk "Next buffer")
-   "b p" '(previous-buffer :wk "Previous buffer")
-   "b r" '(revert-buffer :wk "Reloade buffer")
-   "b R" '(rename-buffer :wk "Rename buffer")
-   "b s" '(basic-save-buffer :wk "Save buffer")
-   "b S" '(save-some-buffers :wk "Save multiple buffers")
-   "b w" '(bookmark-save :wk "Save current bookmarks to bookmark file"))
-
-
-  (mg/leader-keys
-   "c" '(:ignore t :wk "LSP")
-   "c a" '(lsp-bridge-code-action :wk "Code action")
-   "c R" '(lsp-bridge-rename :wk "Rename/Refactor")
-   "c p" '(lsp-bridge-find-def-return :wk "Return definiton")
-   "c m" '(lsp-bridge-popup-documentation :wk "Docutenmation popup")
-   "c u" '(lsp-bridge-popup-documentation-scroll-down :wk "Scroll under current documentation popup")
-   "c d" '(lsp-bridge-find-def :wk "Find definition")
-   "c i" '(lsp-bridge-find-impl :wk "Find implimentation")
-   "c r" '(lsp-bridge-find-references :wk "Find refferences")
-   "c e" '(:ignore :wk "Errors")
-   "c e e" '(lsp-bridge-diagnostic-list :wk "List diagnostic information")
-   "c e n" '(lsp-bridge-diagnostic-jump-next :wk "Jump to next diagnostic position")
-   "c e p" '(lsp-bridge-diagnostic-jump-prev :wk "Jump to previous diagnostic position")
-   "c e c" '(lsp-bridge-diagnostic-copy :wk "Copy diagnostic info to clipboard")
-   "c s" '(:ignore :wk "Peek")
-   "c s s" '(lsp-bridge-peek :wk "Peek inside symbole")
-   "c s m" '(lsp-bridge-peek-through :wk "Peek even deeper")
-   "c s e" '(lsp-bridge-peek-abort :wk "Close peek window")
-   "c s j" '(lsp-bridge-peek-jump :wk "Jump to peek")
-   "c s b" '(lsp-bridge-peek-jump-back :wk "Jump back from peek")
-   "c s n" '(lsp-bridge-peek-list-next-line :wk "Next element in peek window")
-   "c s p" '(lsp-bridge-peek-list-prev-line :wk "Previuos element in peek window")
-   "c s d" '(lsp-bridge-peek-file-content-next-line :wk "Peek window down")
-   "c s u" '(lsp-bridge-peek-file-content-prev-line :wk "Peek window up"))
+    "c" '(:ignore t :wk "LSP")
+    "c a" '(lsp-bridge-code-action :wk "Code action")
+    "c R" '(lsp-bridge-rename :wk "Rename/Refactor")
+    "c p" '(lsp-bridge-find-def-return :wk "Return definiton")
+    "c m" '(lsp-bridge-popup-documentation :wk "Docutenmation popup")
+    "c u" '(lsp-bridge-popup-documentation-scroll-down :wk "Scroll under current documentation popup")
+    "c d" '(lsp-bridge-find-def :wk "Find definition")
+    "c i" '(lsp-bridge-find-impl :wk "Find implimentation")
+    "c r" '(lsp-bridge-find-references :wk "Find refferences")
+    "c e" '(:ignore :wk "Errors")
+    "c e e" '(lsp-bridge-diagnostic-list :wk "List diagnostic information")
+    "c e n" '(lsp-bridge-diagnostic-jump-next :wk "Jump to next diagnostic position")
+    "c e p" '(lsp-bridge-diagnostic-jump-prev :wk "Jump to previous diagnostic position")
+    "c e c" '(lsp-bridge-diagnostic-copy :wk "Copy diagnostic info to clipboard")
+    "c s" '(:ignore :wk "Peek")
+    "c s s" '(lsp-bridge-peek :wk "Peek inside symbole")
+    "c s m" '(lsp-bridge-peek-through :wk "Peek even deeper")
+    "c s e" '(lsp-bridge-peek-abort :wk "Close peek window")
+    "c s j" '(lsp-bridge-peek-jump :wk "Jump to peek")
+    "c s b" '(lsp-bridge-peek-jump-back :wk "Jump back from peek")
+    "c s n" '(lsp-bridge-peek-list-next-line :wk "Next element in peek window")
+    "c s p" '(lsp-bridge-peek-list-prev-line :wk "Previuos element in peek window")
+    "c s d" '(lsp-bridge-peek-file-content-next-line :wk "Peek window down")
+    "c s u" '(lsp-bridge-peek-file-content-prev-line :wk "Peek window up"))
 
   (mg/leader-keys
-   "d" '(:ignore t :wk "Dired")
-   "d d" '(dired :wk "Open dired")
-   "d j" '(dired-jump :wk "Dired jump to current")
-   "d n" '(neotree-dir :wk "Open directory in neotree")
-   "d p" '(peep-dired :wk "Peep-dired"))
+    "d" '(:ignore t :wk "Dired")
+    "d d" '(dired :wk "Open dired")
+    "d j" '(dired-jump :wk "Dired jump to current")
+    "d n" '(neotree-dir :wk "Open directory in neotree")
+    "d p" '(peep-dired :wk "Peep-dired"))
 
   (mg/leader-keys
-   "e" '(:ignore t :wk "Evaluate/Eshell")
-   "e b" '(switch-to-buffer :wk "Evaluate elisp in buffer")
-   "e d" '(kill-this-buffer :wk "Evaluate defun containing or after point")
-   "e e" '(next-buffer :wk "Evaluate and elisp expression")
-   "e h" '(counsel-esh-history :which-key "Eshell history")
-   "e l" '(previous-buffer :wk "Evaluate elist expression before point")
-   "e r" '(revert-buffer :wk "Evaluate elisp in region")
-   "e s" '(eshell :which-key "Eshell"))
+    "e" '(:ignore t :wk "Evaluate/Eshell")
+    "e b" '(switch-to-buffer :wk "Evaluate elisp in buffer")
+    "e d" '(kill-this-buffer :wk "Evaluate defun containing or after point")
+    "e e" '(next-buffer :wk "Evaluate and elisp expression")
+    "e h" '(counsel-esh-history :which-key "Eshell history")
+    "e l" '(previous-buffer :wk "Evaluate elist expression before point")
+    "e r" '(revert-buffer :wk "Evaluate elisp in region")
+    "e s" '(eshell :which-key "Eshell"))
 
   (mg/leader-keys
-   "f" '(:ignore t :wk "Focus Windows/Files")
-   ;; Window motions
-   "f h" '(evil-window-left :wk "Window left")
-   "f j" '(evil-window-down :wk "Window down")
-   "f k" '(evil-window-up :wk "Window up")
-   "f l" '(evil-window-right :wk "Window right")
-   "f <left>" '(evil-window-left :wk "Window left")
-   "f <down>" '(evil-window-down :wk "Window down")
-   "f <up>" '(evil-window-up :wk "Window up")
-   "f <right>" '(evil-window-right :wk "Window right")
-   ;; Files
-   "f b" '((lambda () (interactive) 
-	          (find-file (concat Home "vim-cheat-sheet.org"))) 
-	        :wk "Open evil keybind cheat sheet")
-   "f c" '((lambda () (interactive) 
-	          (find-file (concat Home "config.org"))) 
-	        :wk "Edit emacs config")
-   "f d" '(find-grep-dired :wk "Search for string in files in DIR")
-   "f e" '((lambda () (interactive)
-              (dired Home)) 
-            :wk "Open user-emacs-directory in dired")
-   "f f" '(find-file :wk "Find file")
-   "f g" '(counsel-grep-or-swiper :wk "Search for string current file")
-   "f i" '((lambda () (interactive)
-              (find-file (concat Home "init.el"))) 
-            :wk "Open emacs init.el")
-   "f s" '(counsel-locate :wk "Locate a file")
-   "f r" '(counser-recentf :wk "Find recent files")
-   "f u" '(sudo-edit-find-file :wk "Sudo find file")
-   "f U" '(sudo-edit :wk "Sudo edit file"))
+    "f" '(:ignore t :wk "Focus Windows/Files")
+    ;; Window motions
+    "f h" '(evil-window-left :wk "Window left")
+    "f j" '(evil-window-down :wk "Window down")
+    "f k" '(evil-window-up :wk "Window up")
+    "f l" '(evil-window-right :wk "Window right")
+    "f <left>" '(evil-window-left :wk "Window left")
+    "f <down>" '(evil-window-down :wk "Window down")
+    "f <up>" '(evil-window-up :wk "Window up")
+    "f <right>" '(evil-window-right :wk "Window right")
+    ;; Files
+    "f b" '((lambda () (interactive) 
+	      (find-file (concat Home "vim-cheat-sheet.org"))) 
+	    :wk "Open evil keybind cheat sheet")
+    "f c" '((lambda () (interactive) 
+	      (find-file (concat Home "config.org"))) 
+	    :wk "Edit emacs config")
+    "f d" '(find-grep-dired :wk "Search for string in files in DIR")
+    "f e" '((lambda () (interactive)
+	      (dired Home)) 
+	    :wk "Open user-emacs-directory in dired")
+    "f f" '(find-file :wk "Find file")
+    "f g" '(counsel-grep-or-swiper :wk "Search for string current file")
+    "f i" '((lambda () (interactive)
+	      (find-file (concat Home "init.el"))) 
+	    :wk "Open emacs init.el")
+    "f s" '(counsel-locate :wk "Locate a file")
+    "f r" '(counser-recentf :wk "Find recent files")
+    "f u" '(sudo-edit-find-file :wk "Sudo find file")
+    "f U" '(sudo-edit :wk "Sudo edit file"))
 
   (mg/leader-keys
-   "g" '(:ignore t :wk "Git")
-   "g /" '(magit-displatch :wk "Magit dispatch")
-   "g ." '(magit-file-displatch :wk "Magit file dispatch")
-   "g b" '(magit-branch-checkout :wk "Switch branch")
-   "g c" '(:ignore t :wk "Create") 
-   "g c b" '(magit-branch-and-checkout :wk "Create branch and checkout")
-   "g c c" '(magit-commit-create :wk "Create commit")
-   "g c f" '(magit-commit-fixup :wk "Create fixup commit")
-   "g C" '(magit-clone :wk "Clone repo")
-   "g f" '(:ignore t :wk "Find") 
-   "g f c" '(magit-show-commit :wk "Show commit")
-   "g f f" '(magit-find-file :wk "Magit find file")
-   "g f g" '(magit-find-git-config-file :wk "Find gitconfig file")
-   "g F" '(magit-fetch :wk "Git fetch")
-   "g g" '(magit-status :wk "Magit status")
-   "g i" '(magit-init :wk "Initialize git repo")
-   "g l" '(magit-log-buffer-file :wk "Magit buffer log")
-   "g r" '(vc-revert :wk "Git revert file")
-   "g s" '(magit-stage-file :wk "Git stage file")
-   "g t" '(git-timemachine :wk "Git time machine")
-   "g u" '(magit-stage-file :wk "Git unstage file"))
+    "g" '(:ignore t :wk "Git")
+    "g /" '(magit-dispatch :wk "Magit dispatch")
+    "g ." '(magit-file-dispatch :wk "Magit file dispatch")
+    "g b" '(magit-branch-checkout :wk "Switch branch")
+    "g c" '(:ignore t :wk "Create") 
+    "g c b" '(magit-branch-and-checkout :wk "Create branch and checkout")
+    "g c c" '(magit-commit-create :wk "Create commit")
+    "g c f" '(magit-commit-fixup :wk "Create fixup commit")
+    "g C" '(magit-clone :wk "Clone repo")
+    "g f" '(:ignore t :wk "Find") 
+    "g f c" '(magit-show-commit :wk "Show commit")
+    "g f f" '(magit-find-file :wk "Magit find file")
+    "g f g" '(magit-find-git-config-file :wk "Find gitconfig file")
+    "g F" '(magit-fetch :wk "Git fetch")
+    "g g" '(magit-status :wk "Magit status")
+    "g i" '(magit-init :wk "Initialize git repo")
+    "g l" '(magit-log-buffer-file :wk "Magit buffer log")
+    "g r" '(vc-revert :wk "Git revert file")
+    "g s" '(magit-stage-file :wk "Git stage file")
+    "g t" '(git-timemachine :wk "Git time machine")
+    "g u" '(magit-stage-file :wk "Git unstage file"))
 
   (mg/leader-keys
-   "h" '(:ignore t :wk "Help")
-   "h a" '(counsel-apropos :wk "Apropos")
-   "h b" '(describe-bindings :wk "Describe bindings")
-   "h c" '(describe-char :wk "Describe character under cursor")
-   "h d" '(:ignore t :wk "Emacs documentation")
-   "h d a" '(about-emacs :wk "About Emacs")
-   "h d d" '(view-emacs-debugging :wk "View Emacs debugging")
-   "h d f" '(view-emacs-FAQ :wk "View Emacs FAQ")
-   "h d m" '(info-emacs-manual :wk "The Emacs manual")
-   "h d n" '(view-emacs-news :wk "View Emacs news")
-   "h d o" '(describe-distribution :wk "How to obtain Emacs")
-   "h d p" '(view-emacs-problems :wk "View Emacs problems")
-   "h d t" '(view-emacs-todo :wk "View Emacs todo")
-   "h d w" '(describe-no-warranty :wk "Describe no warranty")
-   "h e" '(view-echo-area-messages :wk "View echo area messages")
-   "h f" '(describe-function :wk "Describe function")
-   "h F" '(describe-face :wk "Describe face")
-   "h g" '(describe-gnu-project :wk "Describe GNU Project")
-   "h i" '(info :wk "Info")
-   "h I" '(describe-input-method :wk "Describe input method")
-   "h k" '(describe-key :wk "Describe key")
-   "h l" '(view-lossage :wk "Display recent keystrokes and the commands run")
-   "h L" '(describe-language-environment :wk "Describe language environment")
-   "h m" '(describe-mode :wk "Describe mode")
-   "h r" '(:ignore t :wk "Reload")
-   "h r r" '((lambda () (interactive)
-                (load-file (concat Home "init.el"))
-                (ignore (elpaca-process-queues)))
-              :wk "Reload emacs config")
-   "h t" '(load-theme :wk "Load theme")
-   "h v" '(describe-variable :wk "Describe variable")
-   "h w" '(where-is :wk "Prints keybinding for command if set")
-   "h x" '(describe-command :wk "Display full documentation for command"))
+    "h" '(:ignore t :wk "Help")
+    "h a" '(counsel-apropos :wk "Apropos")
+    "h b" '(describe-bindings :wk "Describe bindings")
+    "h c" '(describe-char :wk "Describe character under cursor")
+    "h d" '(:ignore t :wk "Emacs documentation")
+    "h d a" '(about-emacs :wk "About Emacs")
+    "h d d" '(view-emacs-debugging :wk "View Emacs debugging")
+    "h d f" '(view-emacs-FAQ :wk "View Emacs FAQ")
+    "h d m" '(info-emacs-manual :wk "The Emacs manual")
+    "h d n" '(view-emacs-news :wk "View Emacs news")
+    "h d o" '(describe-distribution :wk "How to obtain Emacs")
+    "h d p" '(view-emacs-problems :wk "View Emacs problems")
+    "h d t" '(view-emacs-todo :wk "View Emacs todo")
+    "h d w" '(describe-no-warranty :wk "Describe no warranty")
+    "h e" '(view-echo-area-messages :wk "View echo area messages")
+    "h f" '(describe-function :wk "Describe function")
+    "h F" '(describe-face :wk "Describe face")
+    "h g" '(describe-gnu-project :wk "Describe GNU Project")
+    "h i" '(info :wk "Info")
+    "h I" '(describe-input-method :wk "Describe input method")
+    "h k" '(describe-key :wk "Describe key")
+    "h l" '(view-lossage :wk "Display recent keystrokes and the commands run")
+    "h L" '(describe-language-environment :wk "Describe language environment")
+    "h m" '(describe-mode :wk "Describe mode")
+    "h r" '(:ignore t :wk "Reload")
+    "h r r" '((lambda () (interactive)
+		(load-file (concat Home "init.el"))
+		(ignore (elpaca-process-queues)))
+	      :wk "Reload emacs config")
+    "h t" '(load-theme :wk "Load theme")
+    "h v" '(describe-variable :wk "Describe variable")
+    "h w" '(where-is :wk "Prints keybinding for command if set")
+    "h x" '(describe-command :wk "Display full documentation for command"))
 
   (mg/leader-keys
-   "m" '(:ignore t :wk "Move Windows/Org")
-   ;; Move Windows
-   "m h" '(buf-move-left :wk "Buffer move left")
-   "m j" '(buf-move-down :wk "Buffer move down")
-   "m k" '(buf-move-up :wk "Buffer move up")
-   "m l" '(buf-move-right :wk "Buffer move right")
-   "m <left>" '(buf-move-left :wk "Buffer move left")
-   "m <down>" '(buf-move-down :wk "Buffer move down")
-   "m <up>" '(buf-move-up :wk "Buffer move up")
-   "m <right>" '(buf-move-right :wk "Buffer move right")
-   ;; Org
-   "m a" '(org-agenda :wk "Org agenda")
-   "m B" '(org-babel-tangle :wk "Org babel tangle")
-   "m d" '(:ignore t :wk "Date/deadline")
-   "m d t" '(org-time-stamp :wk "Org time stamp")
-   "m e" '(org-export-dispatch :wk "Org export dispatch")
-   "m i" '(org-toggle-item :wk "Org toggle item")
-   "m t" '(org-todo :wk "Org todo")
-   "m T" '(org-todo-list :wk "Org todo list"))
+    "m" '(:ignore t :wk "Move Windows/Org")
+    ;; Move Windows
+    "m h" '(buf-move-left :wk "Buffer move left")
+    "m j" '(buf-move-down :wk "Buffer move down")
+    "m k" '(buf-move-up :wk "Buffer move up")
+    "m l" '(buf-move-right :wk "Buffer move right")
+    "m <left>" '(buf-move-left :wk "Buffer move left")
+    "m <down>" '(buf-move-down :wk "Buffer move down")
+    "m <up>" '(buf-move-up :wk "Buffer move up")
+    "m <right>" '(buf-move-right :wk "Buffer move right")
+    ;; Org
+    "m a" '(org-agenda :wk "Org agenda")
+    "m B" '(org-babel-tangle :wk "Org babel tangle")
+    "m d" '(:ignore t :wk "Date/deadline")
+    "m d t" '(org-time-stamp :wk "Org time stamp")
+    "m e" '(org-export-dispatch :wk "Org export dispatch")
+    "m i" '(org-toggle-item :wk "Org toggle item")
+    "m t" '(org-todo :wk "Org todo")
+    "m T" '(org-todo-list :wk "Org todo list"))
 
   (mg/leader-keys
-   "o" '(:ignore t :wk "Open")
-   "o f" '(make-frame :wk "Open buffer in new frame")
-   "o F" '(select-frame-by-name :wk "Select frame by name"))
+    "o" '(:ignore t :wk "Open")
+    "o f" '(make-frame :wk "Open buffer in new frame")
+    "o F" '(select-frame-by-name :wk "Select frame by name"))
 
   ;; projectile-command-map already has a ton of bindings 
   ;; set for us, so no need to specify each individually.
   (mg/leader-keys
-   "p" '(projectile-command-map :wk "Projectile"))
+    "p" '(projectile-command-map :wk "Projectile"))
   
   (mg/leader-keys
     "s" '(:ignore t :wk "Search/Snippets")
@@ -271,32 +284,26 @@
     "s t" '(tldr :wk "Lookup TLDR docs for a command"))
 
   (mg/leader-keys
-   "t" '(:ignore t :wk "Toggle")
-   "t a" '(org-appear-mode :wk "Toggle rendered text to original form")
-   "t e" '(eshell-toggle :wk "Toggle eshell")
-   "t f" '(flycheck-mode :wk "Toggle flycheck")
-   "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-   "t n" '(neotree-toggle :wk "Toggle neotree file viewer")
-   "t r" '(rainbow-mode :wk "Toggle rainbow mode")
-   "t t" '(visual-line-mode :wk "Toggle truncated lines")
-   "t v" '(vterm-toggle :wk "Toggle vtert"))
+    "t" '(:ignore t :wk "Toggle")
+    "t a" '(org-appear-mode :wk "Toggle rendered text to original form")
+    "t d" '(fd-switch-dictionary :wk "Toggle ispell german englich dic.")
+    "t e" '(eshell-toggle :wk "Toggle eshell")
+    "t f" '(flycheck-mode :wk "Toggle flycheck")
+    "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+    "t n" '(neotree-toggle :wk "Toggle neotree file viewer")
+    "t r" '(rainbow-mode :wk "Toggle rainbow mode")
+    "t t" '(visual-line-mode :wk "Toggle truncated lines")
+    "t v" '(vterm-toggle :wk "Toggle vtert"))
 
   (mg/leader-keys
-   "w" '(:ignore t :wk "windows")
-   ;; Window splits
-   "w d" '(evil-window-delete :wk "Close window")
-   "w n" '(evil-window-new :wk "New window")
-   "w s" '(evil-window-split :wk "Horizontal split window")
-   "w v" '(evil-window-vsplit :wk "Vertical split window")
-   "w w" '(evil-window-next :wk "Goto next window"))
+    "w" '(:ignore t :wk "windows")
+    ;; Window splits
+    "w d" '(evil-window-delete :wk "Close window")
+    "w n" '(evil-window-new :wk "New window")
+    "w s" '(evil-window-split :wk "Horizontal split window")
+    "w v" '(evil-window-vsplit :wk "Vertical split window")
+    "w w" '(evil-window-next :wk "Goto next window"))
   )
-
-(use-package all-the-icons
-  :ensure t
-  :if (display-graphic-p))
-
-(use-package all-the-icons-dired
-  :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 
 (use-package ace-jump-mode)
 
@@ -400,6 +407,7 @@ one, an error is signaled."
 
 (use-package dashboard
   :elpaca t
+  :after nerd-icons
   :config
   (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
   (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
@@ -412,13 +420,14 @@ one, an error is signaled."
                           (projects . 5)
                           (agenda . 5)
                           (registers . 5))
-	dashboard-icon-type 'all-the-icons
+	dashboard-display-icons-p t ;; display icons on both GUI and terminal
+	dashboard-icon-type 'nerd-icons ;; use `nerd-icons' package
 	dashboard-set-file-icons t
 	dashboard-set-navigator t
 	;; Format: "(icon title help action face prefix suffix)"
 	dashboard-navigator-buttons
 	`(;; line1
-          ((,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
+          ((,(nerd-icons-octicon "nf-oct-mark_github" :height 1.1 :v-adjust 0.0)
             "Homepage"
             "Browse homepage"
             (lambda (&rest _) (browse-url "https://github.com/Moerliy")))
@@ -510,6 +519,42 @@ one, an error is signaled."
   :diminish
   :init (global-flycheck-mode))
 
+(defun flyspell-on-for-buffer-type ()
+  "Enable Flyspell appropriately for the major mode of the current buffer.  Uses `flyspell-prog-mode' for modes derived from `prog-mode', so only strings and comments get checked.  All other buffers get `flyspell-mode' to check all text.  If flyspell is already enabled, does nothing."
+  (interactive)
+  (if (not (symbol-value flyspell-mode)) ; if not already on
+      (progn
+	(if (derived-mode-p 'prog-mode)
+	    (progn
+	      (message "Flyspell on (code)")
+	      (flyspell-prog-mode))
+	  ;; else
+	  (progn
+	    (message "Flyspell on (text)")
+	    (flyspell-mode 1)))
+	;; I tried putting (flyspell-buffer) here but it didn't seem to work
+	)))
+
+(defun flyspell-toggle ()
+  "Turn Flyspell on if it is off, or off if it is on.  When turning on, it uses `flyspell-on-for-buffer-type' so code-vs-text is handled appropriately."
+  (interactive)
+  (if (symbol-value flyspell-mode)
+      (progn ; flyspell is on, turn it off
+	(message "Flyspell off")
+	(flyspell-mode -1))
+					; else - flyspell is off, turn it on
+    (flyspell-on-for-buffer-type)))
+
+(defun fd-switch-dictionary()
+  (interactive)
+  (let* ((dic ispell-current-dictionary)
+    	 (change (if (string= dic "deutsch8") "english" "deutsch8")))
+    (ispell-change-dictionary change)
+    (message "Dictionary switched from %s to %s" dic change)
+    ))
+(add-hook 'after-change-major-mode-hook 'flyspell-on-for-buffer-type)
+(setq flyspell-issue-message-flag nil) ;; performance
+
 (use-package git-timemachine
   :after git-timemachine
   :hook (evil-normalize-keymaps . git-timemachine-hook)
@@ -542,6 +587,13 @@ one, an error is signaled."
   (setq highlight-indent-guides-method 'column
 	highlight-indent-guides-responsive 'stack))
 
+(use-package all-the-icons)
+(use-package nerd-icons)
+
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
 (use-package counsel
   :after ivy
   :config
@@ -560,9 +612,10 @@ one, an error is signaled."
   :config
     (ivy-mode))
 
-(use-package all-the-icons-ivy-rich
+(use-package nerd-icons-ivy-rich
   :ensure t
-  :init (all-the-icons-ivy-rich-mode 1))
+  :init
+  (nerd-icons-ivy-rich-mode 1))
 
 (use-package ivy-rich
   :after ivy
@@ -579,7 +632,8 @@ one, an error is signaled."
 (use-package treesit-auto
   :config
   (global-treesit-auto-mode)
-  (add-to-list 'auto-mode-alist '("\\.sh\\'" . bash-ts-mode)))
+  (add-to-list 'auto-mode-alist '("\\.sh\\'" . bash-ts-mode))
+  (setq treesit-auto-install t))
 
 (use-package yaml-mode)
 (use-package web-mode
@@ -688,7 +742,8 @@ one, an error is signaled."
         neo-show-hidden-files t
         neo-window-width 40
         neo-window-fixed-size nil
-        inhibit-compacting-font-caches t)
+        inhibit-compacting-font-caches t
+	  neo-theme (if (display-graphic-p) 'nerd 'arrow))
         ;; truncate long file names in neotree
         (add-hook 'neo-after-create-hook
            #'(lambda (_)
@@ -697,6 +752,13 @@ one, an error is signaled."
                  (setq word-wrap nil)
                  (make-local-variable 'auto-hscroll-mode)
                  (setq auto-hscroll-mode nil)))))
+
+;; to tangle on save
+(use-package org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-default t))
 
 (use-package org-appear
   :hook (org-mode . org-appear-mode)
