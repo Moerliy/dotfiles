@@ -52,7 +52,7 @@
   (define-key evil-motion-state-map (kbd "RET") nil)
   (define-key evil-motion-state-map (kbd "TAB") nil))
 ;; Setting RETURN key in org-mode to follow links
-  (setq org-return-follows-link  t)
+(setq org-return-follows-link  t)
 
 (use-package general
   :config
@@ -82,6 +82,7 @@
 
   (mg/leader-keys
     "." '(find-file :wk "Find file")
+    "," '(flyspell-auto-correct-word :wk "Correct word spelling")
     ":" '(counsel-M-x :wk "Counsel M-x")
     "TAB" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
     "; ;" '(comment-line :wk "Comment lines"))
@@ -187,16 +188,31 @@
 
   (mg/leader-keys
     "g" '(:ignore t :wk "Git")
-    "g /" '(magit-dispatch :wk "Magit dispatch")
     "g ." '(magit-file-dispatch :wk "Magit file dispatch")
     "g b" '(magit-branch-checkout :wk "Switch branch")
+    "g d" '(magit-dispatch :wk "Magit dispatch")
     "g c" '(:ignore t :wk "Create") 
     "g c b" '(magit-branch-and-checkout :wk "Create branch and checkout")
     "g c c" '(magit-commit-create :wk "Create commit")
     "g c f" '(magit-commit-fixup :wk "Create fixup commit")
     "g C" '(magit-clone :wk "Clone repo")
-    "g f" '(:ignore t :wk "Find") 
-    "g f c" '(magit-show-commit :wk "Show commit")
+    "g f" '(:ignore t :wk "Find/Forge") 
+    "g f m" '(:ignore t :wk "Mark")
+    "g f m c" '(forge-create-mark :wk "Create mark")
+    "g f m e" '(forge-edit-mark :wk "Edit mark")
+    "g f p" '(:ignore t :wk "Post")
+    "g f p n" '(forge-create-post :wk "Create post")
+    "g f p e" '(forge-edit-post :wk "Edit post")
+    "g f p d" '(forge-delete-comment :wk "Delete a commend")
+    "g f e" '(:ignore t :wk "Edit")
+    "g f e t" '(forge-edit-topic-title :wk "Edit Title")
+    "g f e T" '(forge-edit-topic-state :wk "Edit topic open/closed")
+    "g f e d" '(forge-edit-topic-draft :wk "Edit if draft")
+    "g f e l" '(forge-edit-topic-labels :wk "Edit labels")
+    "g f e m" '(forge-edit-topic-marks :wk "Edit local marks")
+    "g f e a" '(forge-edit-review-requests :wk "Edit review request assignee")
+    "g f e a" '(forge-edit-topic-assignees :wk "Edit assignee")
+    "g f e n" '(forge-edit-topic-note :wk "Edit local note")
     "g f f" '(magit-find-file :wk "Magit find file")
     "g f g" '(magit-find-git-config-file :wk "Find gitconfig file")
     "g F" '(magit-fetch :wk "Git fetch")
@@ -565,8 +581,16 @@ one, an error is signaled."
 
 (use-package magit
   :config
-    (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
+  (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
 (use-package magit-todos)
+
+(use-package forge
+  :after magit
+  :config
+  (add-to-list 'forge-alist '("git@git.h2t.iar.kit.edu"
+			      "git.h2t.iar.kit.edu/api/v4"
+			      "git.h2t.iar.kit.edu"
+			      forge-gitlab-repository)))
 
 (use-package hl-todo
   :hook ((org-mode . hl-todo-mode)
@@ -753,6 +777,7 @@ one, an error is signaled."
                  (make-local-variable 'auto-hscroll-mode)
                  (setq auto-hscroll-mode nil)))))
 
+(setq org-log-done 'time)  ;; marks done todos with close time
 (setq org-agenda-files '("~/NextCloud/Documents/Org/Agenda/"))
 (use-package org-super-agenda
   :after org-agenda
