@@ -40,6 +40,7 @@
 - [[#mouse-center-cursor][Mouse Center Cursor]]
 - [[#neotree][Neotree]]
 - [[#org-mode][Org Mode]]
+  - [[#tangle-auto][Tangle auto]]
   - [[#org-appear][Org-Appear]]
   - [[#enabling-table-of-contents][Enabling Table of Contents]]
   - [[#enabling-org-bullets][Enabling Org Bullets]]
@@ -985,6 +986,16 @@ Neotree is a file tree viewer.  When you open neotree, it jumps to the current f
 * Org Mode
 
 #+begin_src emacs-lisp
+(setq org-agenda-files '("~/NextCloud/Documents/Org/Agenda/"))
+(use-package org-super-agenda
+  :after org-agenda
+  :config
+  (org-super-agenda-mode))
+#+end_src
+
+** Tangle auto
+
+#+begin_src emacs-lisp
 ;; to tangle on save
 (use-package org-auto-tangle
   :defer t
@@ -992,7 +1003,6 @@ Neotree is a file tree viewer.  When you open neotree, it jumps to the current f
   :config
   (setq org-auto-tangle-default t))
 #+end_src
-
 
 ** Org-Appear
 Org mode provides a way to toggle visibility of hidden elements such as emphasis markers, links, etc. by customizing specific variables
@@ -1003,7 +1013,6 @@ Org mode provides a way to toggle visibility of hidden elements such as emphasis
   :config
   (setq org-appear-autolinks t))
 #+end_src
-
 
 ** Enabling Table of Contents
 #+begin_src emacs-lisp
