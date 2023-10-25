@@ -753,6 +753,12 @@ one, an error is signaled."
                  (make-local-variable 'auto-hscroll-mode)
                  (setq auto-hscroll-mode nil)))))
 
+(setq org-agenda-files '("~/NextCloud/Documents/Org/Agenda/"))
+(use-package org-super-agenda
+  :after org-agenda
+  :config
+  (org-super-agenda-mode))
+
 ;; to tangle on save
 (use-package org-auto-tangle
   :defer t
