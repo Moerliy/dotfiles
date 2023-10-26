@@ -36,6 +36,7 @@
 - [[#tree-sitter][Tree Sitter]]
 - [[#language-support][Language Support]]
 - [[#language-server-protokoll][Language Server Protokoll]]
+- [[#mu4e][Mu4e]]
 - [[#mini-buffer-escape][Mini-buffer Escape]]
 - [[#modeline][Modeline]]
 - [[#mouse-center-cursor][Mouse Center Cursor]]
@@ -288,6 +289,7 @@
     "g f m c" '(forge-create-mark :wk "Create mark")
     "g f m e" '(forge-edit-mark :wk "Edit mark")
     "g f p" '(:ignore t :wk "Post")
+    "g f p c" '(forge-post-cancel :wk "Cancel a post creation")
     "g f p n" '(forge-create-post :wk "Create post")
     "g f p e" '(forge-edit-post :wk "Edit post")
     "g f p d" '(forge-delete-comment :wk "Delete a commend")
@@ -756,7 +758,7 @@ Spell checking ripped of [[https://www.emacswiki.org/emacs/FlySpell][wiki]].
 
 ** Forge
 Work with Git forges, such as Github and Gitlab, from the comfort of Magit and the rest of Emacs.
-
+For to authenticate a repo see [[https://magit.vc/manual/ghub/Storing-a-Token.html][here]].
 #+begin_src emacs-lisp
 (use-package forge
   :after magit
@@ -932,6 +934,12 @@ Client for Language Server Protocol (v3.14). lsp-mode aims to provide IDE-like e
 ;; (setq lsp-idle-delay 0.500)  ;; This variable determines how often lsp-mode will refresh the highlights, lenses, links, etc while you type
 (setq gc-cons-threshold 100000000)
 #+end_src
+
+* Mu4e
+#+begin_src emacs-lisp
+;; (use-package mu4e)
+#+end_src
+
 
 * Mini-buffer Escape
 By default, Emacs requires you to hit ESC three times to escape quit the minibuffer.
