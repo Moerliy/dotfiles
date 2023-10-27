@@ -201,6 +201,7 @@
     "g f m c" '(forge-create-mark :wk "Create mark")
     "g f m e" '(forge-edit-mark :wk "Edit mark")
     "g f p" '(:ignore t :wk "Post")
+    "g f p c" '(forge-post-cancel :wk "Cancel a post creation")
     "g f p n" '(forge-create-post :wk "Create post")
     "g f p e" '(forge-edit-post :wk "Edit post")
     "g f p d" '(forge-delete-comment :wk "Delete a commend")
@@ -283,7 +284,9 @@
   (mg/leader-keys
     "o" '(:ignore t :wk "Open")
     "o f" '(make-frame :wk "Open buffer in new frame")
-    "o F" '(select-frame-by-name :wk "Select frame by name"))
+    "o F" '(select-frame-by-name :wk "Select frame by name")
+    "o m" '(mu4e :wk "Open mu mail client")
+)
 
   ;; projectile-command-map already has a ton of bindings 
   ;; set for us, so no need to specify each individually.
@@ -721,6 +724,22 @@ one, an error is signaled."
 ;; (setq lsp-idle-delay 0.500)  ;; This variable determines how often lsp-mode will refresh the highlights, lenses, links, etc while you type
 (setq gc-cons-threshold 100000000)
 
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+(require 'mu4e)
+(setq user-mail-address "moritz@gleissner.de")
+(use-package mu4easy
+  :bind ("C-c u" . mu4e)
+  :config 
+  ;; (add-hook 'elpaca-after-init-hook #'mu4easy-mode)
+  (mu4easy-mode)
+  :custom
+  (setq mu4easy-contexts
+	'((mu4easy-context
+           :c-name  "Ionos"
+           :maildir "Ionos"
+           :mail    "moritz@gleissner.de"
+           :smtp    "smtp.ionos.de"))))
+
 (global-set-key [escape] 'keyboard-escape-quit)
 
 (use-package doom-modeline
@@ -783,6 +802,16 @@ one, an error is signaled."
   :after org-agenda
   :config
   (org-super-agenda-mode))
+
+(use-package org-caldav
+  :config
+  (setq org-caldav-url "https://cloud.gleissner.com/remote.php/dav/calendars/moritz"
+	org-caldav-calendar-id "org"
+	org-icalendar-timezone "Europe/Berlin"))
+(use-package calfw)
+(use-package calfw-org
+  :after calfw)
+(use-package calfw-cal)
 
 ;; to tangle on save
 (use-package org-auto-tangle
