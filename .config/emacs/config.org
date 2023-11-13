@@ -860,11 +860,13 @@ All-the-icons is needed for doom themes.
 * Tree Sitter
 This [[https://www.masteringemacs.org/article/how-to-get-started-tree-sitter][article]] was pretty usefull
 #+begin_src emacs-lisp
+(use-package tree-sitter-langs)
 (use-package treesit-auto
   :config
   (global-treesit-auto-mode)
   (add-to-list 'auto-mode-alist '("\\.sh\\'" . bash-ts-mode))
-  (setq treesit-auto-install t))
+  (setq treesit-auto-install t)
+  treesit-extra-load-path (concat Home "elpaca/builds/tree-sitter-langs/bin"))
 #+end_src
 
 * Language Support
@@ -878,13 +880,11 @@ Emacs has built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM,
 (use-package json-mode)
 (use-package typescript-mode)
 (use-package lua-mode)
+(use-package fish-mode)
 (use-package markdown-mode
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "multimarkdown"))
-;; (use-package vue-mode
-;;   :mode "\\.vue\\'")
-;;(setq lsp-volar-take-over-mode nil)  ;; uses typescript sever in ts files. Is performanec hungtey because two ls run in one vue project
 #+end_src
 
 * Language Server Protokoll
@@ -900,14 +900,16 @@ Client for Language Server Protocol (v3.14). lsp-mode aims to provide IDE-like e
   (setq lsp-bridge-user-multiserver-dir (concat Home "lsp-multiserver-conf")
 	lsp-bridge-find-def-select-in-open-windows t
 	lsp-bridge-enable-hover-diagnostic t
-	;; lsp-bridge-enable-auto-format-code t  ;; all files are all the time not saved and it breaks finding and switching buffers
 	lsp-bridge-enable-org-babel t
+	lsp-bridge-enable-with-tramp t
 	lsp-bridge-peek-file-content-height 16
 	lsp-bridge-peek-file-content-scroll-margin 3
 	acm-enable-tabnine nil
 	acm-enable-codeium nil
 	acm-enable-copilot t
 	acm-enable-preview t
+	lsp-bridge-python-lsp-server 'pylsp
+	lsp-bridge-c-lsp-server 'ccls
 )
   ;; hides the modeline in lsp box buffers
   (add-to-list 'auto-mode-alist '("\\*acm-buffer*\\'" . hide-mode-line))
@@ -946,10 +948,10 @@ Client for Language Server Protocol (v3.14). lsp-mode aims to provide IDE-like e
 (use-package mu4easy
   :bind ("C-c u" . mu4e)
   :config 
-  ;; (add-hook 'elpaca-after-init-hook #'mu4easy-mode)
+  (add-hook 'elpaca-after-init-hook #'mu4easy-mode)
   (mu4easy-mode)
   :custom
-  (setq mu4easy-contexts
+  (mu4easy-contexts
 	'((mu4easy-context
            :c-name  "Ionos"
            :maildir "Ionos"
