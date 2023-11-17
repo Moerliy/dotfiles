@@ -182,7 +182,7 @@
 	      (find-file (concat Home "init.el"))) 
 	    :wk "Open emacs init.el")
     "f s" '(counsel-locate :wk "Locate a file")
-    "f r" '(counser-recentf :wk "Find recent files")
+    "f r" '(counsel-recentf :wk "Find recent files")
     "f u" '(sudo-edit-find-file :wk "Sudo find file")
     "f U" '(sudo-edit :wk "Sudo edit file"))
 
@@ -621,6 +621,11 @@ one, an error is signaled."
   :hook
   (dired-mode . nerd-icons-dired-mode))
 
+(use-package ivy-prescient
+  :after ivy
+  :config
+    (ivy-prescient-mode)
+    (setq ivy-prescient-retain-classic-highlighting t))
 (use-package counsel
   :after ivy
   :config
@@ -686,7 +691,7 @@ one, an error is signaled."
   :config
   (setq lsp-bridge-user-multiserver-dir (concat Home "lsp-multiserver-conf")
 	lsp-bridge-find-def-select-in-open-windows t
-	lsp-bridge-enable-hover-diagnostic t
+	;; lsp-bridge-enable-hover-diagnostic t
 	lsp-bridge-enable-org-babel t
 	lsp-bridge-enable-with-tramp t
 	lsp-bridge-peek-file-content-height 16

@@ -271,7 +271,7 @@
 	      (find-file (concat Home "init.el"))) 
 	    :wk "Open emacs init.el")
     "f s" '(counsel-locate :wk "Locate a file")
-    "f r" '(counser-recentf :wk "Find recent files")
+    "f r" '(counsel-recentf :wk "Find recent files")
     "f u" '(sudo-edit-find-file :wk "Sudo find file")
     "f U" '(sudo-edit :wk "Sudo edit file"))
 
@@ -820,6 +820,11 @@ All-the-icons is needed for doom themes.
 + [[https://github.com/Yevgnen/ivy-rich][Ivy-rich]] allows us to add descriptions alongside the commands in M-x.
 
 #+begin_src emacs-lisp
+(use-package ivy-prescient
+  :after ivy
+  :config
+    (ivy-prescient-mode)
+    (setq ivy-prescient-retain-classic-highlighting t))
 (use-package counsel
   :after ivy
   :config
@@ -888,7 +893,6 @@ Emacs has built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM,
 #+end_src
 
 * Language Server Protokoll
-Client for Language Server Protocol (v3.14). lsp-mode aims to provide IDE-like experience by providing optional integration with the most popular Emacs packages like company, flycheck and projectile.
 #+begin_src emacs-lisp
 (use-package lsp-bridge
   :elpaca '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge"
@@ -899,7 +903,7 @@ Client for Language Server Protocol (v3.14). lsp-mode aims to provide IDE-like e
   :config
   (setq lsp-bridge-user-multiserver-dir (concat Home "lsp-multiserver-conf")
 	lsp-bridge-find-def-select-in-open-windows t
-	lsp-bridge-enable-hover-diagnostic t
+	;; lsp-bridge-enable-hover-diagnostic t
 	lsp-bridge-enable-org-babel t
 	lsp-bridge-enable-with-tramp t
 	lsp-bridge-peek-file-content-height 16
