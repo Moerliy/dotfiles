@@ -3,6 +3,7 @@
 #+description: Personal config that was build from the ground up
 #+startup: showeverything
 #+options: toc:2
+#+property: header-args :tangle config.el
 
 * Table Of Contents :toc:
 - [[#variables][Variables]]
@@ -42,7 +43,6 @@
 - [[#mouse-center-cursor][Mouse Center Cursor]]
 - [[#neotree][Neotree]]
 - [[#org-mode][Org Mode]]
-  - [[#org-caldav][Org CalDav]]
   - [[#tangle-auto][Tangle auto]]
   - [[#org-appear][Org-Appear]]
   - [[#enabling-table-of-contents][Enabling Table of Contents]]
@@ -64,6 +64,7 @@
 - [[#sudo-edit][Sudo edit]]
 - [[#themes][Themes]]
 - [[#tldr][TLDR]]
+- [[#tramp][Tramp]]
 - [[#transparency][Transparency]]
 - [[#undoredo][Undo/Redo]]
 - [[#which-key][Which-Key]]
@@ -904,6 +905,7 @@ Emacs has built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM,
   (setq lsp-bridge-user-multiserver-dir (concat Home "lsp-multiserver-conf")
 	lsp-bridge-find-def-select-in-open-windows t
 	;; lsp-bridge-enable-hover-diagnostic t
+	lsp-bridge-enable-with-tramp t
 	lsp-bridge-enable-org-babel t
 	lsp-bridge-enable-with-tramp t
 	lsp-bridge-peek-file-content-height 16
@@ -951,9 +953,8 @@ Emacs has built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM,
 (setq user-mail-address "moritz@gleissner.de")
 (use-package mu4easy
   :bind ("C-c u" . mu4e)
-  :config 
-  (add-hook 'elpaca-after-init-hook #'mu4easy-mode)
-  (mu4easy-mode)
+  :hook
+  (mu4e-main-mode . mu4easy-mode)
   :custom
   (mu4easy-contexts
 	'((mu4easy-context
@@ -1053,20 +1054,6 @@ Neotree is a file tree viewer.  When you open neotree, it jumps to the current f
   :after org-agenda
   :config
   (org-super-agenda-mode))
-#+end_src
-
-** Org CalDav
-
-#+begin_src emacs-lisp
-(use-package org-caldav
-  :config
-  (setq org-caldav-url "https://cloud.gleissner.com/remote.php/dav/calendars/moritz"
-	org-caldav-calendar-id "org"
-	org-icalendar-timezone "Europe/Berlin"))
-(use-package calfw)
-(use-package calfw-org
-  :after calfw)
-(use-package calfw-cal)
 #+end_src
 
 ** Tangle auto
@@ -1355,6 +1342,14 @@ A theme megapack for GNU Emacs, inspired by community favorites. Special attenti
 
 #+begin_src emacs-lisp
 (use-package tldr)
+#+end_src
+
+* Tramp
+(Transparent Remote Access, Multiple Protocols) is a package for editing remote files, similar to AngeFtp or efs. Whereas the others use FTP to connect to the remote host and to transfer the files, TRAMP uses a remote shell connection (rlogin, telnet, ssh).
+
+#+begin_src emacs-lisp
+(setq tramp-default-method "ssh")
+
 #+end_src
 
 * Transparency

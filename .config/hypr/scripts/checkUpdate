@@ -1,6 +1,6 @@
 #!/bin/bash
 
-UPDATE=$(checkupdates | wc -l)
+UPDATE=$(checkupdates-with-aur | wc -l)
 
 if [ ${UPDATE} -lt 1 ]; then
   echo ""
