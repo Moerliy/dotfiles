@@ -692,6 +692,7 @@ one, an error is signaled."
   (setq lsp-bridge-user-multiserver-dir (concat Home "lsp-multiserver-conf")
 	lsp-bridge-find-def-select-in-open-windows t
 	;; lsp-bridge-enable-hover-diagnostic t
+	lsp-bridge-enable-with-tramp t
 	lsp-bridge-enable-org-babel t
 	lsp-bridge-enable-with-tramp t
 	lsp-bridge-peek-file-content-height 16
@@ -736,9 +737,8 @@ one, an error is signaled."
 (setq user-mail-address "moritz@gleissner.de")
 (use-package mu4easy
   :bind ("C-c u" . mu4e)
-  :config 
-  (add-hook 'elpaca-after-init-hook #'mu4easy-mode)
-  (mu4easy-mode)
+  :hook
+  (mu4e-main-mode . mu4easy-mode)
   :custom
   (mu4easy-contexts
 	'((mu4easy-context
@@ -809,16 +809,6 @@ one, an error is signaled."
   :after org-agenda
   :config
   (org-super-agenda-mode))
-
-(use-package org-caldav
-  :config
-  (setq org-caldav-url "https://cloud.gleissner.com/remote.php/dav/calendars/moritz"
-	org-caldav-calendar-id "org"
-	org-icalendar-timezone "Europe/Berlin"))
-(use-package calfw)
-(use-package calfw-org
-  :after calfw)
-(use-package calfw-cal)
 
 ;; to tangle on save
 (use-package org-auto-tangle
@@ -999,6 +989,8 @@ one, an error is signaled."
   (doom-themes-org-config))
 
 (use-package tldr)
+
+(setq tramp-default-method "ssh")
 
 (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
 
