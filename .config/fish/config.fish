@@ -27,10 +27,10 @@ starship init fish | source
 
 
 ### EXPORT ###
-set fish_greeting                                # Supresses fish's intro message
-set TERM "xterm-256color"                         # Sets the terminal type
-set EDITOR "emacsclient -t -a ''"                 # $EDITOR use Emacs in terminal
-set VISUAL "emacsclient -c -a emacs"              # $VISUAL use Emacs in GUI mode
+set fish_greeting # Supresses fish's intro message
+set TERM xterm-256color # Sets the terminal type
+set EDITOR "emacsclient -t -a ''" # $EDITOR use Emacs in terminal
+set VISUAL "emacsclient -c -a emacs" # $VISUAL use Emacs in GUI mode
 
 ### ALIASES ###
 # navigation
@@ -42,8 +42,8 @@ alias .5='cd ../../../../..'
 
 # Changing "ls" to "exa"
 alias ls='exa -al --color=always --group-directories-first' # my preferred listing
-alias la='exa -a --color=always --group-directories-first'  # all files and dirs
-alias ll='exa -l --color=always --group-directories-first'  # long format
+alias la='exa -a --color=always --group-directories-first' # all files and dirs
+alias ll='exa -l --color=always --group-directories-first' # long format
 alias lt='exa -aT --color=always --group-directories-first' # tree listing
 alias l.='exa -a | egrep "^\."'
 
@@ -101,21 +101,21 @@ alias pfzff='rg --heading --line-number --column --files . | fzf --layout=revers
 # pnpm
 set -gx PNPM_HOME "/home/moritz/.local/share/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
 end
 
 # nvims
-function lazyvim
-    env NVIM_APPNAME=LazyNvim nvim
+function old-nvim
+    env NVIM_APPNAME=old-nvim nvim
 end
 
 function nvims
-    set items lazyvim
-    set config (printf "%s\n" $items | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+    set items old-nvim default
+    set config (printf "%s\n" $items | fzf --prompt=" Neovim Config = " --height=~50% --layout=reverse --border --exit-0)
     if [ -z $config ]
         echo "Nothing selected"
         return 0
-    else if [ $config = "default" ]
+    else if [ $config = default ]
         set config ""
     end
     env NVIM_APPNAME=$config nvim $argv
