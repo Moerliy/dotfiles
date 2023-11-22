@@ -223,17 +223,23 @@ return {
             ["n"] = {
               -- your custom normal mode mappings
               ["n"] = fb_actions.create,
+              ["r"] = fb_actions.rename,
+              ["d"] = fb_actions.remove,
+              ["m"] = fb_actions.move,
+              ["H"] = fb_actions.goto_home_dir,
+              ["c"] = fb_actions.goto_cwd,
+              ["C"] = fb_actions.change_cwd,
               ["h"] = fb_actions.goto_parent_dir,
               ["<left>"] = fb_actions.goto_parent_dir,
               ["/"] = function()
                 vim.cmd("startinsert")
               end,
-              ["u"] = function(prompt_bufnr)
+              ["U"] = function(prompt_bufnr)
                 for i = 1, 10 do
                   actions.move_selection_previous(prompt_bufnr)
                 end
               end,
-              ["d"] = function(prompt_bufnr)
+              ["D"] = function(prompt_bufnr)
                 for i = 1, 10 do
                   actions.move_selection_next(prompt_bufnr)
                 end
