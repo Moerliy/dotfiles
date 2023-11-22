@@ -27,8 +27,6 @@ return {
       { "<leader>bK", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
     },
   },
-<<<<<<< Updated upstream
-=======
   {
     "folke/which-key.nvim",
     opts = {
@@ -251,5 +249,4 @@ return {
       require("telescope").load_extension("file_browser")
     end,
   },
->>>>>>> Stashed changes
 }
