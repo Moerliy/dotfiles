@@ -5,7 +5,7 @@
 local keymap = vim.keymap
 
 -- Diagnostics
-keymap.set("n", "<Leader>j", function()
+keymap.set("n", "<Leader>xn", function()
   vim.diagnostic.goto_next()
 end, { desc = "Next Vim diagnostic" })
 
@@ -25,3 +25,14 @@ keymap.set("n", "<Leader>r<down>", "<C-w>-")
 
 -- Notificon
 keymap.set("n", "<Leader>uN", ":Telescope notify<Return>", { desc = "Show all notifications" })
+
+-- Toggleterm
+keymap.set("n", "<Leader>T", ":ToggleTerm<Return>", { desc = "Toggle terminal" })
+
+-- dotfiles lazygit with toggleterm
+local Terminal = require("toggleterm.terminal").Terminal
+local lazygit = Terminal:new({ cmd = "lazygit --git-dir=$HOME/dotfiles --work-tree=$HOME", hidden = true })
+function _lazygit_toggle()
+  lazygit:toggle()
+end
+keymap.set("n", "<leader>fC", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true })

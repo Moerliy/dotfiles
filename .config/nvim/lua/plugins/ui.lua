@@ -1,5 +1,14 @@
 return {
   {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    opts = {
+      open_mapping = [[<c-\>]],
+      direction = "float",
+      border = "curved",
+    },
+  },
+  {
     "folke/noice.nvim",
     opts = function(_, opts)
       table.insert(opts.routes, {
