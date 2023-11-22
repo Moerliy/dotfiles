@@ -22,3 +22,6 @@ keymap.set("n", "<Leader>r<left>", "<C-w><")
 keymap.set("n", "<Leader>r<right>", "<C-w>>")
 keymap.set("n", "<Leader>r<up>", "<C-w>+")
 keymap.set("n", "<Leader>r<down>", "<C-w>-")
+
+-- Notificon
+keymap.set("n", "<Leader>uN", ":Telescope notify<Return>", { desc = "Show all notifications" })
