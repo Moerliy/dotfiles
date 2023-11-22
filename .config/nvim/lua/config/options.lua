@@ -5,3 +5,4 @@
 local opt = vim.opt
 
 opt.relativenumber = false
+opt.belloff = "all"
