@@ -39,6 +39,9 @@ opt.mouse = ""
 opt.spelllang = "en_us"
 opt.spell = true
 
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldmethod = "expr"
+
 -- Add asterisks in block comments
 opt.formatoptions:append({ "r" })
 
