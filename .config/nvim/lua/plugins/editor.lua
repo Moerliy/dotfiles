@@ -255,4 +255,14 @@ return {
       require("telescope").load_extension("file_browser")
     end,
   },
+  {
+    "stevearc/aerial.nvim",
+    event = "LazyFile",
+    opts = {
+      close_automatic_events = { "unfocus" },
+      manage_folds = true,
+      link_folds_to_tree = true,
+      link_tree_to_folds = true,
+    },
+  },
 }
