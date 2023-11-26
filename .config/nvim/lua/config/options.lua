@@ -39,6 +39,8 @@ opt.mouse = ""
 opt.spelllang = "en_us"
 opt.spell = true
 
+opt.clipboard = "unnamedplus"
+
 opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldmethod = "expr"
 
