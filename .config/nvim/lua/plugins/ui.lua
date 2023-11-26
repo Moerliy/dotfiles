@@ -94,7 +94,6 @@ return {
   },
   {
     "b0o/incline.nvim",
-    dependencies = { "folke/tokyonight.nvim" },
     event = "BufReadPre",
     priority = 1200,
     config = function()
