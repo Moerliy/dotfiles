@@ -94,15 +94,16 @@ return {
   },
   {
     "b0o/incline.nvim",
+    dependencies = { "catppuccin/nvim", name = "catppuccin" },
     event = "BufReadPre",
     priority = 1200,
     config = function()
-      local colors = require("tokyonight.colors").setup()
+      local colors = require("catppuccin.palettes").get_palette("mocha")
       require("incline").setup({
         highlight = {
           groups = {
-            InclineNormal = { guibg = colors.bg_statusline, guifg = colors.fg_dark },
-            InclineNormalNC = { guibg = colors.bg_statusline, guifg = colors.fg_dark },
+            InclineNormal = { guibg = colors.surface2, guifg = colors.sapphire },
+            InclineNormalNC = { guibg = colors.surface2, guifg = colors.sapphire },
           },
         },
         window = { margin = { vertical = 0, horizontal = 1 } },
