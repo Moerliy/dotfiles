@@ -3,6 +3,15 @@ return {
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 100,
+    config = function()
+      require("catppuccin").setup({
+        custom_highlights = function(colors)
+          return {
+            PackageInfoOutdatedVersion = { fg = colors.peach },
+          }
+        end,
+      })
+    end,
     opts = {
       flavour = "mocha",
       background = { -- :h background

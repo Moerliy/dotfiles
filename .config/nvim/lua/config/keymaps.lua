@@ -29,10 +29,54 @@ keymap.set("n", "<Leader>uN", ":Telescope notify<Return>", { desc = "Show all no
 -- Toggleterm
 keymap.set("n", "<Leader>T", ":ToggleTerm<Return>", { desc = "Toggle terminal" })
 
--- dotfiles lazygit with toggleterm
+-- Dotfiles lazygit with toggleterm
 local Terminal = require("toggleterm.terminal").Terminal
 local lazygit = Terminal:new({ cmd = "lazygit --git-dir=$HOME/dotfiles --work-tree=$HOME", hidden = true })
 function _lazygit_toggle()
   lazygit:toggle()
 end
 keymap.set("n", "<leader>fC", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true })
+
+-- Package info
+keymap.set(
+  "n",
+  "<Leader>cps",
+  require("package-info").show,
+  { silent = true, noremap = true, desc = "Show package info" }
+)
+keymap.set(
+  "n",
+  "<Leader>cph",
+  require("package-info").hide,
+  { silent = true, noremap = true, desc = "Hide package info" }
+)
+keymap.set(
+  "n",
+  "<Leader>cpt",
+  require("package-info").toggle,
+  { silent = true, noremap = true, desc = "Toggle package info" }
+)
+keymap.set(
+  "n",
+  "<Leader>cpu",
+  require("package-info").update,
+  { silent = true, noremap = true, desc = "Update package info" }
+)
+keymap.set(
+  "n",
+  "<Leader>cpd",
+  require("package-info").delete,
+  { silent = true, noremap = true, desc = "Delete package" }
+)
+keymap.set(
+  "n",
+  "<Leader>cpi",
+  require("package-info").install,
+  { silent = true, noremap = true, desc = "Install package" }
+)
+keymap.set(
+  "n",
+  "<Leader>cpc",
+  require("package-info").change_version,
+  { silent = true, noremap = true, desc = "Change package version" }
+)
