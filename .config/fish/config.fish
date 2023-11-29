@@ -89,7 +89,7 @@ alias gst='git status'
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 
 # npm
-alias npm='/usr/bin/pnpm'
+#alias npm='/usr/bin/pnpm'
 
 # the terminal rickroll
 alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
