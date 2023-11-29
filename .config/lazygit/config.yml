@@ -1,0 +1,5 @@
+customCommands:
+  - key: "F"
+    context: "files"
+    command: "git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done"
+    description: "Fetch and prune remots mirrors and locals"
