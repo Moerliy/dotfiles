@@ -10,24 +10,24 @@ keymap.set("n", "<Leader>xn", function()
 end, { desc = "Next Vim diagnostic" })
 
 -- Window management
-keymap.set("n", "<Leader>wk", ":close", { desc = "Delete window" })
-keymap.set("n", "<Leader>ws", ":split<Return>", { noremap = true, silent = true, desc = "Horizontal split window" })
-keymap.set("n", "<Leader>wv", ":vsplit<Return>", { noremap = true, silent = true, desc = "Vertical split window" })
+keymap.set("n", "<Leader>wk", "<cmd>close<CR>", { desc = "Delete window" })
+keymap.set("n", "<Leader>ws", "<cmd>split<CR>", { noremap = true, silent = true, desc = "Horizontal split window" })
+keymap.set("n", "<Leader>wv", "<cmd>vsplit<CR>", { noremap = true, silent = true, desc = "Vertical split window" })
 keymap.set("n", "<Leader>f<left>", "<C-w>h", { desc = "Focus window left" })
 keymap.set("n", "<Leader>f<up>", "<C-w>k", { desc = "Focus window up" })
 keymap.set("n", "<Leader>f<down>", "<C-w>j", { desc = "Focus window down" })
 keymap.set("n", "<Leader>f<right>", "<C-w>l", { desc = "Focus window right" })
-keymap.set("n", "<Leader>mm", ":WinShift<Return>", { desc = "Move mode" })
+keymap.set("n", "<Leader>mm", "<cmd>WinShift<CR>", { desc = "Move mode" })
 keymap.set("n", "<Leader>r<left>", "<C-w><")
 keymap.set("n", "<Leader>r<right>", "<C-w>>")
 keymap.set("n", "<Leader>r<up>", "<C-w>+")
 keymap.set("n", "<Leader>r<down>", "<C-w>-")
 
 -- Notificon
-keymap.set("n", "<Leader>uN", ":Telescope notify<Return>", { desc = "Show all notifications" })
+keymap.set("n", "<Leader>uN", "<cmd>Telescope notify<CR>", { desc = "Show all notifications" })
 
 -- Toggleterm
-keymap.set("n", "<Leader>T", ":ToggleTerm<Return>", { desc = "Toggle terminal" })
+keymap.set("n", "<Leader>T", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
 
 -- Dotfiles lazygit with toggleterm
 local Terminal = require("toggleterm.terminal").Terminal
@@ -80,3 +80,6 @@ keymap.set(
   require("package-info").change_version,
   { silent = true, noremap = true, desc = "Change package version" }
 )
+
+-- Git blame
+keymap.set("n", "<Leader>gb", "<cmd>GitBlameToggle<CR>", { desc = "Toggle git blame" })
