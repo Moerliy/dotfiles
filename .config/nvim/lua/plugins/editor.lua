@@ -38,6 +38,7 @@ return {
         ["<leader>h"] = { name = "+help" },
         ["<leader>p"] = { name = "+project" },
         ["<leader>cp"] = { name = "+package" },
+        ["<leader>a"] = { name = "+ai" },
       },
     },
   },
