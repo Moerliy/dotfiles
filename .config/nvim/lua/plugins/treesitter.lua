@@ -11,6 +11,7 @@ return {
         "graphql",
         "http",
         "java",
+        "kotlin",
         "php",
         "rust",
         "scss",
