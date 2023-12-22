@@ -12,6 +12,9 @@ return {
         "css-lsp",
         "vue-language-server",
         "grammarly-languageserver",
+        "kotlin-language-server",
+        "kotlin-debug-adapter",
+        "ktlint",
       })
     end,
   },
