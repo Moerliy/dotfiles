@@ -7,6 +7,7 @@ end
 fish_add_path --path "$HOME/.local/bin"
 fish_add_path --path "$HOME/go/bin"
 fish_add_path --path "$HOME/.ghcup/bin"
+fish_add_path --path "$HOME/.cargo/bin"
 
 # starship
 starship init fish | source

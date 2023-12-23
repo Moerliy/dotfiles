@@ -1,6 +1,8 @@
 @import "mocha.css";
 * {
-  font-family: Symbols Nerd Font, Iosevka Medium, monospace;
+  font-family:
+    Iosevka NF Medium,
+    monospace;
   font-size: 15px;
   /* border: none; */
   border-radius: 10px;
@@ -23,7 +25,9 @@ window#waybar.hidden {
   background: none;
 }
 
-.modules-left, .modules-center, .modules-right {
+.modules-left,
+.modules-center,
+.modules-right {
   background: @theme_base_color;
   border: 3px solid @overlay0;
   padding: 0px 5px;
@@ -158,7 +162,7 @@ window#waybar.hidden {
 }
 
 #custom-waybar-mpris {
-  color:@lavender;
+  color: @lavender;
 }
 
 #network {
