@@ -4,6 +4,7 @@
 
 local opt = vim.opt
 
+vim.api.nvim_command('set commentstring=//%s')
 vim.scriptencoding = "utf-8"
 opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
@@ -28,12 +29,12 @@ opt.smarttab = true
 opt.breakindent = true
 opt.shiftwidth = 2
 opt.tabstop = 2
-opt.wrap = true -- No Wrap lines
+opt.wrap = true           -- No Wrap lines
 opt.backspace = { "start", "eol", "indent" }
 opt.path:append({ "**" }) -- Finding files - Search down into subfolders
 opt.wildignore:append({ "*/node_modules/*" })
-opt.splitbelow = true -- Put new windows below current
-opt.splitright = true -- Put new windows right of current
+opt.splitbelow = true     -- Put new windows below current
+opt.splitright = true     -- Put new windows right of current
 opt.splitkeep = "cursor"
 opt.mouse = ""
 opt.spelllang = "en_us"
