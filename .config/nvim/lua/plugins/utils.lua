@@ -16,6 +16,10 @@ return {
   {
     "numToStr/Comment.nvim",
     lazy = false,
+    config = function()
+      local ft = require("Comment.ft")
+      ft.set("kt", "// %s")
+    end,
     opts = {},
   },
 }
