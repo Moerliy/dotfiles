@@ -39,6 +39,7 @@ return {
         ["<leader>p"] = { name = "+project" },
         ["<leader>cp"] = { name = "+package" },
         ["<leader>a"] = { name = "+ai" },
+        ["<leader>t"] = { name = "+test/theme" },
       },
     },
   },
@@ -79,6 +80,23 @@ return {
     },
   },
   {
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+    },
+    keys = {
+      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+    },
+  },
+  {
     "telescope.nvim",
     dependencies = {
       {
@@ -86,6 +104,7 @@ return {
         build = "make",
       },
       "nvim-telescope/telescope-file-browser.nvim",
+      "andrew-george/telescope-themes",
     },
     keys = {
       {
@@ -216,6 +235,38 @@ return {
         },
       }
       opts.extensions = {
+        themes = {
+          -- you can add regular telescope config
+          -- that you want to apply on this picker only
+          layout_config = {
+            horizontal = {
+              width = 0.8,
+              height = 0.7,
+            },
+          },
+          -- extension specific config
+          enable_previewer = true, -- (boolean) -> show/hide previewer window
+          enable_live_preview = true, -- (boolean) -> enable/disable live preview
+          ignore = {
+            "default",
+            "desert",
+            "elflord",
+            "blue",
+            "peachpuff",
+            "shine",
+            "darkblue",
+            "delek",
+            "catppuccin-latte",
+            "morning",
+            "zellner",
+            "tokyonight-day",
+            "kanagawa-lotus",
+            "onenord-light",
+            "solarized-osaka-day",
+          },
+          -- (table) -> provide table of theme names to ignore
+          -- all builtin themes are ignored by default
+        },
         file_browser = {
           theme = "dropdown",
           -- disables netrw and use telescope-file-browser in its place

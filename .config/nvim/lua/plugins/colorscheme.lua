@@ -71,6 +71,27 @@ return {
       },
     },
   },
+  { "ellisonleao/gruvbox.nvim" },
+  { "rebelot/kanagawa.nvim" },
+  { "nyoom-engineering/oxocarbon.nvim" },
+  { "rmehri01/onenord.nvim" },
+  {
+    "craftzdog/solarized-osaka.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  {
+    "AlexvZyl/nordic.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
   -- Configure LazyVim to load theme
   {
     "LazyVim/LazyVim",
