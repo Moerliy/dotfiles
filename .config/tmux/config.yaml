@@ -1,0 +1,253 @@
+command_alias_start_index: 200
+keybindings:
+  root_table: C-Space
+  prefix_table: Space
+title:
+  style: align=centre,bold
+  prefix: tmux-keys
+  prefix_style: fg=#cba6f7,align=centre,bold
+position:
+  x: C
+  y: C
+custom_variables:
+  - name: log_info
+    value: "#[fg=#cba6f7,italics] [info]#[default]#[italics]"
+macros:
+  - name: reload-config
+    commands:
+      - display "#{log_info} Loading config... "
+      - source-file $HOME/.config/tmux/tmux.conf
+      - display -p "\n\n... Press ENTER to continue"
+  - name: restart-pane
+    commands:
+      - display "#{log_info} Restarting pane"
+      - "respawnp -k -c #{pane_current_path}"
+items:
+  - name: Run
+    key: ":"
+    command: command-prompt
+  - name: Refresh
+    key: r
+    command: reload-config
+  - name: Copy
+    key: c
+    menu:
+      - name: Copy
+        key: c
+        command: copy-mode
+      - name: List buffers
+        key: "#"
+        command: list-buffers
+  - separator: true
+  - name: +tab/toggle
+    key: t
+    menu:
+      - name: New
+        key: c
+        command: "neww -c #{pane_current_path}"
+      - name: Last
+        key: tab
+        command: last-window
+      - name: Choose
+        key: i
+        command: choose-tree -Zw
+      - name: Previous
+        key: p
+        command: previous-window
+      - name: Next
+        key: n
+        command: next-window
+      - name: Swap with previous
+        key: P
+        command: swap-window -t -1 \; previous-window
+      - name: Swap with Next
+        key: N
+        command: swap-window -t +1 \; next-window
+      - separator: true
+      - name: Toggle Mouse
+        key: m
+        command: 'set -g mouse \; display "Mouse: #{?mouse,off,on}"'
+      - separator: true
+      - name: Rename
+        key: R
+        command: command-prompt -I "#W" "renamew -- \"%%\""
+      - name: Kill
+        key: d
+        command: 'confirm -p "Kill window #W? (y/n)" killw'
+  - name: +window
+    key: w
+    menu:
+      - name: Choose
+        key: i
+        command: displayp -d 0
+      - name: Last
+        key: w
+        command: lastp
+      - name: Split horiztonal
+        key: s
+        command: "splitw -h -c #{pane_current_path}"
+      - name: Split vertical
+        key: v
+        command: "splitw -v -c #{pane_current_path}"
+      - name: Rotate
+        key: o
+        command: rotatew
+        transient: true
+      - name: Rotate reverse
+        key: O
+        command: rotatew -D
+        transient: true
+      - name: Zoom
+        key: z
+        command: resizep -Z
+      - name: Mark
+        key: m
+        command: selectp -m
+      - name: Unmark
+        key: M
+        command: selectp -M
+      - name: Capture
+        key: c
+        command: capture-pane
+      - name: Respawn pane
+        key: r
+        macro: restart-pane
+      - name: Kill
+        key: d
+        command: 'confirm -p "Kill pane #P? (y/n)" killp'
+      - separator: true
+      - name: +layout
+        key: l
+        menu:
+          - name: Next
+            key: l
+            command: nextl
+            transient: true
+          - name: Tiled
+            key: t
+            command: selectnl tiled
+          - name: Horizontal
+            key: h
+            command: selectl even-horizontal
+          - name: Vertical
+            key: v
+            command: selectl even-vertical
+          - name: Horizontal main
+            key: H
+            command: selectl main-horizontal
+          - name: Vertical main
+            key: V
+            command: selectl main-vertical
+  - name: +focus
+    key: f
+    menu:
+      - name: Left
+        key: Left
+        command: selectp -L
+      - name: Down
+        key: Down
+        command: selectp -D
+      - name: Up
+        key: Up
+        command: selectp -U
+      - name: Right
+        key: Right
+        command: selectp -R
+  - name: +move
+    key: m
+    menu:
+      - name: Swap left
+        key: Left
+        command: swapp -t "{left-of}"
+      - name: Swap down
+        key: Down
+        command: swapp -t "{down-of}"
+      - name: Swap up
+        key: Up
+        command: swapp -t "{up-of}"
+      - name: Swap right
+        key: Right
+        command: swapp -t "{right-of}"
+      - name: Break
+        key: "!"
+        command: break-pane
+  - name: +resize
+    key: R
+    menu:
+      - name: Left
+        key: Left
+        command: resizep -L
+        transient: true
+      - name: Down
+        key: Down
+        command: resizep -D
+        transient: true
+      - name: Up
+        key: Up
+        command: resizep -U
+        transient: true
+      - name: Right
+        key: Right
+        command: resizep -R
+        transient: true
+  - name: +sessions
+    key: s
+    menu:
+      - name: Choose
+        key: i
+        command: choose-tree -Zs
+      - name: New
+        key: c
+        command: new
+      - name: Rename
+        key: r
+        command: rename
+  - name: +client
+    key: C
+    menu:
+      - name: Choose
+        key: i
+        command: choose-client -Z
+      - name: Last
+        key: l
+        command: switchc -l
+      - name: Previous
+        key: p
+        command: switchc -p
+      - name: Next
+        key: n
+        command: switchc -n
+      - name: Refresh
+        key: r
+        command: refresh
+      - name: Detach
+        key: d
+        command: detach
+      - name: Suspend
+        key: s
+        command: suspendc
+  - name: +plugins
+    key: p
+    menu:
+      - name: Install
+        key: i
+        command: run-shell $TMUX_PLUGIN_MANAGER_PATH/tpm/bindings/install_plugins
+      - name: Update
+        key: u
+        command: run-shell $TMUX_PLUGIN_MANAGER_PATH/tpm/bindings/update_plugins
+      - name: Clean
+        key: c
+        command: run-shell $TMUX_PLUGIN_MANAGER_PATH/tpm/bindings/clean_plugins
+      - name: Customize
+        key: ","
+        command: customize-mode -Z
+  - separator: true
+  - name: Time
+    key: T
+    command: clock-mode
+  - name: Show messages
+    key: M
+    command: show-messages
+  - name: +Keys
+    key: h
+    command: list-keys -N

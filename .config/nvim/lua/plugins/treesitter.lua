@@ -21,6 +21,7 @@ return {
         "lua",
         "typescript",
         "python",
+        "nix",
       },
     },
   },

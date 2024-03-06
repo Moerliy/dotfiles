@@ -15,6 +15,8 @@ return {
         "kotlin-language-server",
         "kotlin-debug-adapter",
         "ktlint",
+        "nil",
+        "nixpkgs-fmt",
       })
     end,
   },

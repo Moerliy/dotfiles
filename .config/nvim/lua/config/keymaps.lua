@@ -13,10 +13,10 @@ end, { desc = "Next Vim diagnostic" })
 keymap.set("n", "<Leader>wk", "<cmd>close<CR>", { desc = "Delete window" })
 keymap.set("n", "<Leader>ws", "<cmd>split<CR>", { noremap = true, silent = true, desc = "Horizontal split window" })
 keymap.set("n", "<Leader>wv", "<cmd>vsplit<CR>", { noremap = true, silent = true, desc = "Vertical split window" })
-keymap.set("n", "<Leader>f<left>", "<C-w>h", { desc = "Focus window left" })
-keymap.set("n", "<Leader>f<up>", "<C-w>k", { desc = "Focus window up" })
-keymap.set("n", "<Leader>f<down>", "<C-w>j", { desc = "Focus window down" })
-keymap.set("n", "<Leader>f<right>", "<C-w>l", { desc = "Focus window right" })
+keymap.set("n", "<Leader>f<left>", "<cmd>TmuxNavigateLeft<CR>", { desc = "Focus window left" })
+keymap.set("n", "<Leader>f<up>", "<cmd>TmuxNavigateUp<CR>", { desc = "Focus window up" })
+keymap.set("n", "<Leader>f<down>", "<cmd>TmuxNavigateDown<CR>", { desc = "Focus window down" })
+keymap.set("n", "<Leader>f<right>", "<cmd>TmuxNavigateRight<CR>", { desc = "Focus window right" })
 keymap.set("n", "<Leader>mm", "<cmd>WinShift<CR>", { desc = "Move mode" })
 keymap.set("n", "<Leader>r<left>", "<C-w><")
 keymap.set("n", "<Leader>r<right>", "<C-w>>")
@@ -108,3 +108,6 @@ keymap.set(
   "<cmd>ChatGPTRun code_readability_analysis<CR>",
   { desc = "ChatGPT analyzing readability" }
 )
+
+-- Telescope theme switcher
+keymap.set("n", "<leader>tc", ":Telescope themes<CR>", { noremap = true, silent = true, desc = "Theme Changer" })
