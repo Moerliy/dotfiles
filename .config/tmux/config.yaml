@@ -85,10 +85,10 @@ items:
         command: lastp
       - name: Split horiztonal
         key: s
-        command: "splitw -h -c #{pane_current_path}"
+        command: "splitw -v -c #{pane_current_path}"
       - name: Split vertical
         key: v
-        command: "splitw -v -c #{pane_current_path}"
+        command: "splitw -h -c #{pane_current_path}"
       - name: Rotate
         key: o
         command: rotatew
