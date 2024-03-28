@@ -30,11 +30,12 @@ starship init fish | source
 ### EXPORT ###
 set fish_greeting # Supresses fish's intro message
 set TERM xterm-256color # Sets the terminal type
-set EDITOR "emacsclient -t -a ''" # $EDITOR use Emacs in terminal
-set VISUAL "emacsclient -c -a emacs" # $VISUAL use Emacs in GUI mode
+set EDITOR nvim # $EDITOR use Emacs in terminal
+set VISUAL nvim # $VISUAL use Emacs in GUI mode
 
 ### ALIASES ###
 # navigation
+zoxide init --cmd cd fish | source
 alias ..='cd ..'
 alias ...='cd ../..'
 alias .3='cd ../../..'
@@ -120,4 +121,11 @@ function nvims
         set config ""
     end
     env NVIM_APPNAME=$config nvim $argv
+end
+
+# lf file manager
+function lfcd --wraps="lf" --description="lf - Terminal file manager (changing directory on exit)"
+    # `command` is needed in case `lfcd` is aliased to `lf`.
+    # Quotes will cause `cd` to not change directory if `lf` prints nothing to stdout due to an error.
+    cd "$(command lf -print-last-dir $argv)"
 end
