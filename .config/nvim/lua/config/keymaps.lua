@@ -23,6 +23,9 @@ keymap.set("n", "<Leader>r<right>", "<C-w>>")
 keymap.set("n", "<Leader>r<up>", "<C-w>+")
 keymap.set("n", "<Leader>r<down>", "<C-w>-")
 
+-- better movement
+keymap.set("n", "gp", "<C-o>", { desc = "Return to last cursor position" })
+
 -- Notificon
 keymap.set("n", "<Leader>uN", "<cmd>Telescope notify<CR>", { desc = "Show all notifications" })
 
