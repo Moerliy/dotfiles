@@ -22,6 +22,8 @@ return {
         "typescript",
         "python",
         "nix",
+        "markdown",
+        "markdown_inline",
       },
     },
   },
