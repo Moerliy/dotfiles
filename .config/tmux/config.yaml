@@ -202,9 +202,12 @@ items:
       - name: Rename
         key: r
         command: rename
-      - name: sessionx
+      - name: Sessionx
         key: s
         command: if-shell "test -f $HOME/.config/tmux/plugins/tmux-sessionx/scripts/sessionx.sh" "run-shell '$HOME/.config/tmux/plugins/tmux-sessionx/scripts/sessionx.sh'"
+      - name: kill
+        key: d
+        command: kill-session
   - name: +client
     key: C
     menu:

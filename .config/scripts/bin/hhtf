@@ -1,0 +1,96 @@
+#!/bin/bash
+
+axiiWorkspace="flux"
+
+# check for flags
+while getopts "h""w" opt; do
+	case $opt in
+	h)
+		echo "Usage: hhtf"
+		echo "Starts a tmux session with a ssh connection to a remote machine."
+		echo "This script is intended to be used with hht."
+		exit 0
+		;;
+	w) # set workspace
+		axiiWorkspace=$OPTARG
+		;;
+	\?)
+		echo "Invalid option: -$OPTARG" >&2
+		exit 1
+		;;
+	esac
+done
+
+# look for hht binary with which
+if [[ $(which hht >/dev/null) ]]; then
+	echo "hht binary not found"
+	exit 1
+fi
+
+sshCommand=$(hht -p)
+
+session="hhtf"
+
+# if session exists, attach to it else create it
+if tmux has-session -t $session 2>/dev/null; then
+	echo "Session $session already exists. Attaching to it."
+	tmux attach -t $session
+	exit 0
+else
+	tmux new-session -d -s $session
+fi
+
+# init all windows
+window=0
+tmux rename-window -t $session:$window "run/armarx"
+window=1
+tmux new-window -t $session:$window -n "run/rest"
+window=2
+tmux new-window -t $session:$window -n "run/fluxio"
+window=3
+tmux new-window -t $session:$window -n "comp/robotAPI"
+window=4
+tmux new-window -t $session:$window -n "dev/ssh"
+window=5
+tmux new-window -t $session:$window -n "dev/fluxio"
+
+# fish start is slow, give it some time
+sleep 0.5 >/dev/null
+
+# axii uses a cache for the commands, so bombording it with commands is not a good idea
+
+window=0
+tmux send-keys -t $session:$window "eval '$sshCommand'" C-m
+tmux send-keys -t $session:$window "axii w ac $axiiWorkspace" C-m
+tmux send-keys -t $session:$window "armarx reset" C-m
+tmux send-keys -t $session:$window "armarx gui" C-m
+
+window=1
+tmux send-keys -t $session:$window "eval '$sshCommand'" C-m
+# wait a second for every axii workspace activation
+tmux send-keys -t $session:$window "sleep 2" C-m
+tmux send-keys -t $session:$window "axii w ac $axiiWorkspace" C-m
+tmux send-keys -t $session:$window "cd armarest" C-m
+# tmux send-keys -t $session:$window "armarx run --no-auth"
+
+window=2
+tmux send-keys -t $session:$window "cd fluxio" C-m
+tmux send-keys -t $session:$window "npm run dev" C-m
+
+window=3
+tmux send-keys -t $session:$window "eval '$sshCommand'" C-m
+tmux send-keys -t $session:$window "sleep 3" C-m
+tmux send-keys -t $session:$window "axii w ac $axiiWorkspace" C-m
+tmux send-keys -t $session:$window "cd robotAPI" C-m
+
+window=4
+tmux send-keys -t $session:$window "eval '$sshCommand'" C-m
+tmux send-keys -t $session:$window "sleep 4" C-m
+tmux send-keys -t $session:$window "axii w ac $axiiWorkspace" C-m
+tmux send-keys -t $session:$window "vim" C-m
+
+window=5
+tmux send-keys -t $session:$window "cd fluxio" C-m
+tmux send-keys -t $session:$window "vim" C-m
+
+tmux attach -t $session
