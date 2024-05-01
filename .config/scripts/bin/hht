@@ -1,0 +1,142 @@
+#!/bin/bash
+
+# check for flags
+printOutput=false
+while getopts "h""p" opt; do
+	case $opt in
+	h)
+		echo "Usage: hht"
+		echo "Connect to H²T PCs via SSH"
+		echo "Options:"
+		echo "  -h  Display help"
+		exit 0
+		;;
+	p)
+		printOutput=true
+		break
+		;;
+	\?)
+		echo "Invalid option: -$OPTARG" >&2
+		exit 1
+		;;
+	:)
+		echo "Option -$OPTARG requires an argument." >&2
+		exit 1
+		;;
+	esac
+done
+
+# config
+export user=ughlu_gleissner
+export proxy=%r@jump.h2t.iar.kit.edu
+ssh_timeout=2 # seconds to wait for ssh connection (including handshake)
+export pcNumbers=(100 101 102 103 104 105 106 031 032 081 082 083 086 087 088 044 047 048)
+
+# for colored output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Color
+
+collectedData=""
+
+# prameter: $1 = pclist index, $2 = remote, $3 = timeout
+sshProcess() {
+	# bash magic happens here
+	tmp=$(ssh 2>/dev/null -J $proxy $2 -o PasswordAuthentication=no -o ConnectTimeout=$3 '{ ((who -q | grep "users" | cut -d"=" -f2; uptime -p; [ $(who -q | grep "users" | cut -d"=" -f2) -eq 0 ] && echo "no users" || who -q | sed -n 1p; lscpu | grep "Model name" | cut -c 13-; lsmem | grep "Total online" | cut -c 27-; [ ! -z "$(nvidia-smi --query-gpu=gpu_name --format=csv,noheader)" || nvidia-smi | grep "Failed" ] && nvidia-smi --query-gpu=gpu_name --format=csv,noheader || lshw -C display 2>/dev/null | grep "product" | cut -d':' -f2; /bin/cat /etc/*-release | grep "PRETTY_NAME" | cut -c 14- | rev | cut -c 2- | rev) | xargs -L 1 echo -ne ";"| cut -c 2-)} ')
+	res="$1"
+	if [ -z "$tmp" ]; then
+		res+=": ${RED}not available${NC}"
+	else
+		# split string into count and uptime
+		count=$(echo $tmp | cut -d';' -f1)
+		# format output
+		if [ "$count" -eq "0" ]; then
+			res+=": ${GREEN}free${NC}"
+		elif [ "$count" -eq "1" ]; then
+			res+=": ${YELLOW}${count}${NC} user"
+		else
+			res+=": ${YELLOW}${count}${NC} users"
+		fi
+		res+="|$tmp"
+	fi
+	echo -e "$res"
+}
+
+threadedSsh() {
+	# Enable Job Control
+	set -m
+	for i in ${!pcNumbers[@]}; do
+		pcNumber=${pcNumbers[$i]}
+		remote=${user}@pc${pcNumber}.h2t.iar.kit.edu
+		sshProcess $pcNumber $remote $ssh_timeout &
+	done
+	# wait for all processes to finish
+	while [ 1 ]; do
+		fg 2>/dev/null
+		[ $? == 1 ] && break
+	done
+}
+
+# SILENCE!
+collectedData=$(threadedSsh 2>/dev/null)
+
+# sort array by first number and remove elements starting with "sshProcess"
+export dataArray=$(echo -e "$collectedData" | sort -t';' -k1 -n | grep -v 'sshProcess')
+# add custom number option
+dataArray+="\ncustom number|custom number"
+
+preview() {
+	info=$(echo -e "$dataArray" | grep "^$1" | cut -d'|' -f2)
+	# if info contains "not available"
+	if [[ $info == *"not available"* ]]; then
+		echo -e "Pc $1 ${RED}not available${NC}"
+		return
+	# if custom number is selected
+	elif [[ $info == *"custom number"* ]]; then
+		echo -e "Enter a custom number"
+		return
+	fi
+	IFS=';' read -r -a infoArray <<<"$info"
+	echo -e "Users: ${infoArray[2]}\nUptime: ${infoArray[1]}\nCPU: ${infoArray[3]}\nRAM: ${infoArray[4]}\nGPU: ${infoArray[5]} \nOS: ${infoArray[6]}"
+}
+
+export -f preview
+
+# use all bevor "|" as data
+fzfData=$(echo -e "$dataArray" | cut -d'|' -f1)
+
+connection=$(echo -e "${fzfData[@]}" | fzf --ansi --prompt="󱚤 H²T SSH connections  " --height=~50 --layout=reverse --border --exit-0 --preview 'preview {1}' --preview-window=up:6:wrap)
+
+# cut out connection number or custom
+connection=$(echo $connection | cut -d':' -f1)
+# if connection is empty, exit
+if [ -z "$connection" ]; then
+	exit 0
+fi
+# if custom number is selected
+if [ "$connection" == "custom number" ]; then
+	read -p "Enter custom number: " selection
+	# if selection is empty, exit
+	if [ -z "$selection" ]; then
+		exit 0
+	fi
+	# if printOutput is set and true
+	command="ssh -X -L 3300:localhost:3300 -J $proxy $user@pc$selection.h2t.iar.kit.edu 2>/dev/null"
+	if [ "$printOutput" == "true" ]; then
+		echo "$command"
+	else
+		# suppress output
+		eval "$command"
+	fi
+	exit 0
+else # if a pc number is selected
+	# if printOutput is set and true
+	command="ssh -X -L 3300:localhost:3300 -J $proxy $user@pc$connection.h2t.iar.kit.edu 2>/dev/null"
+	if [ "$printOutput" == "true" ]; then
+		echo "$command"
+	else
+		# suppress output
+		eval "$command"
+	fi
+fi
