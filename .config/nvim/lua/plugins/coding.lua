@@ -1,5 +1,42 @@
 return {
   {
+    "hrsh7th/nvim-cmp",
+    depends = {
+      "catppuccin/nvim",
+    },
+    config = {
+      window = {
+        completion = {
+          -- custom border
+          border = {
+            "󱐋",
+            "─",
+            "╮",
+            "│",
+            "╯",
+            "─",
+            "╰",
+            "│",
+          },
+          scrollbar = false,
+        },
+        documentation = {
+          border = {
+            "",
+            "─",
+            "╮",
+            "│",
+            "╯",
+            "─",
+            "╰",
+            "│",
+          },
+          scrollbar = false,
+        },
+      },
+    },
+  },
+  {
     "smjonas/inc-rename.nvim",
     cmd = "IncRename",
     config = true,

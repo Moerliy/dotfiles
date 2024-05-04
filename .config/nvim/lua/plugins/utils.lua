@@ -22,4 +22,10 @@ return {
     end,
     opts = {},
   },
+  {
+    "tris203/precognition.nvim",
+    config = {
+      startVisible = false,
+    },
+  },
 }
