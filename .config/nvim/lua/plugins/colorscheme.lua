@@ -10,6 +10,7 @@ return {
             PackageInfoOutdatedVersion = { fg = colors.peach },
           }
         end,
+        transparent_background = true,
       })
     end,
     opts = {
@@ -18,7 +19,7 @@ return {
         light = "latte",
         dark = "mocha",
       },
-      transparent_background = false,
+      transparent_background = true,
       show_end_of_buffer = false,
       styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
         comments = { "italic" }, -- Change the style of comments
@@ -90,7 +91,9 @@ return {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    opts = {},
+    opts = {
+      transparent = true,
+    },
   },
   -- Configure LazyVim to load theme
   {

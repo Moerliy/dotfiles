@@ -9,6 +9,9 @@ keymap.set("n", "<Leader>xn", function()
   vim.diagnostic.goto_next()
 end, { desc = "Next Vim diagnostic" })
 
+-- precognition
+keymap.set("n", "<Leader>tp", "<cmd>lua require('precognition').toggle()<CR>", { desc = "Toggle precognition" })
+
 -- Window management
 keymap.set("n", "<Leader>wk", "<cmd>close<CR>", { desc = "Delete window" })
 keymap.set("n", "<Leader>ws", "<cmd>split<CR>", { noremap = true, silent = true, desc = "Horizontal split window" })
@@ -22,6 +25,9 @@ keymap.set("n", "<Leader>r<left>", "<C-w><")
 keymap.set("n", "<Leader>r<right>", "<C-w>>")
 keymap.set("n", "<Leader>r<up>", "<C-w>+")
 keymap.set("n", "<Leader>r<down>", "<C-w>-")
+
+-- -- Transparency
+-- keymap.set("n", "<Leader>tb", "<cmd>TransparentToggle<CR>", { desc = "Toggle background transparency" })
 
 -- better movement
 keymap.set("n", "gp", "<C-o>", { desc = "Return to last cursor position" })
