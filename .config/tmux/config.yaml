@@ -51,6 +51,9 @@ items:
       - name: Choose
         key: i
         command: choose-tree -Zw
+      - name: Quick switch
+        key: t
+        command: source-file ./util/qickWindowSwitch.tmux
       - name: Previous
         key: p
         command: previous-window
