@@ -29,6 +29,11 @@ fi
 
 sshCommand=$(hht -p)
 
+if [[ $sshCommand == "" ]]; then
+	echo "No ssh command found"
+	exit 1
+fi
+
 session="hhtf"
 
 # if session exists, attach to it else create it
@@ -61,7 +66,7 @@ sleep 0.5 >/dev/null
 
 window=0
 tmux send-keys -t $session:$window "eval '$sshCommand'" C-m
-tmux send-keys -t $session:$window "axii w ac $axiiWorkspace" C-m
+tmux send-keys -t $session:$window "axii w ac $axiiWorkspace; if [[ \`echo \$?\` != '0' ]];  then echo 'again'; axii w ac $axiiWorkspace; fi" C-m
 tmux send-keys -t $session:$window "armarx reset" C-m
 tmux send-keys -t $session:$window "armarx gui" C-m
 
@@ -69,7 +74,7 @@ window=1
 tmux send-keys -t $session:$window "eval '$sshCommand'" C-m
 # wait a second for every axii workspace activation
 tmux send-keys -t $session:$window "sleep 2" C-m
-tmux send-keys -t $session:$window "axii w ac $axiiWorkspace" C-m
+tmux send-keys -t $session:$window "axii w ac $axiiWorkspace; if [[ \`echo \$?\` != '0' ]];  then echo 'again'; axii w ac $axiiWorkspace; fi" C-m
 tmux send-keys -t $session:$window "cd armarest" C-m
 # tmux send-keys -t $session:$window "armarx run --no-auth"
 
@@ -80,13 +85,13 @@ tmux send-keys -t $session:$window "npm run dev" C-m
 window=3
 tmux send-keys -t $session:$window "eval '$sshCommand'" C-m
 tmux send-keys -t $session:$window "sleep 3" C-m
-tmux send-keys -t $session:$window "axii w ac $axiiWorkspace" C-m
+tmux send-keys -t $session:$window "axii w ac $axiiWorkspace; if [[ \`echo \$?\` != '0' ]];  then echo 'again'; axii w ac $axiiWorkspace; fi" C-m
 tmux send-keys -t $session:$window "cd robotAPI" C-m
 
 window=4
 tmux send-keys -t $session:$window "eval '$sshCommand'" C-m
 tmux send-keys -t $session:$window "sleep 4" C-m
-tmux send-keys -t $session:$window "axii w ac $axiiWorkspace" C-m
+tmux send-keys -t $session:$window "axii w ac $axiiWorkspace; if [[ \`echo \$?\` != '0' ]];  then echo 'again'; axii w ac $axiiWorkspace; fi" C-m
 tmux send-keys -t $session:$window "vim" C-m
 
 window=5
